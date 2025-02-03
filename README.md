@@ -25,6 +25,7 @@ This csv file is a matrix of 6032 lines and 12103 columns, whose values are floa
 ### Performance dataset of Electrical Submersible Pumps [2]
 This dataset contains the performance of 6 ESPs models operating with viscous single-phase flow. Data includes measurements of suction and discharge pressure and temperature, mass flow rate, shaft torque and rotational speed. These 6 ESPs models were tested at 1800, 2400, 3000 and 3500 rpm, 11 viscosities ranging between 1273 and 24 cP (1020 to 20 mm2/s). The 13 files are available at: XXXXXXXXX 
 
+# Bibliography
 **[1]** Varejão F. M., Mello L. H. S., Ribeiro M. P., Oliveira-Santos T. ,Rodrigues A. L.. An open source experimental framework and public dataset for vibration-based fault diagnosis of electrical submersible pumps used on offshore oil exploration. Volume 288, 15 March 2024, 111452.
 
 **[2]** Monte Verde, William; Kindermann, Ellen; Biazussi, Jorge Luiz; Foresti, Bernardo Pereira;Estevam, Valdir; Bannwart, Antonio Carlos, 2022, &quot;Performance database of Electrical Submersible Pumps (ESPs) under viscous fluid flow&quot;, https://doi.org/10.25824/redu/AQX7SK, Repositório de Dados de Pesquisa da Unicamp, V
