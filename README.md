@@ -23,9 +23,11 @@ rms(98,102): Root mean square of the amplitudes in the interval (98% X, 102% X).
 This csv file is a matrix of 6032 lines and 12103 columns, whose values are float numbers seperated by a ';'. Each line of this file contains the spectrum of a single vibration signal collected from a sensor at a specific test condition of the ESP. Each value is the amplitude in inches per second (velocity) at a specific frequency. Each signal is normalized by the rotation frequency in which the ESP operates, in such a way that the amplitude with respect to the rotation frequency is always at the same position for all signal arrays.
 
 ### Performance dataset of Electrical Submersible Pumps [2]
-This dataset contains the performance of 6 ESPs models operating with viscous single-phase flow. Data includes measurements of suction and discharge pressure and temperature, mass flow rate, shaft torque and rotational speed. These 6 ESPs models were tested at 1800, 2400, 3000 and 3500 rpm, 11 viscosities ranging between 1273 and 24 cP (1020 to 20 mm2/s). The 13 files are available at: XXXXXXXXX  
+This dataset contains the performance of 6 ESPs models operating with viscous single-phase flow. Data includes measurements of suction and discharge pressure and temperature, mass flow rate, shaft torque and rotational speed. These 6 ESPs models were tested at 1800, 2400, 3000 and 3500 rpm, 11 viscosities ranging between 1273 and 24 cP (1020 to 20 mm2/s). The 13 files are available at: https://redu.unicamp.br/dataset.xhtml?persistentId=doi:10.25824/redu/AQX7SK  
 To do:
-- Request access from the 
+- Request access from the https://redu.unicamp.br/
+- Download the 13 files
+- Open the data file, describe each collumn
 
 # Bibliography
 **[1]** Varejão F. M., Mello L. H. S., Ribeiro M. P., Oliveira-Santos T. ,Rodrigues A. L.. An open source experimental framework and public dataset for vibration-based fault diagnosis of electrical submersible pumps used on offshore oil exploration. Volume 288, 15 March 2024, 111452.
