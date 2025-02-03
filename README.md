@@ -2,7 +2,7 @@
 Intelligent systems for fault detection and diagnosis of submersible equipments.
 
 ## ESPset dataset description [1]
-The data is downloaded from https://github.com/NINFA-UFES/ESPset. The dataset is provided in two files: spectrum.csv and features.csv.
+The data is downloaded from https://github.com/NINFA-UFES/ESPset. The dataset is provided in two files: spectrum.csv and features.csv. These two files are downloaded directly from a google driver account of the authors: https://drive.google.com/drive/folders/1Tr0ddbopjVgHtccYg5nVcsjMraWkJOaM.
 
 ### features.csv
 esp_id: The id of the ESP.
