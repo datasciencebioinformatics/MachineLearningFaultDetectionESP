@@ -33,3 +33,4 @@ To do:
 **[1]** Varejão F. M., Mello L. H. S., Ribeiro M. P., Oliveira-Santos T. ,Rodrigues A. L.. An open source experimental framework and public dataset for vibration-based fault diagnosis of electrical submersible pumps used on offshore oil exploration. Volume 288, 15 March 2024, 111452.
 
 **[2]** Monte Verde, William; Kindermann, Ellen; Biazussi, Jorge Luiz; Foresti, Bernardo Pereira;Estevam, Valdir; Bannwart, Antonio Carlos, 2022, &quot;Performance database of Electrical Submersible Pumps (ESPs) under viscous fluid flow&quot;, https://doi.org/10.25824/redu/AQX7SK, Repositório de Dados de Pesquisa da Unicamp, V
+
