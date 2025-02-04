@@ -8,15 +8,21 @@ The data is downloaded from https://github.com/NINFA-UFES/ESPset. The dataset is
 
 #### features.csv
 esp_id: The id of the ESP.
+
 label: The classification label.
+
 median(8,13): Median of the amplitudes in the interval (8% X, 13% X);
+
 median(98,102): Median of the amplitudes in the interval (98% X, 102% X);
-a: Coefficient a of the exponential regression of type e (a⋅A+b) where A is an array of equally separated relative frequencies up to 0.4
-X, excluding zero. Example: A=(0.01, 0.02, ..., 0.39, 0.4).
-b: Coefficient b of the exponential regression of type e(a⋅A+b) where A is an array of equally separated relative frequencies up to 0.4 X, excluding zero. Example: A =
-(0.01, 0.02, ..., 0.39, 0.4).
+
+a: Coefficient a of the exponential regression of type e (a⋅A+b) where A is an array of equally separated relative frequencies up to 0.4 X, excluding zero. Example: A=(0.01, 0.02, ..., 0.39, 0.4).
+
+b: Coefficient b of the exponential regression of type e(a⋅A+b) where A is an array of equally separated relative frequencies up to 0.4 X, excluding zero. Example: A =(0.01, 0.02, ..., 0.39, 0.4).
+
 peak1x: Amplitude in X;
+
 peak2x: Amplitude in 2;
+
 rms(98,102): Root mean square of the amplitudes in the interval (98% X, 102% X).
 
 #### spectrum.csv
