@@ -12,6 +12,11 @@ spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
 
 # Load the features file
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
-#########################################################################################################
 
+# Take the ids as the rownames
+spectrum_signals$ids<-rownames(spectrum_signals)
+#########################################################################################################
+# The spectrum_signals table must be melt. 
+# The id must be kept to identity each signal.
+melt(spectrum_signals,by="ids")
 
