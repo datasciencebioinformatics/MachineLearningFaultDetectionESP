@@ -14,19 +14,21 @@ spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 
 # Take the ids as the rownames
-spectrum_signals$ids<-rownames(spectrum_signals)
+spectrum_signals$id<-rownames(spectrum_signals)
 
 # Re-set the colnames to numbers
 colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
+
+# Spectrum and features merged
+spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
-melt_spectrum_signals<-melt(spectrum_signals,by="ids")
+melt_spectrum_signals<-melt(spectrum_signals,by="id")
 
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
 df_singal_amplitude<-data.frame(signal=melt_spectrum_signals$ids,amplitude=melt_spectrum_signals$value,frequency=melt_spectrum_signals$variable)
-
 
 ggplot(data = melt_spectrum_signals, aes(x = variable, y = value))+ geom_line(aes(group=ids))
