@@ -47,12 +47,14 @@ melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label")
 # Rename collumn
 colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
 
+# Remove entried for the label normal because of the number of lines
+melt_spectrum_signals<-melt_spectrum_signals[melt_spectrum_signals$label!="Normal",]
 
-                                 
+                                
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude))+ geom_line(aes(group=esp_id))+ facet_grid(vars(label), vars(cyl))
+ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude))+ geom_line(aes(group=esp_id))+ facet_grid(vars(label))
 
 
 
