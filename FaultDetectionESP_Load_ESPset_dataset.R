@@ -21,7 +21,7 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 
 # Spectrum and features merged
 # In this table I have the signals and also the id, the esp_id and label.
-spectrum_features_merged<-merge(spectrum_signals,features_signals[,c(" ","esp_id","label")],by="id")
+spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
 # Table with the number of signal collected per equipment and per condition
 # table(spectrum_features_merged$esp_id,spectrum_features_merged$label)
