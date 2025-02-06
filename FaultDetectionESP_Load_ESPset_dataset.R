@@ -20,6 +20,7 @@ colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
 spectrum_signals$id<-rownames(spectrum_signals)
 
 # Spectrum and features merged
+# In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
 # Table with the number of signal collected per equipment and per condition
@@ -41,8 +42,10 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # I stopped here: it is needed to melt the table and keep the three variables (id,esp_id, and label) 
-melt_spectrum_signals<-melt(spectrum_features_merged,by=c("id","esp_id"))
+melt_spectrum_signals<-melt(spectrum_features_merged,by=c("id","esp_id","label"))
 
+colnames(melt_spectrum_signals)<-c("signal","label","amplitude")
+                                   
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
