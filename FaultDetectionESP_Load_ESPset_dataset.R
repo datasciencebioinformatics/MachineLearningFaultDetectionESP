@@ -41,10 +41,13 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 #########################################################################################################
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
-# I stopped here: it is needed to melt the table and keep the three variables (id,esp_id, and label) 
+# Melt by multiple ids
 melt_spectrum_signals<-melt(spectrum_features_merged,by=c("id","esp_id","label"))
 
-colnames(melt_spectrum_signals)<-c("signal","label","amplitude")
+# Melt by multiple ids
+melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label"))
+
+
                                    
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
