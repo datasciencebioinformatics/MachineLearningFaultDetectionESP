@@ -17,7 +17,7 @@ features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
 
 # Take the ids as the rownames
-spectrum_signals$id<-rownames(spectrum_signals)
+spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 
 # Spectrum and features merged
 # In this table I have the signals and also the id, the esp_id and label.
@@ -54,7 +54,15 @@ melt_spectrum_signals<-melt_spectrum_signals[melt_spectrum_signals$label!="Norma
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude))+ geom_line(aes(group=esp_id))+ facet_grid(vars(label))
+#ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + scale_x_continuous(n.breaks = 100) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id))) + ylim(min(melt_spectrum_signals$amplitude), max(melt_spectrum_signals$amplitude))
+ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + scale_x_continuous(n.breaks = 100) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id))) + ylim(min(melt_spectrum_signals$amplitude), 1000))
+
+
+
+
+
+
+
 
 
 
