@@ -39,6 +39,14 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 #  9              0           18    308      22        73
 #  10             0            0    639      68         7
 #########################################################################################################
+# When needed, a procedure to subset Normal samples to reduce computational complexity
+## Split normal samples from the other samples
+#spectrum_features_merged_normal_samples <-spectrum_features_merged[spectrum_features_merged$label=="Normal",]
+#spectrum_features_merged_except_samples <-spectrum_features_merged[spectrum_features_merged$label!="Normal",]
+
+## Merge back the two data.frames
+#spectrum_features_merged<-rbind(sample_n(spectrum_features_merged_normal_samples, 200),spectrum_features_merged_except_samples)
+#########################################################################################################
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
@@ -46,9 +54,6 @@ melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label")
 
 # Rename collumn
 colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
-
-# Remove entried for the label normal because of the number of lines
-#melt_spectrum_signals<-melt_spectrum_signals[melt_spectrum_signals$label!="Normal",]
                                
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
