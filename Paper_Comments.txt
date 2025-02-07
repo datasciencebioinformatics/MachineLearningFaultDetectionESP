@@ -1,0 +1,2 @@
+# https://pmc.ncbi.nlm.nih.gov/articles/PMC10909639/
+This review shows a model for vbration data. Importantly, a plot frequency versus amplitude is shown. In the same plot, corresponding frequency bands for each different fault types. Moreover, vibration analysis in ESP systems are discussed.
