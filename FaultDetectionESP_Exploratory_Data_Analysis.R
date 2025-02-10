@@ -61,5 +61,5 @@ dev.off()
 # https://rdrr.io/cran/EMD/man/semd.html
 # To do: study empirical model decompositions
 # Tesday work from home : 1.1.2 and 1.1.4 and take study questions.
-# Wednesday : library in the afternoon.
+# Wednesday : library horto in the afternoon.
 ######################################################################################################
