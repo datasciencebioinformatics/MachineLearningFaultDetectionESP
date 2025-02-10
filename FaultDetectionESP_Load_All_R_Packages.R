@@ -13,6 +13,8 @@ library("expsmooth")
 library("fpp")
 library("TSA")
 library("astsa")
+library("ggfortify")
+
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
