@@ -1,10 +1,13 @@
 #########################################################################################################
 # The spectrum and features tables were downloaded from https://github.com/NINFA-UFES/ESPset            #
-######################################################################################################
+#########################################################################################################
+# 1.1    Exploratory Data Analysis
+# 1.1.1  PCA example: analysis of spectral data
+#########################################################################################################
 # Subset spectrum data
 spectrum_features_data<-spectrum_features_merged #[,c(1:100)]
-# 1.1 Exploratory Data Analysis
-# PCA example: analysis of spectral data
+
+# Rename collumns of spectrum data
 spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label"))]
 
 # center and scale the data before
