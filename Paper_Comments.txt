@@ -3,3 +3,5 @@ This review shows a model for vbration data. Importantly, a plot frequency versu
 
 #  https://www.mdpi.com/2075-1702/11/10/943
 This paper discussess clearly time-domain analysis and frequency-domain analysis.
+
+# Vibration data treatment can be applied to enable clusterinf of espetrum data according to the condition of the equipmment. Inicial literature review pointed to empirical mode decomposition as a default choice for transoforming spectral data [https://www.mdpi.com/2071-1050/14/16/9870, https://www.sciencedirect.com/science/article/abs/pii/S2949891024006493, https://www.mdpi.com/2071-1050/14/16/9870, https://www.mdpi.com/2071-1050/14/16/9870]. An R package was already selected to apply Empirical Mode Decomposition to the test set ESPSet [emd: Empirical Mode Decomposition].
