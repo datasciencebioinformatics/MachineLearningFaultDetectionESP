@@ -27,6 +27,8 @@ png(filename=paste(output_dir,"Plot_PCA_of_spectral_data.png",sep=""), width = 2
 dev.off()
 ######################################################################################################
 # 1.1.2  PCA example: analysis of spectral data averaged per equipment
+# The amplitude of each equipment will be averaged per equipment.
+# Expected to find a more clear peaks, as shown in 
 ######################################################################################################
 # 1.1.3  PCA example: analysis of spectral data after eigen decomposition
 ######################################################################################################
