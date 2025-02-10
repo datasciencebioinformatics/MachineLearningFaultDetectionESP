@@ -28,10 +28,16 @@ dev.off()
 ######################################################################################################
 # 1.1.2  PCA example: analysis of spectral data averaged per equipment
 # The amplitude of each equipment will be averaged per equipment.
-# Expected to find a more clear peaks, as shown in 
+# Expected to find a more clear peaks, as shown in Figure 1 of:
+# https://onlinelibrary.wiley.com/doi/pdf/10.1002/%28SICI%291522-2594%28199903%2941%3A3%3C450%3A%3AAID-MRM4%3E3.0.CO%3B2-9
 ######################################################################################################
 # 1.1.3  PCA example: analysis of spectral data after eigen decomposition
+# This can be tried following this simple tutorial: https://www.geeksforgeeks.org/ml-spectral-clustering/
+# Question is is I can use eigen values on the spectral data or if I use it on the time series.
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
+# Several papers point to empirical model decomposition.
+# Expected to find reduction in the complexity of the singals (averaging, smothing, etc, etc).
+# Os dados podem ser tratados com  o método decomposição em modo empírico (emp) [https://www.mdpi.com/2071-1050/14/16/9870, https://www.sciencedirect.com/science/article/abs/pii/S2949891024006493, https://www.mdpi.com/2071-1050/14/16/9870, https://www.mdpi.com/2071-1050/14/16/9870]. Um pacote R já foi selecionado para aplicar a emp no ESPSet [emd: Decomposição em modo empírico]. Eu vou estudar e testar esse pacote R (emp), e reporto progresso,
 ######################################################################################################
 
