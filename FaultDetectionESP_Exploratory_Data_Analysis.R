@@ -22,4 +22,3 @@ PCA_of_spectral_data_esp_id<-autoplot(model.pca, data = spectrum_features_merged
 png(filename=paste(output_dir,"Plot_PCA_of_spectral_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id, P3, ncol = 2, nrow = 1)
 dev.off()
-
