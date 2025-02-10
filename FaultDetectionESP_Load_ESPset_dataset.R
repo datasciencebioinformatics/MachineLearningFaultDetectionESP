@@ -10,6 +10,9 @@ spectrum_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_
 # Load the spectrum file
 spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
 
+# Load the time-series data
+# Here I must wait the time-series data.
+
 # Load the features file
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 
@@ -66,6 +69,9 @@ ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(freque
 png(filename=paste(output_dir,"Plot_raw_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
+#########################################################################################################
+# Plot the time-series data
+# Here I must wait the time-series data.
 #########################################################################################################
 
 
