@@ -45,7 +45,7 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 #spectrum_features_merged_except_samples <-spectrum_features_merged[spectrum_features_merged$label!="Normal",]
 
 ## Merge back the two data.frames
-#spectrum_features_merged<-rbind(sample_n(spectrum_features_merged_normal_samples, 200),spectrum_features_merged_except_samples)
+#spectrum_features_merged<-rbind(sample_n(spectrum_features_merged_normal_samples, 100),spectrum_features_merged_except_samples)
 #########################################################################################################
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
