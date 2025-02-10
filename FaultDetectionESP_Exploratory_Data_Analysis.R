@@ -52,6 +52,7 @@ dev.off()
 # The amplitude of each equipment will be averaged per equipment.
 # Expected to find a more clear peaks, as shown in Figure 1 of:
 # https://onlinelibrary.wiley.com/doi/pdf/10.1002/%28SICI%291522-2594%28199903%2941%3A3%3C450%3A%3AAID-MRM4%3E3.0.CO%3B2-9
+# For each equipment, the average of amplitude will be calculated per frequency_id
 ######################################################################################################
 # 1.1.3  PCA example: analysis of spectral data after eigen decomposition
 # This can be tried following this simple tutorial: https://www.geeksforgeeks.org/ml-spectral-clustering/
