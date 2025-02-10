@@ -14,6 +14,8 @@ library("fpp")
 library("TSA")
 library("astsa")
 library("ggfortify")
+library("EMD")
+
 
 
 # Hadley Wickham's tidyverse universe
