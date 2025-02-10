@@ -26,3 +26,5 @@ png(filename=paste(output_dir,"Plot_PCA_of_spectral_data.png",sep=""), width = 2
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id, ncol = 2, nrow = 1, top = "Raw data") 
 dev.off()
 ######################################################################################################
+# 1.1.2  PCA example: analysis of spectral data averaged per equipment
+######################################################################################################
