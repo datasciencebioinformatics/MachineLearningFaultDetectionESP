@@ -54,10 +54,6 @@ dev.off()
 # https://onlinelibrary.wiley.com/doi/pdf/10.1002/%28SICI%291522-2594%28199903%2941%3A3%3C450%3A%3AAID-MRM4%3E3.0.CO%3B2-9
 # For each equipment, the average of amplitude will be calculated per frequency_id
 ######################################################################################################
-# 1.1.3  PCA example: analysis of spectral data after eigen decomposition
-# This can be tried following this simple tutorial:https://www.geeksforgeeks.org/spectral-clustering-using-r/
-# Question is is I can use eigen values on the spectral data or if I use it on the time series.
-######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
 # Several papers point to empirical model decomposition.
 # Expected to find reduction in the complexity of the singals (averaging, smothing, etc, etc).
