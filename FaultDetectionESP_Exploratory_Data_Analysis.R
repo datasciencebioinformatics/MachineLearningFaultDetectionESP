@@ -58,5 +58,6 @@ dev.off()
 # Several papers point to empirical model decomposition.
 # Expected to find reduction in the complexity of the singals (averaging, smothing, etc, etc).
 # Os dados podem ser tratados com  o método decomposição em modo empírico (emp) [https://www.mdpi.com/2071-1050/14/16/9870, https://www.sciencedirect.com/science/article/abs/pii/S2949891024006493, https://www.mdpi.com/2071-1050/14/16/9870, https://www.mdpi.com/2071-1050/14/16/9870]. Um pacote R já foi selecionado para aplicar a emp no ESPSet [emd: Decomposição em modo empírico]. Eu vou estudar e testar esse pacote R (emp), e reporto progresso,
+# https://rdrr.io/cran/EMD/man/semd.html
 ######################################################################################################
 
