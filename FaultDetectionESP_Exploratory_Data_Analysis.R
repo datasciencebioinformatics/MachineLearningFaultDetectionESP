@@ -9,7 +9,7 @@ spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_feature
 
 # center and scale the data before
 # calculation the components
-model.pca <- prcomp(spectrum_features_data,center = TRUE, scale =TRUE, rank. = 4)
+model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
 
 # Display summary of
 summary(model.pca)
