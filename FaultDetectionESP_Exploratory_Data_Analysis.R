@@ -132,39 +132,12 @@ colnames(melt_spectrum_signals)<-c("esp_with_label_id","esp_id","label","frequen
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
 
 # Plot the raw data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_with_label_id)))+ geom_line(aes(group=esp_with_label_id))+ theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Average data (per esp and condition)") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(label)))+ geom_line(aes(group=esp_with_label_id))+ theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Average data (per esp and condition)") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id))) + facet_grid(vars(label))
 
 # Plot_raw_vibration_data.png              
 png(filename=paste(output_dir,"Plot_average_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
-
-# Subset spectrum data
-spectrum_features_data<-df_esp_frequency
-
-# Rename collumns of spectrum data
-spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label","esp_with_label_id","esp_id_str"))]
-
-# center and scale the data before
-# calculation the components
-model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
-
-# Display summary of
-summary(model.pca)
-
-# Add collumns to esp_id as string
-spectrum_features_merged$esp_id_str<-paste(spectrum_features_merged$esp_id)
-
-# Plot pca's
-PCA_of_spectral_data_label        <-autoplot(model.pca, data = df_esp_frequency, colour = 'label') + theme_bw() 
-PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = df_esp_frequency, colour = 'esp_id') + theme_bw()
-PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = df_esp_frequency, colour = 'esp_with_label_id') + theme_bw()
-
-# FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_average_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
-  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Raw data") 
-dev.off()
-
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
 # Several papers point to empirical model decomposition.
