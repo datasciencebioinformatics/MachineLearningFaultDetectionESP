@@ -12,7 +12,7 @@ spectrum_features_merged$esp_id_label<-paste(spectrum_features_merged$label,spec
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label"))
+melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label","esp_id_label"))
 
 # Rename collumn
 colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
