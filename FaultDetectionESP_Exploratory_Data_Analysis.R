@@ -6,6 +6,9 @@
 # Ouptput 1 : Frequency vs. Amplitude : Plot_raw_vibration_data.png
 # Ouptput 2 : PCA data per conditions : Plot_PCA_of_spectral_data.png
 #########################################################################################################
+# Add a collumn with the esp_id combined with the label
+spectrum_features_merged$esp_id_label<-paste(spectrum_features_merged$label,spectrum_features_merged$esp_id,sep="_")
+
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
