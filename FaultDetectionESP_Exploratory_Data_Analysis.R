@@ -55,11 +55,17 @@ dev.off()
 # For each equipment, the average of amplitude will be calculated per frequency_id
 # From the spectrum_features_data, take the frequency_id and the esp_id
 
+# Add a collumn with the esp_id combined with the label
+spectrum_features_merged$esp_id_label<-paste(spectrum_features_merged$esp_id,spectrum_features_merged$label,sep="_")
+
 # First the frequency_id in the colnames
-frequency_ids_vector<- colnames(spectrum_features_data)
+frequency_ids_vector<- sort(colnames(spectrum_features_data))
 
 # Second the esp_id in the colnames
-esp_ids_vector      <- unique(spectrum_features_merged$esp_id)
+esp_ids_vector      <- sort(unique(spectrum_features_merged$esp_id))
+
+# Third the esp_id combined with the label
+esp_with_label      <- sort(unique(spectrum_features_merged$esp_id_label))
 
 # A data.frame with frequency and esp
 df_esp_frequency    <- data.frame(matrix(nrow = length(esp_ids_vector), ncol = length(frequency_ids_vector))) 
@@ -87,20 +93,23 @@ for (esp_id in esp_ids_vector)
   }    
 }
 
+# Set the esp_id
+df_esp_frequency$esp_id<-rownames(df_esp_frequency)
+
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_spectrum_signals<-melt(df_esp_frequency,id=c("id","esp_id"))
+melt_spectrum_signals<-melt(df_esp_frequency,id=c("esp_id"))
 
 # Rename collumn
-colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
+colnames(melt_spectrum_signals)<-c("esp_id","frequency_id","amplitude")
                                
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
 
 # Plot the raw data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Average data (per esp)") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line()+ theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Average data (per esp)") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), 50)
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_average_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
