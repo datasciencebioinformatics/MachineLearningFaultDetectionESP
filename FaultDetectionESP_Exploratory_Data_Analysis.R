@@ -148,3 +148,11 @@ dev.off()
 # Tesday work from home : 1.1.2 and 1.1.4 and take study questions.
 # Wednesday : library horto in the afternoon.
 ######################################################################################################
+# Questions to follow about features.csv:
+# peak1x and peak2x, median(8,13) and median(98,102), rms(98,102), coefficients a and Coefficients b are shown. 
+# Can we use the summary variables to descriminate conditions or cluster the groups?
+# To do : 
+# PCA using all these variables accross conditions, ESPs and combinations of them
+
+
+
