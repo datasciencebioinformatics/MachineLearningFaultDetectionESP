@@ -92,13 +92,31 @@ for (esp_with_label_id in esp_with_label)
     df_esp_frequency[esp_with_label_id,frequency_id]<-mean_of_amplitude    
   }    
 }
-# In this table, I have for each combination of esp with label the average of amplipluite
-# df_esp_frequency
-
 # Set the esp_id
 df_esp_frequency$esp_with_label_id<-rownames(df_esp_frequency)
 
-# Add also the filed of esp_id
+# Take list with the paired  id
+esp_with_label_id_list<-strsplit(df_esp_frequency$esp_with_label_id,"_",fixed=T)
+
+# Add also the field esp_id
+df_esp_frequency$esp_id<-0
+
+# And the field esp_id
+df_esp_frequency$label<-""
+
+# For each paired id in the list
+for (esp_with_label_id in esp_with_label_id_list)
+{
+  # Add the esp_id and the label
+  df_esp_frequency[paste(esp_with_label_id[1],esp_with_label_id[2],sep="_"),"esp_id"]<-esp_with_label_id[1]
+  df_esp_frequency[paste(esp_with_label_id[1],esp_with_label_id[2],sep="_"),"label"]<-esp_with_label_id[2]
+}
+
+  rownames(df_esp_frequency)
+
+
+
+
 
 
 
