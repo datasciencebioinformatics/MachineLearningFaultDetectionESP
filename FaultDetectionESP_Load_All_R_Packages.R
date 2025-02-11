@@ -15,7 +15,7 @@ library("TSA")
 library("astsa")
 library("ggfortify")
 library("EMD")
-
+library("ggpubr")
 
 
 # Hadley Wickham's tidyverse universe
