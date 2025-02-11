@@ -152,7 +152,7 @@ PCA_of_spectral_data_esp_id           <-autoplot(model.pca, data = df_esp_freque
 PCA_of_spectral_data_esp_with_label_id<-autoplot(model.pca, data = df_esp_frequency, colour = 'esp_with_label_id') + theme_bw() + theme(legend.position="bottom")
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_average_PCA_of_spectral_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_average_PCA_of_spectral_data.png",sep=""), width = 30, height = 30, res=600, units = "cm")  
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id, PCA_of_spectral_data_esp_with_label_id,ncol = 3, nrow = 1, top = "Averaged data data") 
 dev.off()
 ######################################################################################################
