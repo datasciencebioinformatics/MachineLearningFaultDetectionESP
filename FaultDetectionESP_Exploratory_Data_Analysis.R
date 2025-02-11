@@ -90,7 +90,7 @@ for (esp_id in esp_ids_vector)
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_spectrum_signals<-melt(df_esp_frequency,id=c("id","esp_id","label"))
+melt_spectrum_signals<-melt(df_esp_frequency,id=c("id","esp_id"))
 
 # Rename collumn
 colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
