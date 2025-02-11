@@ -59,22 +59,22 @@ dev.off()
 frequency_ids_vector<- colnames(spectrum_features_data)
 
 # Second the esp_id in the colnames
-esp_ids_vector      <- unique(rownames(spectrum_features_data))
+esp_ids_vector      <- unique(spectrum_features_merged$esp_id)
 
 # A data.frame with frequency and esp
 df_esp_frequency    <- data.frame(matrix(nrow = length(esp_ids_vector), ncol = length(frequency_ids_vector))) 
 
 # Set the rownames with frtequency names
-rownames(df_esp_frequency)<-frequency_ids_vector
+colnames(df_esp_frequency)<-frequency_ids_vector
 
 # Set the colnames with frtequency names
-rownames(esp_ids_vector)<-esp_ids_vector
+rownames(df_esp_frequency)<-esp_ids_vector
 
 # For each esp_ids take the average amplitude
 for (esp_id in esp_ids_vector)
 { 
   # Take all signals from a specific esp
-  signals_from_esp<-spectrum_features_data[spectrum_features_data$esp_id %in% esp_id,]
+  signals_from_esp<-spectrum_features_merged[spectrum_features_merged$esp_id %in% esp_id,frequency_ids_vector]
   
   # For each frequency_id
   for (frequency_id in frequency_ids_vector)
@@ -83,7 +83,7 @@ for (esp_id in esp_ids_vector)
     mean_of_amplitude<-mean(signals_from_esp[,frequency_id])
 
     # Mean of ampplitude for the equipment 
-    df_esp_frequency[signals_from_esp,]<-mean_of_amplitude    
+    df_esp_frequency[esp_id,frequency_id]<-mean_of_amplitude    
   }    
 }
 
