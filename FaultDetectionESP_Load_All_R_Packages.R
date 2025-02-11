@@ -16,6 +16,7 @@ library("astsa")
 library("ggfortify")
 library("EMD")
 library("ggpubr")
+library("gridExtra")
 
 
 # Hadley Wickham's tidyverse universe
