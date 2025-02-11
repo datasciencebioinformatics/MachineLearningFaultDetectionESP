@@ -73,13 +73,19 @@ rownames(esp_ids_vector)<-esp_ids_vector
 # For each esp_ids take the average amplitude
 for (esp_id in esp_ids_vector)
 { 
+  # Take all signals from a specific esp
+  signals_from_esp<-spectrum_features_data[spectrum_features_data$esp_id %in% esp_id,]
+  
   # For each frequency_id
   for (frequency_id in frequency_ids_vector)
-  {  
-    
+  { 
+    # Then, take the average of the amplitude for each frequency_id
+    mean_of_amplitude<-mean(signals_from_esp[,frequency_id])
+
+    # Mean of ampplitude for the equipment 
+    df_esp_frequency[signals_from_esp,]<-mean_of_amplitude    
   }    
 }
-
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
 # Several papers point to empirical model decomposition.
