@@ -145,10 +145,6 @@ dev.off()
 
 
 
-
-
-
-
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
 # Several papers point to empirical model decomposition.
