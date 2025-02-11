@@ -153,6 +153,4 @@ dev.off()
 # Can we use the summary variables to descriminate conditions or cluster the groups?
 # To do : 
 # PCA using all these variables accross conditions, ESPs and combinations of them
-
-
-
+# Take the ids as the rownames
