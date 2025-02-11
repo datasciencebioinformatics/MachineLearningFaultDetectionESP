@@ -56,7 +56,7 @@ dev.off()
 # From the spectrum_features_data, take the frequency_id and the esp_id
 
 # Add a collumn with the esp_id combined with the label
-spectrum_features_merged$esp_id_label<-paste(spectrum_features_merged$esp_id,spectrum_features_merged$label,sep="_")
+spectrum_features_merged$esp_id_label<-paste(spectrum_features_merged$label,spectrum_features_merged$esp_id,sep="_")
 
 # First the frequency_id in the colnames
 frequency_ids_vector<- sort(colnames(spectrum_features_data))
