@@ -154,3 +154,31 @@ dev.off()
 # To do : 
 # PCA using all these variables accross conditions, ESPs and combinations of them
 # Take the ids as the rownames
+features_signals$esp_id_str<-paste(features_signals$label,features_signals$esp_id,sep="_")
+
+# Subset spectrum data
+spectrum_features_data<-features_signals
+
+# Rename collumns of spectrum data
+spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))]
+
+# center and scale the data before
+# calculation the components
+model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
+
+# Display summary of
+summary(model.pca)
+
+# Add collumns to esp_id as string
+features_signals$esp_id<-paste(features_signals$esp_id)
+
+# Plot pca's
+PCA_of_spectral_data_label        <-autoplot(model.pca, data = features_signals, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = features_signals, colour = 'esp_id') + theme_bw()
+PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals, colour = 'esp_id_str') + theme_bw()
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+dev.off()
+
