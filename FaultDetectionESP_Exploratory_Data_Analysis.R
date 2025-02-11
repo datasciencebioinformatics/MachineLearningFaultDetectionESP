@@ -61,9 +61,24 @@ frequency_ids_vector<- colnames(spectrum_features_data)
 # Second the esp_id in the colnames
 esp_ids_vector      <- unique(rownames(spectrum_features_data))
 
+# A data.frame with frequency and esp
+df_esp_frequency    <- data.frame(matrix(nrow = length(esp_ids_vector), ncol = length(frequency_ids_vector))) 
 
+# Set the rownames with frtequency names
+rownames(df_esp_frequency)<-frequency_ids_vector
 
+# Set the colnames with frtequency names
+rownames(esp_ids_vector)<-esp_ids_vector
 
+# For each esp_ids take the average amplitude
+for (esp_id in esp_ids_vector)
+{ 
+  # For each frequency_id
+  for (frequency_id in frequency_ids_vector)
+  {  
+    
+  }    
+}
 
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
