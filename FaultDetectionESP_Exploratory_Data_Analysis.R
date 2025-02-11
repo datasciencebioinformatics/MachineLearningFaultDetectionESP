@@ -96,7 +96,11 @@ for (esp_with_label_id in esp_with_label)
 # df_esp_frequency
 
 # Set the esp_id
-df_esp_frequency$esp_id<-rownames(df_esp_frequency)
+df_esp_frequency$esp_with_label_id<-rownames(df_esp_frequency)
+
+# Add also the filed of esp_id
+
+
 
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
