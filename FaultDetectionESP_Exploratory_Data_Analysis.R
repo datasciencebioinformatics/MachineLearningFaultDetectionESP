@@ -36,7 +36,7 @@ dev.off()
 spectrum_features_data<-spectrum_features_merged
 
 # Rename collumns of spectrum data
-spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label","esp_id_label"))]
+spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))]
 
 # center and scale the data before
 # calculation the components
@@ -47,7 +47,6 @@ summary(model.pca)
 
 # Add collumns to esp_id as string
 spectrum_features_merged$esp_id_str<-paste(spectrum_features_merged$esp_id)
-
 
 # Plot pca's
 PCA_of_spectral_data_label        <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
@@ -84,7 +83,6 @@ colnames(df_esp_frequency)<-frequency_ids_vector
 # Set the colnames with frtequency names
 rownames(df_esp_frequency)<-esp_with_label
 
-
 # For each esp_ids take the average amplitude
 for (esp_with_label_id in esp_with_label)
 {
@@ -101,7 +99,6 @@ for (esp_with_label_id in esp_with_label)
     df_esp_frequency[esp_with_label_id,frequency_id]<-mean_of_amplitude    
   }    
 }
-
 # Set the esp_id
 df_esp_frequency$esp_with_label_id<-rownames(df_esp_frequency)
 
