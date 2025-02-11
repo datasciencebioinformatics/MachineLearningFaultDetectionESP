@@ -77,10 +77,10 @@ colnames(df_esp_frequency)<-frequency_ids_vector
 rownames(df_esp_frequency)<-esp_with_label
 
 # For each esp_ids take the average amplitude
-for (esp_id in esp_with_label)
+for (esp_with_label_id in esp_with_label)
 { 
   # Take all signals from a specific esp
-  signals_from_esp_label<-spectrum_features_merged[spectrum_features_merged$esp_id_label %in% esp_with_label,frequency_ids_vector]
+  signals_from_esp_label<-spectrum_features_merged[spectrum_features_merged$esp_id_label %in% esp_with_label_id,frequency_ids_vector]
   
   # For each frequency_id
   for (frequency_id in frequency_ids_vector)
@@ -89,9 +89,11 @@ for (esp_id in esp_with_label)
     mean_of_amplitude<-mean(signals_from_esp_label[,frequency_id])
 
     # Mean of ampplitude for the equipment 
-    df_esp_frequency[esp_id,frequency_id]<-mean_of_amplitude    
+    df_esp_frequency[esp_with_label_id,frequency_id]<-mean_of_amplitude    
   }    
 }
+# In this table, I have for each combination of esp with label the average of amplipluite
+# df_esp_frequency
 
 # Set the esp_id
 df_esp_frequency$esp_id<-rownames(df_esp_frequency)
