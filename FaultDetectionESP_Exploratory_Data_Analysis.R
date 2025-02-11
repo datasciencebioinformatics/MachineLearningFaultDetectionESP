@@ -44,7 +44,7 @@ PCA_of_spectral_data_label<-autoplot(model.pca, data = spectrum_features_merged,
 PCA_of_spectral_data_esp_id<-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id') + theme_bw()
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_PCA_of_spectral_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_raw_PCA_of_spectral_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id, ncol = 2, nrow = 1, top = "Raw data") 
 dev.off()
 ######################################################################################################
@@ -107,6 +107,27 @@ png(filename=paste(output_dir,"Plot_average_vibration_data.png",sep=""), width =
   ggplot2_raw_data
 dev.off()
 
+# Subset spectrum data
+spectrum_features_data<-df_esp_frequency
+
+# Rename collumns of spectrum data
+spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label"))]
+
+# center and scale the data before
+# calculation the components
+model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
+
+# Display summary of
+summary(model.pca)
+
+# Plot pca's
+PCA_of_spectral_data_label<-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_esp_id<-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id') + theme_bw()
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_average_PCA_of_spectral_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id, ncol = 2, nrow = 1, top = "Raw data") 
+dev.off()
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
 # Several papers point to empirical model decomposition.
