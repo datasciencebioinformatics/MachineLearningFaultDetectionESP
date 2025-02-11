@@ -42,14 +42,18 @@ model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. =
 # Display summary of
 summary(model.pca)
 
+# Add collumns to esp_id as string
+spectrum_features_merged$esp_id_str<-paste(spectrum_features_merged$esp_id)
+
+
 # Plot pca's
 PCA_of_spectral_data_label        <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
-PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id') + theme_bw()
+PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id_str') + theme_bw()
 PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id_label') + theme_bw()
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_raw_PCA_of_spectral_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
-  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id, ncol = 2, nrow = 1, top = "Raw data") 
+png(filename=paste(output_dir,"Plot_raw_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Raw data") 
 dev.off()
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
