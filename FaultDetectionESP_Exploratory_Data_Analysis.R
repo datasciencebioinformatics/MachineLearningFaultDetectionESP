@@ -86,6 +86,27 @@ for (esp_id in esp_ids_vector)
     df_esp_frequency[signals_from_esp,]<-mean_of_amplitude    
   }    
 }
+
+# The spectrum_signals table must be melt. 
+# The id must be kept to identity each signal.
+# Melt by multiple ids
+melt_spectrum_signals<-melt(df_esp_frequency,id=c("id","esp_id","label"))
+
+# Rename collumn
+colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
+                               
+# Each line represents a signal.
+# For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
+# Therefore, two collumns are needed, x for the singal and y for the amplitude.
+
+# Plot the raw data
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Raw data") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))
+
+# Plot_raw_vibration_data.png               
+png(filename=paste(output_dir,"Plot_raw_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+  ggplot2_raw_data
+dev.off()
+
 ######################################################################################################
 # 1.1.4  PCA example: analysis of spectral data after empiric mode decomposition
 # Several papers point to empirical model decomposition.
