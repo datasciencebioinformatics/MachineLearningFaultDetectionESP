@@ -157,7 +157,7 @@ df_results_residue_nimf<-spectrum_features_merged[rownames(spectrum_features_mer
 for (signal in rownames(spectrum_features_merged))
 {
   # Take all the 
-  emd_signal_x<-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none"))
+  emd_signal_x<-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="wave"))
 
   # Store results in the data.frame
   df_results_imf_emd[signal,frequency_id]<-emd_signal_x$imf
