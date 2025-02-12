@@ -223,8 +223,8 @@ ggplot2_residue_emd_data<-ggplot(data = melt_residue_emd_signals, aes(x = as.int
 ggplot2_residue_nimf_data<-ggplot(data = melt_residue_nimf_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("residue nimf") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))  
 
 # Plot_raw_vibration_data.png               
-png(filename=paste(output_dir,"Plot_emd_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  grid.arrange(ggplot2_imf_emd_data, ggplot2_residue_emd_data,ggplot2_residue_nimf_data, ncol = 3, nrow = 1, top = "Empirical mode decomposition")
+png(filename=paste(output_dir,"Plot_emd_vibration_data.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
+  grid.arrange(ggplot2_imf_emd_data, ggplot2_residue_emd_data,ggplot2_residue_nimf_data, ncol = 1, nrow = 3, top = "Empirical mode decomposition")
 dev.off()
 
  
