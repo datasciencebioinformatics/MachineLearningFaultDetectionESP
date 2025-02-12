@@ -152,15 +152,16 @@ dev.off()
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # Instance a table with zero 
-df_emd<
-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_emd<-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 
 # For each signal, the amplitude is taken for all frequency_id
 for (signal in rownames(spectrum_features_merged))
 {
   # Take all the 
-  print(signal)
-  spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]
+  emd_signal_x<-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none"))
+
+  # Store results in the data.frame
+  df_results_emd[signal,]<-emd_signal_x
 }
 
 # The amplitude will be used. 
