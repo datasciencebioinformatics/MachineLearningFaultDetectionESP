@@ -204,22 +204,27 @@ residue_nimf_features_merged$esp_id_label<-paste(residue_nimf_features_merged$la
 # The id must be kept to identity each signal.
 # Melt by multiple ids
 melt_imf_emd_signals<-melt(imf_emd_features_merged,id=c("id","esp_id","label","esp_id_label"))
-melt_residue_emd_signals<-melt(emd_features_merged,id=c("id","esp_id","label","esp_id_label")
-melt_residue_nimf_signals<-melt(residue_nimf_features_merged,id=c("id","esp_id","label","esp_id_label")
+melt_residue_emd_signals<-melt(emd_features_merged,id=c("id","esp_id","label","esp_id_label"))
+melt_residue_nimf_signals<-melt(residue_nimf_features_merged,id=c("id","esp_id","label","esp_id_label"))
 
 # Rename collumn
-colnames(melt_spectrum_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
+colnames(melt_imf_emd_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
+colnames(melt_residue_emd_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
+colnames(melt_residue_nimf_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
+                                
 
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
 
 # Plot the raw data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Raw data") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))
+ggplot2_imf_emd_data<-ggplot(data = melt_imf_emd_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("imf emd") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))            
+ggplot2_residue_emd_data<-ggplot(data = melt_residue_emd_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("residue emd") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))    
+ggplot2_residue_nimf_data<-ggplot(data = melt_residue_nimf_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("residue nimf") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))  
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_emd_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  ggplot2_raw_data
+  grid.arrange(ggplot2_imf_emd_data, ggplot2_residue_emd_data,ggplot2_residue_nimf_data, ncol = 3, nrow = 1, top = "Empirical mode decomposition")
 dev.off()
 
  
