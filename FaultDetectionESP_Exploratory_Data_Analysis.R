@@ -15,10 +15,7 @@ spectrum_features_merged$esp_id_label<-paste(spectrum_features_merged$label,spec
 melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label","esp_id_label"))
 
 # Rename collumn
-colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
-
-# Add collumn combining esp_id with label
-melt_spectrum_signals$esp_id_label<-paste(melt_spectrum_signals$label,melt_spectrum_signals$esp_id,sep="_")
+colnames(melt_spectrum_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
 
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
