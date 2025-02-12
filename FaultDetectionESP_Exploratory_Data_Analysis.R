@@ -175,25 +175,37 @@ for (signal in rownames(spectrum_features_merged))
 # The boundary ``symmetric"  will be tested.
 
 # Load the spectrum file
-emd_signals=df_results_imf_emd
+imf_emd_signals=df_results_imf_emd
+residue_emd_signals=df_results_residue_emd
+residue_nimf_signals=df_results_residue_nimf
 
 # Re-set the colnames to numbers
-colnames(emd_signals)<-frequency_id
+colnames(imf_emd_signals)<-frequency_id
+colnames(residue_emd_signals)<-frequency_id
+colnames(residue_nimf_signals)<-frequency_id
 
 # Take the ids as the rownames
-emd_signals$id<-as.integer(rownames(emd_signals))
+imf_emd_signals$id<-as.integer(rownames(imf_emd_signals))
+residue_emd_signals$id<-as.integer(rownames(residue_emd_signals))
+residue_nimf_signals$id<-as.integer(rownames(residue_nimf_signals))
 
 # Spectrum and features merged
 # In this table I have the signals and also the id, the esp_id and label
-emd_features_merged<-merge(emd_signals,features_signals[,c("id","esp_id","label")],by="id")
+imf_emd_features_merged      <-merge(imf_emd_signals,features_signals[,c("id","esp_id","label")],by="id")
+residue_emd_features_merged  <-merge(residue_emd_signals,features_signals[,c("id","esp_id","label")],by="id")
+residue_nimf_features_merged <-merge(residue_nimf_signals,features_signals[,c("id","esp_id","label")],by="id")
 
 # Add a collumn with the esp_id combined with the label
-emd_features_merged$esp_id_label<-paste(emd_features_merged$label,emd_features_merged$esp_id,sep="_")
+imf_emd_features_merged$esp_id_label<-paste(imf_emd_features_merged$label,imf_emd_features_merged$esp_id,sep="_")
+residue_emd_features_merged$esp_id_label<-paste(residue_emd_features_merged$label,residue_emd_features_merged$esp_id,sep="_")
+residue_nimf_features_merged$esp_id_label<-paste(residue_nimf_features_merged$label,residue_nimf_features_merged$esp_id,sep="_")
 
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_emd_signals<-melt(emd_features_merged,id=c("id","esp_id","label","esp_id_label"))
+melt_imf_emd_signals<-melt(imf_emd_features_merged,id=c("id","esp_id","label","esp_id_label"))
+melt_residue_emd_signals<-melt(emd_features_merged,id=c("id","esp_id","label","esp_id_label")
+melt_residue_nimf_signals<-melt(residue_nimf_features_merged,id=c("id","esp_id","label","esp_id_label")
 
 # Rename collumn
 colnames(melt_spectrum_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
