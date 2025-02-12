@@ -174,7 +174,41 @@ for (signal in rownames(spectrum_features_merged))
 # The boundary ``wave"      will be tested.
 # The boundary ``symmetric"  will be tested.
 
-try <- emd(xt2, tt2, boundary="wave")
+# Load the spectrum file
+emd_signals=df_results_imf_emd
+
+# Re-set the colnames to numbers
+colnames(emd_signals)<-frequency_id
+
+# Take the ids as the rownames
+emd_signals$id<-as.integer(rownames(emd_signals))
+
+# Spectrum and features merged
+# In this table I have the signals and also the id, the esp_id and label
+emd_features_merged<-merge(emd_signals,features_signals[,c("id","esp_id","label")],by="id")
+
+# Add a collumn with the esp_id combined with the label
+emd_features_merged$esp_id_label<-paste(emd_features_merged$label,emd_features_merged$esp_id,sep="_")
+
+# The spectrum_signals table must be melt. 
+# The id must be kept to identity each signal.
+# Melt by multiple ids
+melt_emd_signals<-melt(emd_features_merged,id=c("id","esp_id","label","esp_id_label"))
+
+# Rename collumn
+colnames(melt_spectrum_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
+
+# Each line represents a signal.
+# For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
+# Therefore, two collumns are needed, x for the singal and y for the amplitude.
+
+# Plot the raw data
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Raw data") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))
+
+# Plot_raw_vibration_data.png               
+png(filename=paste(output_dir,"Plot_emd_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+  ggplot2_raw_data
+dev.off()
 
  
 ######################################################################################################
