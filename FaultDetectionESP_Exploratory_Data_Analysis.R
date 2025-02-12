@@ -147,6 +147,36 @@ dev.off()
 # To do: study empirical model decompositions
 # Tesday work from home : 1.1.2 and 1.1.4 and take study questions.
 # Wednesday : library horto in the afternoon.
+# xt2 observation or signal observed at time tt
+# The amplitude will be used. 
+frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
+
+# Instance a table with zero 
+df_emd<
+spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+
+# For each signal, the amplitude is taken for all frequency_id
+for (signal in rownames(spectrum_features_merged))
+{
+  # Take all the 
+  print(signal)
+  spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]
+}
+
+# The amplitude will be used. 
+
+# tt2, observation index or time index.
+# The frenquecy index will be used.
+
+# specifies boundary condition from ``none", ``wave", ``symmetric", ``periodic" or ``evenodd". 
+# See Zeng and He (2004) for evenodd boundary condition.
+# The boundary ``none"      will be used.
+# The boundary ``wave"      will be tested.
+# The boundary ``symmetric"  will be tested.
+
+try <- emd(xt2, tt2, boundary="wave")
+
+ 
 ######################################################################################################
 # Questions to follow about features.csv:
 # peak1x and peak2x, median(8,13) and median(98,102), rms(98,102), coefficients a and Coefficients b are shown. 
