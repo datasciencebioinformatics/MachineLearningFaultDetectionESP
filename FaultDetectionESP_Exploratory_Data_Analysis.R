@@ -198,6 +198,14 @@ residue_nimf_features_merged <-merge(residue_nimf_signals,features_signals[,c("i
 imf_emd_features_merged$esp_id_label<-paste(imf_emd_features_merged$label,imf_emd_features_merged$esp_id,sep="_")
 residue_emd_features_merged$esp_id_label<-paste(residue_emd_features_merged$label,residue_emd_features_merged$esp_id,sep="_")
 residue_nimf_features_merged$esp_id_label<-paste(residue_nimf_features_merged$label,residue_nimf_features_merged$esp_id,sep="_") 
+
+# To do tomorrow : 12-fev-2025
+# Plot PCA with emd boundary="wave".
+# In the same panel add: normal signal, imf_emd_features_merged, residue_nimf_features_merged
+##
+# Do the same for boundary="periodic".
+
+
 ######################################################################################################
 # Questions to follow about features.csv:
 # peak1x and peak2x, median(8,13) and median(98,102), rms(98,102), coefficients a and Coefficients b are shown. 
