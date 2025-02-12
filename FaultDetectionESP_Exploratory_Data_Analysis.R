@@ -152,7 +152,9 @@ dev.off()
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # Instance a table with zero 
-df_results_emd<-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf_emd     <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_residue_emd <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_residue_nimf<-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 
 # For each signal, the amplitude is taken for all frequency_id
 for (signal in rownames(spectrum_features_merged))
@@ -161,10 +163,10 @@ for (signal in rownames(spectrum_features_merged))
   emd_signal_x<-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none"))
 
   # Store results in the data.frame
-  df_results_emd[signal,]<-emd_signal_x
+  df_results_imf_emd[signal,frequency_id]<-emd_signal_x$imf
+  df_results_residue_emd[signal,frequency_id]<-emd_signal_x$residue
+  df_results_residue_nimf[signal,frequency_id]<-emd_signal_x$nimf
 }
-
-# The amplitude will be used. 
 
 # tt2, observation index or time index.
 # The frenquecy index will be used.
