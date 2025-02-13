@@ -10,7 +10,46 @@
 # xt2 observation or signal observed at time tt
 # The amplitude will be used. 
 # Emd function of one specific signal
-emd_signal_x_none    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none"))
+frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
+
+# Instance a table with zero 
+df_results_signal          <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.1           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.2           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.3           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.4           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.5           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.6           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+df_results_imf.residue     <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
+
+# Initiate a data.frame for the results of all signals
+df_results_imf_all_signals=data.frame(Signal=c(),Amplitude=c(),imf.1=c(),imf.2=c(),imf.3=c(),imf.4=c(),imf.5=c(),imf.6=c(),residue=c())
+
+# For each signal, the amplitude is taken for all frequency_id
+for (signal in rownames(spectrum_features_merged))
+{
+  # Take all the 
+  emd_signal_x_none    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=6))
+  
+  # Set the vectors for numeric, imf, emd and residual
+  df_results_signal         <-as.numeric(spectrum_features_merged[signal,frequency_id])
+  df_results_imf.1          <-emd_signal_x_none$imf[,1]
+  df_results_imf.2          <-emd_signal_x_none$imf[,2]
+  df_results_imf.3          <-emd_signal_x_none$imf[,3]
+  df_results_imf.4          <-emd_signal_x_none$imf[,4]
+  df_results_imf.5          <-emd_signal_x_none$imf[,5]
+  df_results_imf.6          <-emd_signal_x_none$imf[,6]
+  df_results_imf.residue    <-emd_signal_x_none$residue
+
+  # Compose a data.frame with the variabels
+  df_results_emd<-data.frame(Signal=signal,Amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,imf.3=df_results_imf.3,imf.4=df_results_imf.5,imf.5=df_results_imf.5,imf.6=df_results_imf.6,residue=df_results_imf.residue)                             
+
+  # Concatenate tables
+  df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
+}
+
+
+emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
 
 # Set the vectors for numeric, imf, emd and residual
 raw_signal   <-as.numeric(spectrum_features_merged[signal,frequency_id])
