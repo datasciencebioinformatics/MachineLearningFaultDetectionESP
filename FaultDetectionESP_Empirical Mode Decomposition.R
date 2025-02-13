@@ -21,7 +21,7 @@ df_results_imf.4           <-spectrum_features_merged[rownames(spectrum_features
 df_results_imf.residue     <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 
 # Initiate a data.frame for the results of all signals
-df_results_imf_all_signals=data.frame(Signal=c(),Amplitude=c(),imf.1=c(),imf.2=c(),imf.3=c(),imf.4=c(),imf.5=c(),imf.6=c(),residue=c())
+df_results_imf_all_signals=data.frame(Signal=c(),Amplitude=c(),imf.1=c(),imf.2=c(),imf.3=c(),imf.4=c(),imf.5=c(),imf.6=c(),residue=c(),eps_id=c(),label=c(),id=c())
 
 # For each signal, the amplitude is taken for all frequency_id
 for (signal in rownames(spectrum_features_merged))
@@ -36,9 +36,12 @@ for (signal in rownames(spectrum_features_merged))
   df_results_imf.3          <-emd_signal_x_none$imf[,3]
   df_results_imf.4          <-emd_signal_x_none$imf[,4]
   df_results_imf.residue    <-emd_signal_x_none$residue
+  esp_id                    <-spectrum_features_merged[signal,"esp_id"]
+  label                     <-spectrum_features_merged[signal,"label"]
+  id                        <-spectrum_features_merged[signal,"id"]
 
   # Compose a data.frame with the variabels  
-  df_results_emd<-data.frame(Signal=signal,Amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,imf.3=df_results_imf.3,imf.4=df_results_imf.4,residue=df_results_imf.residue)                             
+  df_results_emd<-data.frame(Signal=signal,Amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,imf.3=df_results_imf.3,imf.4=df_results_imf.4,residue=df_results_imf.residue,eps_id=esp_id,label=label,id=id)                             
 
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
