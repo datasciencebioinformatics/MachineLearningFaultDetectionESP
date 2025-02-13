@@ -23,6 +23,8 @@ df_results_imf.residue     <-spectrum_features_merged[rownames(spectrum_features
 # Initiate a data.frame for the results of all signals
 df_results_imf_all_signals=data.frame(Signal=c(),Amplitude=c(),imf.1=c(),imf.2=c(),imf.3=c(),imf.4=c(),imf.5=c(),imf.6=c(),residue=c(),eps_id=c(),label=c(),id=c(),frequency_id=c())
 
+
+
 # For each signal, the amplitude is taken for all frequency_id
 for (signal in rownames(spectrum_features_merged))
 {
@@ -46,6 +48,7 @@ for (signal in rownames(spectrum_features_merged))
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
+
 # Add collumn frequency_id to the table
 emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
 
