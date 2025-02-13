@@ -43,7 +43,9 @@ for (signal in rownames(spectrum_features_merged))
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
+# Add collumn frequency_id to the table
 
+# Add collumn frequency_id to the table
 
 emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
 
