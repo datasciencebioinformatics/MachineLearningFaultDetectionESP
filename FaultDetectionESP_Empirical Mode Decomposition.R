@@ -16,8 +16,6 @@ frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_featur
 df_results_signal          <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 df_results_imf.1           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 df_results_imf.2           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
-df_results_imf.3           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
-df_results_imf.4           <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 df_results_imf.residue     <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 
 # Initiate a data.frame for the results of all signals
@@ -30,21 +28,19 @@ rownames(spectrum_features_merged)<-spectrum_features_merged$id
 for (signal in rownames(spectrum_features_merged))
 {
   # Take all the 
-  emd_signal_x_none    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=4))
+  emd_signal_x_none    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=2))
   
   # Set the vectors for numeric, imf, emd and residual
   df_results_signal         <-as.numeric(spectrum_features_merged[signal,frequency_id])
   df_results_imf.1          <-emd_signal_x_none$imf[,1]
   df_results_imf.2          <-emd_signal_x_none$imf[,2]
-  df_results_imf.3          <-emd_signal_x_none$imf[,3]
-  df_results_imf.4          <-emd_signal_x_none$imf[,4]
   df_results_imf.residue    <-emd_signal_x_none$residue
   esp_id                    <-spectrum_features_merged[signal,"esp_id"]
   label                     <-spectrum_features_merged[signal,"label"]
   id                        <-spectrum_features_merged[signal,"id"]
 
   # Compose a data.frame with the variabels  
-  df_results_emd<-data.frame(Amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,imf.3=df_results_imf.3,imf.4=df_results_imf.4,residue=df_results_imf.residue,eps_id=esp_id,label=label,id=id,frequency_id=frequency_id)                             
+  df_results_emd<-data.frame(Amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,residue=df_results_imf.residue,eps_id=esp_id,label=label,id=id,frequency_id=frequency_id)                             
 
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
