@@ -44,6 +44,6 @@ melt_df_results_emd<-melt(df_results_emd,id=c("id", "esp_id", "label","frequency
 ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=id)) + ggtitle(paste("emd on sigal", signal, "boundary set to none",sep=" ")) 
 
 # Plot_raw_vibration_data.png              
-png(filename=paste(output_dir,"Plot_imf_emd_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_imf_emd_data.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
   ggplot2_imf_emd_data
 dev.off()
