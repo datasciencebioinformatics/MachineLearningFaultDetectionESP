@@ -8,7 +8,7 @@ features_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_
 spectrum_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_dataset/spectrum.csv"
 #########################################################################################################
 # Load the spectrum file
-spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
+spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 
 # Load the features file
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
