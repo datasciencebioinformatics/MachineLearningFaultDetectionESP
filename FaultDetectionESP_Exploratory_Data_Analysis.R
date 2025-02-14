@@ -170,3 +170,14 @@ PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals,
 png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
 dev.off()
+######################################################################################################
+# Replicate values of median(8,13).
+# Replicate values of median(98,102).
+# Replicate values of rms(98,102).
+# coefficients a
+# coefficients b
+######################################################################################################
+
+
+
+
