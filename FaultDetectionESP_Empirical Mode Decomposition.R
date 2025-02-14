@@ -103,3 +103,8 @@ ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(freq
 png(filename=paste(output_dir,"Plot_imf_emd_all_imfs.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
   ggplot2_imf_emd_data
 dev.off()
+#########################################################################################################
+# Empirical mode decomposition
+# Plot the pca
+# Question : which variables to use to have a reasonable pca?
+#########################################################################################################
