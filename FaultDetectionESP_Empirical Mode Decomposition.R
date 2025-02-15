@@ -103,7 +103,8 @@ df_results_emd$label<-features_signals[signal,c("label")]
 melt_df_results_emd<-melt(df_results_emd,id=c("id", "esp_id", "label","frequency_id"))
 
 # Plot the emd  
-ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value),colour = factor(esp_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=esp_id)) + ggtitle(paste("emd on sigal", signal, "boundary set to none",sep=" "))
+#ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value),colour = factor(esp_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=esp_id)) + ggtitle(paste("emd on sigal", signal, "boundary set to none",sep=" "))
+ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value),colour = factor(esp_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line() 
 
 # Plot_raw_vibration_data.png              
 png(filename=paste(output_dir,"Plot_imf_emd_all_imfs.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
