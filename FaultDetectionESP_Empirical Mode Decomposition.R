@@ -46,6 +46,10 @@ for (signal in rownames(spectrum_features_merged))
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
 #########################################################################################################
+# To do : write results table on a file
+# I stopped here
+# write.csv(df_results_imf_all_signals,"/home/felipe/Downloads/filename.csv", row.names = FALSE)
+#########################################################################################################
 # The spectrum_signals table must be melt.
 # The id must be kept to identity each signal.
 # Melt by multiple ids
