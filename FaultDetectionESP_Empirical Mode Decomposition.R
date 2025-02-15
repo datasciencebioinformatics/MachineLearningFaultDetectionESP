@@ -53,7 +53,7 @@ for (signal in rownames(spectrum_features_merged))
 # The spectrum_signals table must be melt.
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_df_results_emd<-melt(df_results_emd,id=c("id", "esp_id", "label","frequency_id"))
+melt_df_results_emd<-melt(df_results_imf_all_signals,id=c("eps_id","label","id","frequency_id"))
 
 # Plot the emd  
 ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=id)) + ggtitle(paste("emd on sigal", signal, "boundary set to none",sep=" ")) 
