@@ -57,11 +57,11 @@ for (signal in rownames(spectrum_features_merged))
 # The spectrum_signals table must be melt.
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_df_results_emd<-melt(df_results_imf_all_signals,id=c("eps_id","label","id","frequency_id"))
+melt_df_results_emd<-melt(df_results_imf_all_signals,id=c("eps_id","label","id","frequency_id","variable"))
 
 # Plot the emd  
 #ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=id)) + ggtitle(paste("emd on sigal", signal, "boundary set to none",sep=" ")) 
-ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value, colour=esp_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=id))
+ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value, colour=esp_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line()
 
 # Plot_raw_vibration_data.png              
 png(filename=paste(output_dir,"Plot_imf_emd_data.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
