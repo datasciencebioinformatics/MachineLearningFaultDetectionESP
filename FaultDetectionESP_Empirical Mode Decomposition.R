@@ -45,6 +45,8 @@ for (signal in rownames(spectrum_features_merged))
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
+# Conver to factors
+df_results_imf_all_signals$eps_id<-as.factor(df_results_imf_all_signals$eps_id)
 #########################################################################################################
 # To do : write results table on a file
 # I stopped here
