@@ -91,9 +91,37 @@ df_imf.1    =data.frame(matrix(0, nrow = length(singnals), ncol = length(frequen
 df_imf.2    =data.frame(matrix(0, nrow = length(singnals), ncol = length(frequency_id)))
 df_residue  =data.frame(matrix(0, nrow = length(singnals), ncol = length(frequency_id)))
 
+# Set colnames
+colnames(df_amplitude)<-frequency_id
+colnames(df_imf.1)    <-frequency_id
+colnames(df_imf.2)    <-frequency_id
+colnames(df_residue)  <-frequency_id
 
+# Set rownames
+rownames(df_amplitude)<-singnals
+rownames(df_imf.1)    <-singnals
+rownames(df_imf.2)    <-singnals
+rownames(df_residue)  <-singnals
 
- 
+# for each signal and for each frequency_id, add the value
+for (signal in singnals)
+{
+  # for each signal and for each frequency_id, add the value
+  for (sfrequency_id in frequency_id)
+  {
+    # Subselected entries for
+    selected_entries<-df_results_imf_all_signals[df_results_imf_all_signals$id == signal,]
+
+    # Rename rows with frequency_id
+    rownames(selected_entries)<-selected_entries$frequency_id
+
+    # Set the values for amplitude, imf.1, imf.2 and residue
+    df_amplitude[signal,frequency_id]  <-selected_entries[colnames(df_amplitude),"amplitude"]
+    df_imf.1[signal,frequency_id]      <-selected_entries[colnames(df_imf.1),"imf.1"]
+    df_imf.2[signal,frequency_id]      <-selected_entries[colnames(df_imf.2),"imf.2"]
+    df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]      
+  }
+}
 
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
