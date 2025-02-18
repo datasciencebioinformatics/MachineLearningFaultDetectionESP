@@ -137,8 +137,9 @@ model.pca.residue   <- prcomp(df_residue,  center = FALSE, scale =FALSE)
 
 
 # Plot pca's for amplitude data
-#PCA_of_spectral_data_label        <-autoplot(model.pca.amplitude, data = df_results_imf_all_signals, colour = 'label') + theme_bw()
-PCA_for_amplitude_data        <-autoplot(model.pca.amplitude) + theme_bw()
+PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data = df_results_imf_all_signals, colour = 'label') + theme_bw()
+PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data = df_results_imf_all_signals, colour = 'label') + theme_bw()
+
 
 
 #############################################################################################################
