@@ -120,13 +120,27 @@ for (signal in singnals)
     df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]     
 }
 #############################################################################################################
+# instantiate table with emd and informations about the signals
 # center and scale the data before
 # calculation the components
 # Stopped here
 # Remove na and infinite values
-df_amplitude<-df_amplitude[complete.cases(df_amplitude),]
+df_amplitude  <-df_amplitude[complete.cases(df_amplitude),]
+df_imf.1      <-df_imf.1[complete.cases(df_imf.1),]
+df_imf.2      <-df_imf.2[complete.cases(df_imf.2),]
+df_residue    <-df_residue[complete.cases(df_residue),]
 
+# Calculate pca for amplitude data
 model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE)
+model.pca.imf.1     <- prcomp(df_imf.1,    center = FALSE, scale =FALSE)
+model.pca.imf.2     <- prcomp(df_imf.2,    center = FALSE, scale =FALSE)
+model.pca.residue   <- prcomp(df_residue,  center = FALSE, scale =FALSE)
+
+
+# Plot pca's for amplitude data
+#PCA_of_spectral_data_label        <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()
+PCA_for_amplitude_data        <-autoplot(model.pca.amplitude) + theme_bw()
+
 
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
