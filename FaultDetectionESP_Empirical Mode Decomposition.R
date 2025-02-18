@@ -136,9 +136,17 @@ model.pca.imf.2     <- prcomp(df_imf.2,    center = FALSE, scale =FALSE)
 model.pca.residue   <- prcomp(df_residue,  center = FALSE, scale =FALSE)
 
 
+df_results_imf_all_signals
+
+df_amplitude
+df_results_imf_all_signals[df_results_imf_all_signals$id %in% rownames(df_amplitude),c("id", "label")]
+
+
 # Plot pca's for amplitude data
-PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data = unique(df_results_imf_all_signals[,c("id", "label")])
-, colour = 'label') + theme_bw() + ggtitle("Amplitude")
+PCA_for_amplitude_data        <-autoplot(model.pca.amplitude,   data = unique(df_results_imf_all_signals[df_results_imf_all_signals$id %in% rownames(df_amplitude),c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
+
+
+
 PCA_for_imf.1        <-autoplot(model.pca.imf.1, data = unique(df_results_imf_all_signals[,c("id", "label")])
 , colour = 'label') + theme_bw() + ggtitle("Imf.1")
 PCA_for_imf.2        <-autoplot(model.pca.imf.2, data = unique(df_results_imf_all_signals[,c("id", "label")])
