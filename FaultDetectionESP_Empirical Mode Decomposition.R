@@ -106,6 +106,7 @@ rownames(df_residue)  <-singnals
 # for each signal and for each frequency_id, add the value
 for (signal in singnals)
 {
+    print(signal)
     # Subselected entries for
     selected_entries<-df_results_imf_all_signals[df_results_imf_all_signals$id == signal,]
 
