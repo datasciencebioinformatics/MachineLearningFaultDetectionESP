@@ -106,9 +106,6 @@ rownames(df_residue)  <-singnals
 # for each signal and for each frequency_id, add the value
 for (signal in singnals)
 {
-  # for each signal and for each frequency_id, add the value
-  for (sfrequency_id in frequency_id)
-  {
     # Subselected entries for
     selected_entries<-df_results_imf_all_signals[df_results_imf_all_signals$id == signal,]
 
@@ -119,10 +116,8 @@ for (signal in singnals)
     df_amplitude[signal,frequency_id]  <-selected_entries[colnames(df_amplitude),"amplitude"]
     df_imf.1[signal,frequency_id]      <-selected_entries[colnames(df_imf.1),"imf.1"]
     df_imf.2[signal,frequency_id]      <-selected_entries[colnames(df_imf.2),"imf.2"]
-    df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]      
-  }
+    df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]     
 }
-
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
 #emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
