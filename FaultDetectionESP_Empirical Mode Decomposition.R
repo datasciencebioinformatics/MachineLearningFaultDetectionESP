@@ -75,14 +75,34 @@ dev.off()
 # The plot shows results for the empirical mode decomposition. emd R function was used on each signal. Only the two imf's were selected to te plotted because the average number of imfs varies from signal to singal. A greater number of imfs is available to be plotted per signal if needed.
 # Next step. PCA for the imf.1 and imf.2
 
-# Instance a data.frame with the values of amplitude, imf.1, imf.2 and residu
-colnames(df_results_imf_all_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude","imf.1","imf.2")
-
 # Add a field for the esp_id with label
 df_results_imf_all_signals$esp_id_label<-paste(df_results_imf_all_signals$label,df_results_imf_all_signals$esp_id,sep="_")
 
 # Re-order the collumnns
 df_results_imf_all_signals<-df_results_imf_all_signals[,c("id","esp_id","label","esp_id_label","frequency_id","amplitude","imf.1","imf.2","residue")]
+
+# Subset spectrum data
+spectrum_features_data<-df_results_imf_all_signals
+
+# center and scale the data before
+# calculation the components
+model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
+
+# Display summary of
+summary(model.pca)
+
+# Add collumns to esp_id as string
+features_signals$esp_id<-paste(features_signals$esp_id)
+
+# Plot pca's
+PCA_of_spectral_data_label        <-autoplot(model.pca, data = features_signals, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = features_signals, colour = 'esp_id') + theme_bw()
+PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals, colour = 'esp_id_str') + theme_bw()
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+dev.off()
 
 
 #############################################################################################################
