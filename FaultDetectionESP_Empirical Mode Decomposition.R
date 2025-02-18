@@ -80,6 +80,21 @@ df_results_imf_all_signals$esp_id_label<-paste(df_results_imf_all_signals$label,
 
 # Re-order the collumnns
 df_results_imf_all_signals<-df_results_imf_all_signals[,c("id","esp_id","label","esp_id_label","frequency_id","amplitude","imf.1","imf.2","residue")]
+
+# Take unique signals
+singnals<- sort(unique(as.integer(df_results_imf_all_signals$id)))
+frequency_id<-sort(unique(df_results_imf_all_signals$frequency_id))
+
+# Reconstruct data.frame for amplitude, imf.1, imf.2, residue : rows = signals, collumns = frequency_id, values = amplitude
+df_amplitude=data.frame(matrix(0, nrow = length(singnals), ncol = length(frequency_id)))
+df_imf.1    =data.frame(matrix(0, nrow = length(singnals), ncol = length(frequency_id)))
+df_imf.2    =data.frame(matrix(0, nrow = length(singnals), ncol = length(frequency_id)))
+df_residue  =data.frame(matrix(0, nrow = length(singnals), ncol = length(frequency_id)))
+
+
+
+ 
+
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
 #emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
