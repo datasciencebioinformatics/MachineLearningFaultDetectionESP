@@ -124,10 +124,6 @@ for (signal in singnals)
 # calculation the components
 # Stopped here
 # Remove na and infinite values
-df_amplitude  <-df_amplitude[complete.cases(df_amplitude),]
-df_imf.1      <-df_imf.1[complete.cases(df_imf.1),]
-df_imf.2      <-df_imf.2[complete.cases(df_imf.2),]
-df_residue    <-df_residue[complete.cases(df_residue),]
 
 # Calculate pca for amplitude data
 model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE)
@@ -143,7 +139,7 @@ df_results_imf_all_signals[df_results_imf_all_signals$id %in% rownames(df_amplit
 
 
 # Plot pca's for amplitude data
-PCA_for_amplitude_data        <-autoplot(model.pca.amplitude,   data = unique(df_results_imf_all_signals[df_results_imf_all_signals$id %in% rownames(df_amplitude),c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
+PCA_for_amplitude_data        <-autoplot(model.pca.amplitude,   data = unique(df_results_imf_all_signals[which(df_results_imf_all_signals$id %in% rownames(df_amplitude)),c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
 
 
 
