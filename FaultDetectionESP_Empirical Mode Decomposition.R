@@ -120,7 +120,6 @@ for (signal in singnals)
     df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]     
 }
 #############################################################################################################
-# instantiate table with emd and informations about the signals
 # center and scale the data before
 # calculation the components
 # Stopped here
@@ -138,7 +137,7 @@ model.pca.residue   <- prcomp(df_residue,  center = FALSE, scale =FALSE)
 
 
 # Plot pca's for amplitude data
-#PCA_of_spectral_data_label        <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()
+#PCA_of_spectral_data_label        <-autoplot(model.pca.amplitude, data = df_results_imf_all_signals, colour = 'label') + theme_bw()
 PCA_for_amplitude_data        <-autoplot(model.pca.amplitude) + theme_bw()
 
 
