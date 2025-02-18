@@ -80,31 +80,6 @@ df_results_imf_all_signals$esp_id_label<-paste(df_results_imf_all_signals$label,
 
 # Re-order the collumnns
 df_results_imf_all_signals<-df_results_imf_all_signals[,c("id","esp_id","label","esp_id_label","frequency_id","amplitude","imf.1","imf.2","residue")]
-
-# Subset spectrum data
-spectrum_features_data<-df_results_imf_all_signals
-
-# center and scale the data before
-# calculation the components
-model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
-
-# Display summary of
-summary(model.pca)
-
-# Add collumns to esp_id as string
-features_signals$esp_id<-paste(features_signals$esp_id)
-
-# Plot pca's
-PCA_of_spectral_data_label        <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'label') + theme_bw() 
-PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'esp_id') + theme_bw()
-PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'esp_id_str') + theme_bw()
-
-# FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
-  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
-dev.off()
-
-
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
 #emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
