@@ -120,6 +120,22 @@ for (signal in singnals)
     df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]     
 }
 #############################################################################################################
+# center and scale the data before
+# calculation the components
+# Removev infinite values
+df_amplitude[complete.cases(df_amplitude),]
+
+df_amplitude[complete.cases(df_amplitude),]
+
+
+
+df_amplitude <- df_amplitude[!is.na(rowSums(df_amplitude)),]
+
+
+
+
+model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE)
+#############################################################################################################
 # Proceudure to plot imfs of one single signals.
 #emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
 
