@@ -147,9 +147,10 @@ PCA_for_residue        <-autoplot(model.pca.residue, data = unique(df_results_im
 , colour = 'label') + theme_bw() + ggtitle("residue")
 
 
-
-
-
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_PCA_of_emd_results.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_for_amplitude_data, PCA_for_imf.1,PCA_for_imf.2,PCA_for_residue, ncol = 2, nrow = 2, top = "PCA of empirical model decomposition")
+dev.off()
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
 #emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
