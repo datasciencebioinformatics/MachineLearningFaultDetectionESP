@@ -19,7 +19,7 @@ df_results_imf.2           <-spectrum_features_merged[rownames(spectrum_features
 df_results_imf.residue     <-spectrum_features_merged[rownames(spectrum_features_merged),frequency_id]*0
 
 # Initiate a data.frame for the results of all signals
-df_results_imf_all_signals=data.frame(Amplitude=c(),imf.1=c(),imf.2=c(),imf.3=c(),imf.4=c(),imf.5=c(),imf.6=c(),residue=c(),eps_id=c(),label=c(),id=c(),frequency_id=c())
+df_results_imf_all_signals=data.frame(amplitude=c(),imf.1=c(),imf.2=c(),imf.3=c(),imf.4=c(),imf.5=c(),imf.6=c(),residue=c(),esp_id=c(),label=c(),id=c(),frequency_id=c())
 
 # Set the rownames as the id
 rownames(spectrum_features_merged)<-spectrum_features_merged$id
@@ -40,13 +40,13 @@ for (signal in rownames(spectrum_features_merged))
   id                        <-spectrum_features_merged[signal,"id"]
 
   # Compose a data.frame with the variabels  
-  df_results_emd<-data.frame(Amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,residue=df_results_imf.residue,eps_id=esp_id,label=label,id=id,frequency_id=frequency_id)                             
+  df_results_emd<-data.frame(amplitude=df_results_signal,imf.1=df_results_imf.1,imf.2=df_results_imf.2,residue=df_results_imf.residue,esp_id=esp_id,label=label,id=id,frequency_id=frequency_id)                             
 
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
 # Conver to factors
-df_results_imf_all_signals$eps_id<-as.factor(df_results_imf_all_signals$eps_id)
+df_results_imf_all_signals$esp_id<-as.factor(df_results_imf_all_signals$esp_id)
 #########################################################################################################
 # To do : write results table on a file
 # I stopped here
@@ -59,11 +59,11 @@ df_results_imf_all_signals$eps_id<-as.factor(df_results_imf_all_signals$eps_id)
 # The spectrum_signals table must be melt.
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_df_results_emd<-melt(df_results_imf_all_signals,id=c("eps_id","label","id","frequency_id"))
+melt_df_results_emd<-melt(df_results_imf_all_signals,id=c("esp_id","label","id","frequency_id"))
 
 # Plot the emd  
 #ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value))+ facet_grid(vars(variable)) + theme_bw() + geom_line(aes(group=id)) + ggtitle(paste("emd on sigal", signal, "boundary set to none",sep=" ")) 
-ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value, colour=eps_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line()
+ggplot2_imf_emd_data<-ggplot(data = melt_df_results_emd, aes(x = as.integer(frequency_id), y = value, colour=esp_id))+ facet_grid(vars(variable)) + theme_bw() + geom_line()
 
 # Plot_raw_vibration_data.png              
 png(filename=paste(output_dir,"Plot_imf_emd_data.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
@@ -75,6 +75,14 @@ dev.off()
 # The plot shows results for the empirical mode decomposition. emd R function was used on each signal. Only the two imf's were selected to te plotted because the average number of imfs varies from signal to singal. A greater number of imfs is available to be plotted per signal if needed.
 # Next step. PCA for the imf.1 and imf.2
 
+# Instance a data.frame with the values of amplitude, imf.1, imf.2 and residu
+colnames(df_results_imf_all_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude","imf.1","imf.2")
+
+# Add a field for the esp_id with label
+df_results_imf_all_signals$esp_id_label<-paste(df_results_imf_all_signals$label,df_results_imf_all_signals$esp_id,sep="_")
+
+# Re-order the collumnns
+df_results_imf_all_signals<-df_results_imf_all_signals[,c("id","esp_id","label","esp_id_label","frequency_id","amplitude","imf.1","imf.2","residue")]
 
 
 #############################################################################################################
@@ -88,7 +96,7 @@ dev.off()
 #residue_nimf <-emd_signal_x$nimf
 
 ## Compose a data.frame with the variabels
-#df_results_emd<-data.frame(Amplitude=raw_signal,imf=imf_signal,emd=emd_signal)
+#df_results_emd<-data.frame(amplitude=raw_signal,imf=imf_signal,emd=emd_signal)
 
 ## Set the rownames of the data.frame
 #rownames(df_results_emd)<-frequency_id
