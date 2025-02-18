@@ -123,18 +123,23 @@ for (signal in singnals)
 # center and scale the data before
 # calculation the components
 # Removev infinite values
-df_amplitude[complete.cases(df_amplitude),]
+df_amplitude<-df_amplitude[complete.cases(df_amplitude),]
+df_imf.1<-df_amplitude[complete.cases(df_imf.1),]
+df_imf.2<-df_amplitude[complete.cases(df_imf.2),]
+df_residue<-df_amplitude[complete.cases(df_residue),]
 
-df_amplitude[complete.cases(df_amplitude),]
-
-
-
-df_amplitude <- df_amplitude[!is.na(rowSums(df_amplitude)),]
-
+df_amplitude<-df_amplitude[is.na(df_amplitude),]
+df_imf.1<-df_amplitude[is.na(df_imf.1),]
+df_imf.2<-df_amplitude[is.na(df_imf.2),]
+df_residue<-df_amplitude[is.na(df_residue),]
 
 
 
 model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE)
+model.pca.amplitude <- prcomp(df_imf.1,center = FALSE, scale =FALSE)
+model.pca.amplitude <- prcomp(df_imf.2,center = FALSE, scale =FALSE)
+model.pca.amplitude <- prcomp(df_residue,center = FALSE, scale =FALSE)
+
 #############################################################################################################
 # Proceudure to plot imfs of one single signals.
 #emd_signal_x    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=8))
