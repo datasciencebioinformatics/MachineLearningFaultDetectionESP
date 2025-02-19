@@ -198,3 +198,56 @@ dev.off()
 # Plot the pca
 # Question : which variables to use to have a reasonable pca?
 #########################################################################################################
+# Questions to follow about features.csv:
+# peak1x and peak2x, median(8,13) and median(98,102), rms(98,102), coefficients a and Coefficients b are shown. 
+# Can we use the summary variables to descriminate conditions or cluster the groups?
+# To do : 
+# PCA using all these variables accross conditions, ESPs and combinations of them
+# Take the ids as the rownames
+df_results_imf_all_signals[,c("imf.1","imf.2","residue",'')]
+
+# Rename collumns of spectrum data
+spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))]
+
+# center and scale the data before
+# calculation the components
+model.pca <- prcomp(spectrum_features_data,center = FALSE, scale =FALSE, rank. = 4)
+
+# Display summary of
+summary(model.pca)
+
+# Add collumns to esp_id as string
+features_signals$esp_id<-paste(features_signals$esp_id)
+
+# Plot pca's
+PCA_of_spectral_data_label        <-autoplot(model.pca, data = features_signals, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = features_signals, colour = 'esp_id') + theme_bw()
+PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals, colour = 'esp_id_str') + theme_bw()
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+dev.off()
+######################################################################################################
+# Replicate values of median(8,13).
+# Replicate values of median(98,102).
+# Replicate values of rms(98,102).
+# coefficients a
+# coefficients b
+# center and scale the data before
+# calculation the components
+model.pca <- prcomp(df_results_imf_all_signals[,c("amplitude","imf.1","imf.2","residue")],center = FALSE, scale =FALSE, rank. = 4)
+
+# Display summary of
+summary(model.pca)
+
+# Plot pca's
+PCA_of_spectral_data_label        <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'esp_id') + theme_bw()
+
+PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals, colour = 'esp_id_str') + theme_bw()
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+dev.off()
