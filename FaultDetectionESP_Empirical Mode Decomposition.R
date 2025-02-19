@@ -45,6 +45,9 @@ for (signal in rownames(spectrum_features_merged))
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
+
+
+
 # Conver to factors
 df_results_imf_all_signals$esp_id<-as.factor(df_results_imf_all_signals$esp_id)
 #########################################################################################################
@@ -204,8 +207,6 @@ dev.off()
 # To do : 
 # PCA using all these variables accross conditions, ESPs and combinations of them
 # Take the ids as the rownames
-df_results_imf_all_signals[,c("imf.1","imf.2","residue",'')]
-
 # Rename collumns of spectrum data
 spectrum_features_data<-spectrum_features_data[,-which(colnames(spectrum_features_data) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))]
 
