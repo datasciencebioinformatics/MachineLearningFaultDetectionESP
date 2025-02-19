@@ -120,8 +120,25 @@ for (signal in singnals)
     df_residue[signal,frequency_id]<-selected_entries[colnames(df_residue),"residue"]     
 }
 #############################################################################################################
+# Take unique combination of id + label
+df_results_imf_all_signals_unique<-unique(df_results_imf_all_signals[,c("id", "label")])
+
+# Set the rownames
+rownames(df_results_imf_all_signals_unique)<-df_results_imf_all_signals_unique$id
+#############################################################################################################
 # calculation the components
 # Calculate pca for amplitude data
+# Omit na rows
+df_amplitude<-na.omit(df_amplitude)
+df_imf.1<-na.omit(df_imf.1)
+df_imf.2<-na.omit(df_imf.2)
+df_residue<-na.omit(df_residue)
+
+# Filter out to avoid duplicated addted in the na removal
+df_amplitude<-df_amplitude[rownames(df_amplitude) %in% singnals,]
+df_imf.1<-df_amplitude[rownames(df_imf.1) %in% singnals,]
+df_imf.2<-df_amplitude[rownames(df_imf.2) %in% singnals,]
+df_residue<-df_amplitude[rownames(df_residue) %in% singnals,]
 
 model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE, na.action = na.omit)
 model.pca.imf.1     <- prcomp(df_imf.1,center = FALSE, scale =FALSE, na.action = na.omit)
@@ -129,10 +146,10 @@ model.pca.imf.2     <- prcomp(df_imf.2,center = FALSE, scale =FALSE, na.action =
 model.pca.residue   <- prcomp(df_residue,center = FALSE, scale =FALSE, na.action = na.omit)
 
 # Plot pca's for amplitude data
-PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
-PCA_for_imf.1                 <-autoplot(model.pca.imf.1, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("imf.1")
-PCA_for_imf.2                 <-autoplot(model.pca.imf.2, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("imf.2")
-PCA_for_residue               <-autoplot(model.pca.residue, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("residue")
+PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data =unique(df_results_imf_all_signals_unique[rownames(df_amplitude),]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
+PCA_for_imf.1                 <-autoplot(model.pca.imf.1, data =unique(df_results_imf_all_signals_unique[rownames(df_amplitude),]), colour = 'label') + theme_bw() + ggtitle("imf.1")
+PCA_for_imf.2                 <-autoplot(model.pca.imf.2, data =unique(df_results_imf_all_signals_unique[rownames(df_amplitude),]), colour = 'label') + theme_bw() + ggtitle("imf.2")
+PCA_for_residue               <-autoplot(model.pca.residue, data =unique(df_results_imf_all_signals_unique[rownames(df_amplitude),]), colour = 'label') + theme_bw() + ggtitle("residue")
 
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_PCA_of_emd_results.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
