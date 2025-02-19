@@ -45,9 +45,6 @@ for (signal in rownames(spectrum_features_merged))
   # Concatenate tables
   df_results_imf_all_signals<-rbind(df_results_imf_all_signals,df_results_emd)
 }
-
-
-
 # Conver to factors
 df_results_imf_all_signals$esp_id<-as.factor(df_results_imf_all_signals$esp_id)
 #########################################################################################################
@@ -128,6 +125,10 @@ df_results_imf_all_signals_unique<-unique(df_results_imf_all_signals[,c("id", "l
 
 # Set the rownames
 rownames(df_results_imf_all_signals_unique)<-df_results_imf_all_signals_unique$id
+
+# For each singal,I have a line of the data.frame with all the frequencies.
+# With this table I calculate the pca. Therfore, I should count 
+
 #############################################################################################################
 # calculation the components
 # Calculate pca for amplitude data
