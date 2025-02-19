@@ -229,22 +229,3 @@ png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), w
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "PCA of empirical model decomposition") 
 dev.off()
 ######################################################################################################
-# Replicate values of median(8,13).
-# Replicate values of median(98,102).
-# Replicate values of rms(98,102).
-# coefficients a
-# coefficients b
-# center and scale the data before
-# calculation the components
-model.pca <- prcomp(df_results_imf_all_signals[,c("amplitude","imf.1","imf.2","residue")],center = FALSE, scale =FALSE, rank. = 4)
-
-# Display summary of
-summary(model.pca)
-
-# Plot pca's
-PCA_of_spectral_data_label        <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'label') + theme_bw() 
-
-# FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  PCA_of_spectral_data_label
-dev.off()
