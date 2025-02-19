@@ -136,7 +136,7 @@ model.pca.residue   <- prcomp(df_residue,center = FALSE, scale =FALSE, na.action
 PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
 PCA_for_imf.1                 <-autoplot(model.pca.imf.1, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("imf.1")
 PCA_for_imf.2                 <-autoplot(model.pca.imf.2, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("imf.2")
-PCA_for_residue               <-autoplot(model.pca.imf.2, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("residue")
+PCA_for_residue               <-autoplot(model.pca.residue, data =unique(df_results_imf_all_signals[,c("id", "label")]), colour = 'label') + theme_bw() + ggtitle("residue")
 
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_PCA_of_emd_results.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
