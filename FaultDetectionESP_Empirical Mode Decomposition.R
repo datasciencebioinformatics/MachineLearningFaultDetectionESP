@@ -226,7 +226,7 @@ PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals,
 
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
-  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "PCA of empirical model decomposition") 
 dev.off()
 ######################################################################################################
 # Replicate values of median(8,13).
@@ -243,11 +243,8 @@ summary(model.pca)
 
 # Plot pca's
 PCA_of_spectral_data_label        <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'label') + theme_bw() 
-PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = df_results_imf_all_signals, colour = 'esp_id') + theme_bw()
-
-PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals, colour = 'esp_id_str') + theme_bw()
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
-  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+  PCA_of_spectral_data_label
 dev.off()
