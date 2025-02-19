@@ -122,6 +122,11 @@ for (signal in singnals)
 #############################################################################################################
 # calculation the components
 # Calculate pca for amplitude data
+df_amplitude<-na.omit(df_amplitude)
+df_imf.1    <-na.omit(df_imf.1)
+df_imf.2    <-na.omit(df_imf.2)
+df_residue  <-na.omit(df_residue)
+
 model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE, na.action = na.omit)
 model.pca.imf.1     <- prcomp(df_imf.1,center = FALSE, scale =FALSE, na.action = na.omit)
 model.pca.imf.2     <- prcomp(df_imf.2,center = FALSE, scale =FALSE, na.action = na.omit)
