@@ -27,6 +27,8 @@ rownames(spectrum_features_merged)<-spectrum_features_merged$id
 # For each signal, the amplitude is taken for all frequency_id
 for (signal in rownames(spectrum_features_merged))
 {
+  print(signal)
+  
   # Take all the 
   emd_signal_x_none    <-as.vector(emd(as.numeric(spectrum_features_merged[signal,frequency_id]),as.integer(frequency_id), boundary="none",max.imf=2))
   
