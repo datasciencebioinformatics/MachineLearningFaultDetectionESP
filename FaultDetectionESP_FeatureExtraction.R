@@ -6,7 +6,7 @@ spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
-df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c())
+df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),median=c())
 
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
@@ -29,7 +29,7 @@ for (signal in rownames(spectrum_features_merged))
   median<-median(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
   # Add the results for the signal
-  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak))  
+  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median))  
 }
 #########################################################################################################
 # Calculate and plot pca
