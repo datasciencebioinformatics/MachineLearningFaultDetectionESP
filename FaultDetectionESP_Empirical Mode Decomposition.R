@@ -146,10 +146,10 @@ df_imf.1<-df_amplitude[rownames(df_imf.1) %in% singnals,]
 df_imf.2<-df_amplitude[rownames(df_imf.2) %in% singnals,]
 df_residue<-df_amplitude[rownames(df_residue) %in% singnals,]
 
-model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE, na.action = na.omit)
-model.pca.imf.1     <- prcomp(df_imf.1,center = FALSE, scale =FALSE, na.action = na.omit)
-model.pca.imf.2     <- prcomp(df_imf.2,center = FALSE, scale =FALSE, na.action = na.omit)
-model.pca.residue   <- prcomp(df_residue,center = FALSE, scale =FALSE, na.action = na.omit)
+model.pca.amplitude <- prcomp(df_amplitude,center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
+model.pca.imf.1     <- prcomp(df_imf.1,center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
+model.pca.imf.2     <- prcomp(df_imf.2,center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
+model.pca.residue   <- prcomp(df_residue,center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
 
 # Plot pca's for amplitude data
 PCA_for_amplitude_data        <-autoplot(model.pca.amplitude, data =unique(df_results_imf_all_signals_unique[rownames(df_amplitude),]), colour = 'label') + theme_bw() + ggtitle("Amplitude")
