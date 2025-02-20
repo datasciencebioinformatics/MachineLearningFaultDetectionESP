@@ -22,8 +22,11 @@ for (signal in rownames(spectrum_features_merged))
   # Add also the peak-to-peak (maximum-minimum value)
   peak_to_peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))-min(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
-  # Calcula rms
+  # Calculate the rms
   rms<-rms(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
+
+  # Calculate the median
+  median<-median(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
   # Add the results for the signal
   df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak))  
