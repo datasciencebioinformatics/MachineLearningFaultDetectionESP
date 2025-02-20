@@ -6,7 +6,7 @@ spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
-df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),median=c())
+df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),median=c(),a=c(),b=c())
 
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
@@ -28,8 +28,22 @@ for (signal in rownames(spectrum_features_merged))
   # Calculate the median
   median<-median(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
+  # frequency and signal 
+  frequency<-as.integer(colnames(spectrum_features_merged[signal,frequency_id]))
+  signal      <-unlist(as.vector(spectrum_features_merged[1,frequency_id]))
+  
+  # Compose dataset with signal and frequency
+  data<-data.frame(x=signal,y=frequency)
+
+  # exponential regression 1
+  fit_er = lm(log(signal, base = exp(1))~frequency, data = data) 
+
+  # Store cofficientes
+  a=summary(fit_er)$coefficients[1,1]
+  b=summary(fit_er)$coefficients[1,2]
+  
   # Add the results for the signal
-  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median))  
+  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median, a=a, b=b))  
 }
 #########################################################################################################
 # Calculate and plot pca
