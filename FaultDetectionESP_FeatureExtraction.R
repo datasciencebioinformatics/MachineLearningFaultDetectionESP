@@ -12,7 +12,7 @@ df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),me
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # For each signal, the amplitude is taken for all frequency_id
-for (signal in rownames(spectrum_features_merged))
+for (signal_id in rownames(spectrum_features_merged))
 {
   print(signal)
 
@@ -23,14 +23,14 @@ for (signal in rownames(spectrum_features_merged))
   peak_to_peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))-min(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
   # Calculate the rms
-  rms<-rms(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
+  rms<-rms(as.vector(unlist(spectrum_features_merged[signal_id,frequency_id])))
 
   # Calculate the median
-  median<-median(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
+  median<-median(as.vector(unlist(spectrum_features_merged[signal_id,frequency_id])))
 
   # frequency and signal 
-  frequency<-as.integer(colnames(spectrum_features_merged[signal,frequency_id]))
-  signal      <-unlist(as.vector(spectrum_features_merged[,frequency_id]))
+  frequency   <-as.integer(colnames(spectrum_features_merged[signal_id,frequency_id]))
+  signal      <-unlist(as.vector(spectrum_features_merged[signal_id,frequency_id]))
   
   # Compose dataset with signal and frequency
   data<-data.frame(x=signal,y=frequency)
