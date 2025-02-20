@@ -17,6 +17,7 @@ library("ggfortify")
 library("EMD")
 library("ggpubr")
 library("gridExtra")
+library("gsignal")
 
 
 # Hadley Wickham's tidyverse universe
