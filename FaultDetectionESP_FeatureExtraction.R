@@ -17,10 +17,10 @@ for (signal_id in rownames(spectrum_features_merged))
   print(signal_id)
   
   # Add also the peak          (maximum value)
-  peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
+  peak<-max(as.vector(unlist(spectrum_features_merged[signal_id,frequency_id])))
 
   # Add also the peak-to-peak (maximum-minimum value)
-  peak_to_peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))-min(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
+  peak_to_peak<-max(as.vector(unlist(spectrum_features_merged[signal_id,frequency_id])))-min(as.vector(unlist(spectrum_features_merged[signal_id,frequency_id])))
 
   # Calculate the rms
   rms<-rms(as.vector(unlist(spectrum_features_merged[signal_id,frequency_id])))
@@ -43,8 +43,10 @@ for (signal_id in rownames(spectrum_features_merged))
   b=summary(fit_er)$coefficients[1,2]
 
   # Add the results for the signal
-  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median,a=b,b=b))  
+  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal_id,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median,a=b,b=b))  
 }
+#########################################################################################################
+write.csv(df_feature_extraction,"/home/felipe/Downloads/df_feature_extraction.csv", row.names = FALSE)
 #########################################################################################################
 # Calculate and plot pca
 model.features     <- prcomp(df_feature_extraction[,c("RMS","peak","peak_to_peak")],center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
