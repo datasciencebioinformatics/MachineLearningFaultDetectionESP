@@ -50,6 +50,6 @@ for (signal_id in rownames(spectrum_features_merged))
 write.csv(df_feature_extraction,"/home/felipe/Downloads/df_feature_extraction.csv", row.names = FALSE)
 #########################################################################################################
 # Calculate and plot pca
-model.features     <- prcomp(df_feature_extraction[,c("RMS","peak","peak_to_peak")],center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
+model.features     <- prcomp(df_feature_extraction[,c("RMS","peak","peak_to_peak","median","RMS","a","b")],center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
 PCA_for_features   <-autoplot(model.features, data =spectrum_features_merged, colour = 'label') + theme_bw() + ggtitle("Amplitude")
 #########################################################################################################
