@@ -26,6 +26,10 @@ for (signal in rownames(spectrum_features_merged))
   rms<-rms(as.vector(unlist(spectrum_features_merged[1,frequency_id])))
 
   # Add the results for the signal
-  df_root_mean_square_deviation<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak))  
+  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak))  
 }
+#########################################################################################################
+# Calculate and plot pca
+model.features     <- prcomp(df_feature_extraction[,c("RMS","peak","peak_to_peak")],center = FALSE, scale =FALSE, na.action = na.omit, rank. = 4)
+PCA_for_features   <-autoplot(model.features, data =df_feature_extraction, colour = 'label') + theme_bw() + ggtitle("Amplitude")
 #########################################################################################################
