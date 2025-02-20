@@ -18,5 +18,9 @@ for (signal in rownames(spectrum_features_merged))
 
   # Add the results for the signal
   df_root_mean_square_deviation<-rbind(df_root_mean_square_deviation,data.frame(signal=signal,RMS=rms(as.vector(unlist(spectrum_features_merged[1,frequency_id])), MARGIN = 2)))  
+
+  # Add also the peak          (maximum value)
+  # Add also the peak-to-peak (maximum-minimum value)
+  
 }
 #########################################################################################################
