@@ -165,10 +165,11 @@ features_signals$esp_id<-paste(features_signals$esp_id)
 PCA_of_spectral_data_label        <-autoplot(model.pca, data = features_signals, colour = 'label') + theme_bw() 
 PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = features_signals, colour = 'esp_id') + theme_bw()
 PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = features_signals, colour = 'esp_id_str') + theme_bw()
+PCA_of_spectral_rmsd              <-autoplot(model.pca, data = features_signals, colour = 'rms.98.102.') + theme_bw()
 
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
-  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label,PCA_of_spectral_rmsd, ncol = 2, nrow = 2, top = "Summary of vibration data") 
 dev.off()
 ######################################################################################################
 # Replicate values of median(8,13).
