@@ -1,5 +1,5 @@
 #########################################################################################################
-Load the spectrum file
+# Load the spectrum file
 spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 
 # Load the features file
@@ -14,7 +14,7 @@ frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_featur
 # For each signal, the amplitude is taken for all frequency_id
 for (signal_id in rownames(spectrum_features_merged))
 {
-  print(signal)
+  print(signal_id)
 
   # Add also the peak          (maximum value)
   peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
