@@ -36,7 +36,8 @@ for (signal_id in rownames(spectrum_features_merged))
   data<-data.frame(x=signal,y=frequency)
 
   # exponential regression 1
-  fit_er = lm(log(signal, base = exp(1))~frequency, data = data) 
+  fit_er = lm(signal~frequency, data = data) 
+  #fit_er = lm(log(signal, base = exp(1))~frequency, data = data) 
 
   # Store cofficientes
   a=summary(fit_er)$coefficients[1,1]
