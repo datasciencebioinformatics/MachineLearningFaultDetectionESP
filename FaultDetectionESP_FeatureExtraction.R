@@ -18,7 +18,7 @@ for (signal in rownames(spectrum_features_merged))
 
   # Add also the peak          (maximum value)
   peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
-  
+
   # Add also the peak-to-peak (maximum-minimum value)
   peak_to_peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))-min(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
@@ -30,7 +30,7 @@ for (signal in rownames(spectrum_features_merged))
 
   # frequency and signal 
   frequency<-as.integer(colnames(spectrum_features_merged[signal,frequency_id]))
-  signal      <-unlist(as.vector(spectrum_features_merged[1,frequency_id]))
+  signal      <-unlist(as.vector(spectrum_features_merged[,frequency_id]))
   
   # Compose dataset with signal and frequency
   data<-data.frame(x=signal,y=frequency)
@@ -41,9 +41,9 @@ for (signal in rownames(spectrum_features_merged))
   # Store cofficientes
   a=summary(fit_er)$coefficients[1,1]
   b=summary(fit_er)$coefficients[1,2]
-  
+
   # Add the results for the signal
-  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median, a=a, b=b))  
+  df_feature_extraction<-rbind(df_feature_extraction,data.frame(signal=signal,RMS=rms,peak=peak,peak_to_peak=peak_to_peak,median=median,a=b,b=b))  
 }
 #########################################################################################################
 # Calculate and plot pca
