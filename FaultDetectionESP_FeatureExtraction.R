@@ -15,7 +15,7 @@ frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_featur
 for (signal_id in rownames(spectrum_features_merged))
 {
   print(signal_id)
-
+  
   # Add also the peak          (maximum value)
   peak<-max(as.vector(unlist(spectrum_features_merged[signal,frequency_id])))
 
