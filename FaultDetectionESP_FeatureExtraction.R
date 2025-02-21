@@ -156,3 +156,20 @@ PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = spectrum_features
 png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
   grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
 dev.off()
+############################################################################################################################
+# To DO: on Weekend
+# Check the consitency
+teste2<-features_signals[2:101,]
+teste1<-df_feature_extraction_peaks[1:100,]
+
+cor(teste1$a,teste2$a)
+cor(teste1$b,teste2$b)
+
+cor(teste1$median8_13,teste2$median.8.13.) # OK
+cor(teste1$median98_102,teste2$median.98.102.)
+cor(teste1$rms98_102,teste2$rms.98.102.) # OK
+
+cor(teste1$peak1x,teste2$peak1x) 
+cor(teste1$peak2x,teste2$peak2x)
+
+
