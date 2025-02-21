@@ -118,7 +118,7 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   xdata = data.frame(Signal=as.vector(unlist(log(spectrum_features_merged[signal_id, IDXBEGIN:(IDXEND+1)]+1e-10))),Interval=IDXBEGIN:IDXEND)
   
   # exponential regression 1
-  fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
+  fit_er = lm(xdata$Signal~xdata$Interval, data = xdata) 
   
   # Store cofficientes
   a=summary(fit_er)$coefficients[1,1]
@@ -130,4 +130,19 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # Merge data.frame
   df_feature_extraction_peaks<-rbind(df_feature_extraction_peaks,df_results)
 }
+# center and scale the data before
+# calculation the components
+plot_feature_extraction_peaks<-na.omit(df_feature_extraction_peaks[,c("median8_13","median98_102","rms98_102","peak1x","peak2x","a","b")])
+plot_feature_extraction_peaks<- plot_feature_extraction_peaks[!is.infinite(rowSums(plot_feature_extraction_peaks)),]
 
+model.pca <- prcomp(plot_feature_extraction_peaks,center = FALSE, scale =FALSE, rank. = 4)
+
+# Plot pca's
+PCA_of_spectral_data_label        <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id_str') + theme_bw()
+PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label_esp_id') + theme_bw()
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 40, height = 25, res=600, units = "cm")  
+  grid.arrange(PCA_of_spectral_data_label, PCA_of_spectral_data_esp_id,PCA_of_spectral_data_esp_id_label, ncol = 3, nrow = 1, top = "Summary of vibration data") 
+dev.off()
