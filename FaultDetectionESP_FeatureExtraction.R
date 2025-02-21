@@ -105,6 +105,27 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # This variable must be re-defedined with the new data.
   peak2x<-as.vector(unlist(spectrum_features_merged[signal_id,X2_IDX]))
 
+  # CONSTANT VARIABLES FOR THE CALCULATION OF REGRESSION 
+  IDXBEGIN  <-100
+  IDXEND    <-1200
+  
+  xdata = np.log(X[signal_id, IDXBEGIN:IDXEND]+1e-10)
+
+  # frequency and signal 
+  frequency   <-as.integer(colnames(spectrum_features_merged[signal_id,frequency_id]))
+  signal      <-unlist(as.vector(spectrum_features_merged[signal_id,frequency_id]))
+  
+  # Compose dataset with signal and frequency
+  data<-data.frame(x=signal,y=frequency)
+  
+  # exponential regression 1
+  fit_er = lm(signal~frequency, data = data) 
+  #fit_er = lm(log(signal, base = exp(1))~frequency, data = data) 
+  
+  # Store cofficientes
+  a=summary(fit_er)$coefficients[1,1]
+  b=summary(fit_er)$coefficients[1,2]
+
   new_feats['a'], new_feats['b'] = _extract_expregfeatures(X,100-starting_idx_pos, 1200-starting_idx_pos)
 }
 
