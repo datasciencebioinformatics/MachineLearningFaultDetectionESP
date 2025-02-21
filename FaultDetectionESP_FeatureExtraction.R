@@ -99,7 +99,7 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
   # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X2_IDX+61))
   # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
-  rms98_102 <-sum(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)])))**0.5
+  rms98_102 <-sum(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)]**2)))**0.5
 
   # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
   # This variable must be re-defedined with the new data.
