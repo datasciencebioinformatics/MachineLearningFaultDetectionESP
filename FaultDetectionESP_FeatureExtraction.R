@@ -6,7 +6,7 @@ spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
-df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),median=c(),a=c(),b=c())
+df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),median=c(),a=c(),b=c(),)
 
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
