@@ -92,13 +92,19 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   median8_13   <-median(as.vector(unlist(spectrum_features_merged[signal_id,MEDIAN_8_13_START:MEDIAN_8_13_END])))
   
   # The median of the amplitude in the interval (98,102)
-  median98_102 <-sum(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)])))
+  # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
+  # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X2_IDX+61))
+  # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
+  median98_102 <-sum(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)]))))**0.5
 
-  new_feats['median(8,13)'] = np.median(X[:, median_8_13_start:median_8_13_end], axis=1)  # 200:300 | 250:400
-  new_feats['rms(98,102)'] = (X[:, x1_idx-61:x1_idx+61]**2).sum(axis=1)**0.5
-  new_feats['median(98,102)'] = np.median(X[:, x1_idx-61:x1_idx+61], axis=1)
-  new_feats['peak1x'] = X[:, x1_idx]
-  new_feats['peak2x'] = X[:, x2_idx]
+  # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
+  # This variable must be re-defedined with the new data.
+  peak1x<-as.vector(unlist(spectrum_features_merged[signal_id,X1_IDX]))
+
+  # The peak2x of a given signal is given in the position defined by the constant X2_IDX
+  # This variable must be re-defedined with the new data.
+  peak2x<-as.vector(unlist(spectrum_features_merged[signal_id,X2_IDX]))
+
   new_feats['a'], new_feats['b'] = _extract_expregfeatures(X,100-starting_idx_pos, 1200-starting_idx_pos)
 }
 
