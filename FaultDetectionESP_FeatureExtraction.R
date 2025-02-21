@@ -67,7 +67,7 @@ png(filename=paste(output_dir,"Plot_summary_Features_data.png",sep=""), width = 
 dev.off()
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
-df_feature_extraction_peaks=data.frame(signal=c(),peak1x=c(),peak2x=c())
+df_feature_extraction_peaks=data.frame(signal=c(),median8_13=c(),median98_102=c(),rms98_102=c(),peak1x=c(),peak2x=c(),a=c(),b=c())
 
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
@@ -90,12 +90,16 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # The median of a given signal in the interval starting in MEDIAN_8_13_START to MEDIAN_8_13_END
   # They were defined as constants, to be redefined in new data.
   median8_13   <-median(as.vector(unlist(spectrum_features_merged[signal_id,MEDIAN_8_13_START:MEDIAN_8_13_END])))
+
+  # The median of the amplitude in the interval (8,13)
+  # The median of a given signal in the interval starting in MEDIAN_8_13_START to MEDIAN_8_13_END
+  median98_102   <-median(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)])))
   
-  # The median of the amplitude in the interval (98,102)
+  # The root-mean-suqare of the amplitude in the interval (98,102)
   # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
   # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X2_IDX+61))
   # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
-  median98_102 <-sum(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)]))))**0.5
+  rms98_102 <-sum(as.vector(unlist(spectrum_features_merged[signal_id,(X1_IDX-61):(X2_IDX+61)])))**0.5
 
   # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
   # This variable must be re-defedined with the new data.
@@ -106,26 +110,24 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   peak2x<-as.vector(unlist(spectrum_features_merged[signal_id,X2_IDX]))
 
   # CONSTANT VARIABLES FOR THE CALCULATION OF REGRESSION 
-  IDXBEGIN  <-100
-  IDXEND    <-1200
-  
-  xdata = np.log(X[signal_id, IDXBEGIN:IDXEND]+1e-10)
+  IDXBEGIN  <-100-STARTING_IDX_POS
+  IDXEND    <-1200-STARTING_IDX_POS
 
-  # frequency and signal 
-  frequency   <-as.integer(colnames(spectrum_features_merged[signal_id,frequency_id]))
-  signal      <-unlist(as.vector(spectrum_features_merged[signal_id,frequency_id]))
-  
-  # Compose dataset with signal and frequency
-  data<-data.frame(x=signal,y=frequency)
+  # Take the log of the amplitude in the inverval from IDXBEGIN to IDXEND
+  # These variable must be re-defedined with the new data.
+  xdata = data.frame(Signal=as.vector(unlist(log(spectrum_features_merged[signal_id, IDXBEGIN:(IDXEND+1)]+1e-10))),Interval=IDXBEGIN:IDXEND)
   
   # exponential regression 1
-  fit_er = lm(signal~frequency, data = data) 
-  #fit_er = lm(log(signal, base = exp(1))~frequency, data = data) 
+  fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
   
   # Store cofficientes
   a=summary(fit_er)$coefficients[1,1]
   b=summary(fit_er)$coefficients[1,2]
 
-  new_feats['a'], new_feats['b'] = _extract_expregfeatures(X,100-starting_idx_pos, 1200-starting_idx_pos)
+  # Add the results for the signal
+  df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=a,b=b)
+
+  # Merge data.frame
+  df_feature_extraction_peaks<-rbind(df_feature_extraction_peaks,df_results)
 }
 
