@@ -118,7 +118,7 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   xdata = data.frame(Signal=as.vector(unlist(log(spectrum_features_merged[signal_id, IDXBEGIN:(IDXEND+1)]+1e-10))),Interval=IDXBEGIN:IDXEND)
   
   # exponential regression 1
-  fit_er = lm(xdata$Signal~xdata$Interval, data = xdata) 
+  fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
   
   # Store cofficientes
   a=summary(fit_er)$coefficients[1,1]
