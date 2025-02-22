@@ -159,7 +159,7 @@ dev.off()
 ############################################################################################################################
 # To DO: on Weekend
 # Check the consitency
-teste2<-features_signals[2:101,]
+teste2<-features_signals[1:101,]
 teste1<-df_feature_extraction_peaks[1:100,]
 
 cor(teste1$a,teste2$a)
