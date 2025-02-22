@@ -83,7 +83,7 @@ df_feature_extraction_peaks=data.frame(signal=c(),median8_13=c(),median98_102=c(
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # CONSTANT VARIABLES
-STARTING_IDX_POS  = 100
+STARTING_IDX_POS  = 0
 ENDNG_IDX_POS     = 6100
 X1_IDX            = 3002 - STARTING_IDX_POS
 X2_IDX            = 6005 - STARTING_IDX_POS
@@ -98,7 +98,7 @@ frequency_vector<-frequency_id[STARTING_IDX_POS:length(frequency_id)]
 frequency_vector<-frequency_id[1:ENDNG_IDX_POS]
 
 # For each signal, the amplitude is taken for all frequency_id
-for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
+for (signal_id in rownames(spectrum_features_merged))
 {
   print(signal_id)
   
@@ -118,7 +118,7 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
   # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X1_IDX+61))
   # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
-  rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))**2)**0.5
+  rms98_102 <-rms(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)])))
   
   # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
   # This variable must be re-defedined with the new data.
@@ -134,7 +134,7 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
 
   # Take the log of the amplitude in the inverval from IDXBEGIN to IDXEND
   # These variable must be re-defedined with the new data.
-  xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND+1)]+1e-10))),Interval=IDXBEGIN:IDXEND)
+  xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+1e-10))),Interval=IDXBEGIN:IDXEND)
             
   # exponential regression 1
   fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
@@ -151,10 +151,15 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
 }
 # center and scale the data before
 # calculation the components
-plot_feature_extraction_peaks<-na.omit(df_feature_extraction_peaks[,c("median8_13","median98_102","rms98_102","peak1x","peak2x","a","b")])
+plot_feature_extraction_peaks<-na.omit(df_feature_extraction_peaks[,c("median8_13","median98_102","rms98_102","peak1x","peak2x")])
 plot_feature_extraction_peaks<- plot_feature_extraction_peaks[!is.infinite(rowSums(plot_feature_extraction_peaks)),]
 
+# Calculate pca
 model.pca <- prcomp(plot_feature_extraction_peaks,center = FALSE, scale =FALSE, rank. = 4)
+
+# Add label label_esp_id
+spectrum_features_merged$label_esp_id<-paste(spectrum_features_merged$label,spectrum_features_merged$esp_id,sep="_")
+spectrum_features_merged$esp_id_str  <-paste(spectrum_features_merged$esp_id,sep="")
 
 # Plot pca's
 PCA_of_spectral_data_label       <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
@@ -171,15 +176,13 @@ dev.off()
 teste2<-features_signals
 teste1<-df_feature_extraction_peaks
 
+
 cor(teste1$a,teste2$a)
 cor(teste1$b,teste2$b)
 
 cor(teste1$median8_13,teste2$median.8.13.) # OK
 cor(teste1$median98_102,teste2$median.98.102.) #OK
-
-
 cor(teste1$rms98_102,teste2$rms.98.102.) # OK
-
 cor(teste1$peak1x,teste2$peak1x) 
 cor(teste1$peak2x,teste2$peak2x)
 
