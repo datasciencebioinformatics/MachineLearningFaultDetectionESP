@@ -19,9 +19,6 @@ colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
 # Set spectrum signal according to feature signal
 spectrum_signals$id<-features_signals$id
 
-# Take the ids as the rownames
-spectrum_signals$id<-as.integer(rownames(spectrum_signals))
-
 # Spectrum and features merged
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
