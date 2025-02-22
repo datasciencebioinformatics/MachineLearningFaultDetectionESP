@@ -8,13 +8,16 @@ features_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_
 spectrum_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_dataset/spectrum.csv"
 #########################################################################################################
 # Load the spectrum file
-spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
+spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
 
 # Load the features file
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 
 # Re-set the colnames to numbers
 colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
+
+# Set spectrum signal according to feature signal
+spectrum_signals$id<-features_signals$id
 
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
