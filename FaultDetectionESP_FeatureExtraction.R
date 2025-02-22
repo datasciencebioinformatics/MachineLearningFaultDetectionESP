@@ -82,25 +82,28 @@ df_feature_extraction_peaks=data.frame(signal=c(),median8_13=c(),median98_102=c(
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
+# CONSTANT VARIABLES
+STARTING_IDX_POS  = 100
+ENDNG_IDX_POS     = 6100
+X1_IDX            = 3002 - STARTING_IDX_POS
+X2_IDX            = 6005 - STARTING_IDX_POS
+
+# MEDIAN (8,13) CONSTANT VARIABLES
+MEDIAN_8_13_START = 240 - STARTING_IDX_POS
+MEDIAN_8_13_END   = 390 - STARTING_IDX_POS
+
 # Vector to store the frequecies 
-frequency_vector<-frequency_id[101:length(frequency_id)]
+# CONSTANT STAR 
+frequency_vector<-frequency_id[STARTING_IDX_POS:length(frequency_id)]
+frequency_vector<-frequency_id[1:ENDNG_IDX_POS]
 
 # For each signal, the amplitude is taken for all frequency_id
 for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
 {
   print(signal_id)
-
+  
   # Vector to store amplitude for the frequency vector
   amplitude_vector<-spectrum_features_merged[signal_id,frequency_vector]
-
-  # CONSTANT VARIABLES
-  STARTING_IDX_POS  = 100
-  X1_IDX            = 3002 - STARTING_IDX_POS
-  X2_IDX            = 6005 - STARTING_IDX_POS
-
-  # MEDIAN (8,13) CONSTANT VARIABLES
-  MEDIAN_8_13_START = 240 - STARTING_IDX_POS
-  MEDIAN_8_13_END   = 390 - STARTING_IDX_POS
 
   # The median of the amplitude in the interval (8,13)
   # The median of a given signal in the interval starting in MEDIAN_8_13_START to MEDIAN_8_13_END
@@ -109,13 +112,13 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
 
   # The median of the amplitude in the interval (8,13)
   # The median of a given signal in the interval starting in MEDIAN_8_13_START to MEDIAN_8_13_END
-  median98_102   <-median(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X2_IDX+61)])))
+  median98_102   <-median(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)])))
   
   # The root-mean-suqare of the amplitude in the interval (98,102)
   # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
-  # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X2_IDX+61))
+  # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X1_IDX+61))
   # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
-  rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X2_IDX+61)]**2)))**0.5
+  rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))**2)**0.5
 
   # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
   # This variable must be re-defedined with the new data.
@@ -165,14 +168,16 @@ dev.off()
 ############################################################################################################################
 # To DO: on Weekend
 # Check the consitency
-teste2<-features_signals[1:101,]
+teste2<-features_signals[1:100,]
 teste1<-df_feature_extraction_peaks[1:100,]
 
 cor(teste1$a,teste2$a)
 cor(teste1$b,teste2$b)
 
 cor(teste1$median8_13,teste2$median.8.13.) # OK
-cor(teste1$median98_102,teste2$median.98.102.)
+cor(teste1$median98_102,teste2$median.98.102.) #OK
+
+
 cor(teste1$rms98_102,teste2$rms.98.102.) # OK
 
 cor(teste1$peak1x,teste2$peak1x) 
