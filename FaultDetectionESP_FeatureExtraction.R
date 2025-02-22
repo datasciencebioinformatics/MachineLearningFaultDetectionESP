@@ -118,9 +118,7 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
   # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X1_IDX+61))
   # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
-  #rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))**2)**0.5
-  rms98_102 <-as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))
-  
+  rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))**2)**0.5
   
   # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
   # This variable must be re-defedined with the new data.
@@ -159,12 +157,7 @@ plot_feature_extraction_peaks<- plot_feature_extraction_peaks[!is.infinite(rowSu
 model.pca <- prcomp(plot_feature_extraction_peaks,center = FALSE, scale =FALSE, rank. = 4)
 
 # Plot pca's
-
-
-
-
-
-<-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
+PCA_of_spectral_data_label       <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label') + theme_bw() 
 PCA_of_spectral_data_esp_id       <-autoplot(model.pca, data = spectrum_features_merged, colour = 'esp_id_str') + theme_bw()
 PCA_of_spectral_data_esp_id_label <-autoplot(model.pca, data = spectrum_features_merged, colour = 'label_esp_id') + theme_bw()
 
