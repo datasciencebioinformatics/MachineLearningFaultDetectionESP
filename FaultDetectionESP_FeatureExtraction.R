@@ -118,8 +118,10 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # The sum is calulated by the somatory of the amplitude of given signal in the interval X1_IDX-61 to X2_IDX+61
   # Somatory(98_102) = (Amplitude(Signal X,X1_IDX-61 to X1_IDX+61))
   # After the square of the Somatory(98_102) is elevated to the 0.5 potency : Somatory(98_102)**0.5
-  rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))**2)**0.5
-
+  #rms98_102 <-sum(as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))**2)**0.5
+  rms98_102 <-as.vector(unlist(amplitude_vector[(X1_IDX-61):(X1_IDX+61)]))
+  
+  
   # The peak1x of a given signal is given in the position defined by the constant X1_IDX.
   # This variable must be re-defedined with the new data.
   peak1x<-as.vector(unlist(amplitude_vector[X1_IDX]))
@@ -135,13 +137,13 @@ for (signal_id in rownames(spectrum_features_merged[,frequency_id]))
   # Take the log of the amplitude in the inverval from IDXBEGIN to IDXEND
   # These variable must be re-defedined with the new data.
   xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND+1)]+1e-10))),Interval=IDXBEGIN:IDXEND)
-  
+            
   # exponential regression 1
   fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
   
   # Store cofficientes
-  a=summary(fit_er)$coefficients[1,1]
-  b=summary(fit_er)$coefficients[1,2]
+  a=summary(fit_er)$coefficients[1,2]
+  b=summary(fit_er)$coefficients[1,1]
 
   # Add the results for the signal
   df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=a,b=b)
@@ -168,8 +170,8 @@ dev.off()
 ############################################################################################################################
 # To DO: on Weekend
 # Check the consitency
-teste2<-features_signals[1:100,]
-teste1<-df_feature_extraction_peaks[1:100,]
+teste2<-features_signals
+teste1<-df_feature_extraction_peaks
 
 cor(teste1$a,teste2$a)
 cor(teste1$b,teste2$b)
