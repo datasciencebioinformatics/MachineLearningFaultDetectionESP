@@ -21,6 +21,12 @@ df_feature_extraction=data.frame(signal=c(),RMS=c(),peak=c(),peak_to_peak=c(),me
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
+# Constant to define end position
+ENDNG_IDX_POS     = 6100
+
+# Frequency_id
+frequency_id<-frequency_id[1:6100]
+
 # For each signal, the amplitude is taken for all frequency_id
 for (signal_id in rownames(spectrum_features_merged))
 {
@@ -30,9 +36,12 @@ for (signal_id in rownames(spectrum_features_merged))
   amplitude_vector<-spectrum_features_merged[signal_id,frequency_vector]
 
   # Add the results for the signal
-  df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=slope,b=intercept)
-  
 
-  findpeaks( amplitude_vector, npeaks=10)
+  # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
+  # this for an interval of size w
+  # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"
+  # For each signal, there will be a time    
+  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
+  
 
 }
