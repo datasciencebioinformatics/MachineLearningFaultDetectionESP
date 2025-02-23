@@ -134,7 +134,7 @@ for (signal_id in rownames(spectrum_features_merged))
 
   # Take the log of the amplitude in the inverval from IDXBEGIN to IDXEND
   # These variable must be re-defedined with the new data.
-  xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=IDXBEGIN:IDXEND)
+  xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=1:((IDXEND-IDXBEGIN)+1))
             
   # exponential regression 1
   lm.fit=lm(xdata$Interval~xdata$Signal, data = xdata)
