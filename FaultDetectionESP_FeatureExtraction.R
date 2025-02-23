@@ -143,11 +143,11 @@ for (signal_id in rownames(spectrum_features_merged))
   cf <- coef(fit_er)
   
   # Store cofficientes
-  b <- cf[1]
-  a <- cf[2]
+  intercept <-  data.frame(fit_er$coefficients)[1,1]
+  slope     <-  data.frame(fit_er$coefficients)[2,1]
   
   # Add the results for the signal
-  df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=a,b=b)
+  df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=slope,b=intercept)
 
   # Merge data.frame
   df_feature_extraction_peaks<-rbind(df_feature_extraction_peaks,df_results)
