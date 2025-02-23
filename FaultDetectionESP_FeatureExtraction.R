@@ -151,7 +151,7 @@ for (signal_id in rownames(spectrum_features_merged))
 }
 # center and scale the data before
 # calculation the components
-plot_feature_extraction_peaks<-na.omit(df_feature_extraction_peaks[,c("median8_13","median98_102","rms98_102","peak1x","peak2x")])
+plot_feature_extraction_peaks<-na.omit(df_feature_extraction_peaks[,c("median8_13","median98_102","rms98_102","peak1x","peak2x","a","b")])
 plot_feature_extraction_peaks<- plot_feature_extraction_peaks[!is.infinite(rowSums(plot_feature_extraction_peaks)),]
 
 # Calculate pca
