@@ -77,7 +77,7 @@ png(filename=paste(output_dir,"Plot_summary_Features_data.png",sep=""), width = 
 dev.off()
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
-df_feature_extraction_peaks=data.frame(signal=c(),median8_13=c(),median98_102=c(),rms98_102=c(),peak1x=c(),peak2x=c(),a=c(),b=c())
+df_feature_extraction_peaks=data.frame(signal=c(),median8_13=c(),median98_102=c(),rms98_102=c(),peak1x=c(),peak2x=c(),a=c(),b=c(),c=c(),d=c(),e=c(),f=c())
 
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
@@ -135,16 +135,27 @@ for (signal_id in rownames(spectrum_features_merged))
   # Take the log of the amplitude in the inverval from IDXBEGIN to IDXEND
   # These variable must be re-defedined with the new data.
   xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=1:((IDXEND-IDXBEGIN)+1))
+  xdata2 = data.frame(Signal=as.vector(unlist(log(amplitude_vector[1:1100]+(1e-10)))),Interval=1:1100+1)
+  xdata3 = data.frame(Signal=as.vector(unlist(log(amplitude_vector[100:1200]+(1e-10)))),Interval=1:1100+1)
               
   # exponential regression 1
   lm.fit=lm(xdata$Interval~xdata$Signal)
+  lm.fit2=lm(xdata2$Interval~xdata2$Signal)
+  lm.fit3=lm(xdata3$Interval~xdata3$Signal)  
     
   # Store cofficientes
   intercept <-  summary(lm.fit)$coefficients[1,1]
   slope     <-  summary(lm.fit)$coefficients[2,1]
+
+  c <-  summary(lm.fit2)$coefficients[1,1]
+  d <-  summary(lm.fit2)$coefficients[2,1] 
+
+  e <-  summary(lm.fit3)$coefficients[1,1]
+  f <-  summary(lm.fit3)$coefficients[2,1]   
+ 
   
   # Add the results for the signal
-  df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=slope,b=intercept)
+  df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=slope,b=intercept,c=c,d=d,e=e,f=f)
 
   # Merge data.frame
   df_feature_extraction_peaks<-rbind(df_feature_extraction_peaks,df_results)
@@ -185,5 +196,6 @@ cor(teste1$median98_102,teste2$median.98.102.) #OK
 cor(teste1$rms98_102,teste2$rms.98.102.) # OK
 cor(teste1$peak1x,teste2$peak1x) 
 cor(teste1$peak2x,teste2$peak2x)
+
 
 
