@@ -138,11 +138,14 @@ for (signal_id in rownames(spectrum_features_merged))
             
   # exponential regression 1
   fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
+
+  # Coefficient 
+  cf <- coef(fit_er)
   
   # Store cofficientes
-  a=summary(fit_er)$coefficients[1,1]
-  b=summary(fit_er)$coefficients[1,2]
-
+  b <- cf[1]
+  a <- cf[2]
+  
   # Add the results for the signal
   df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=a,b=b)
 
