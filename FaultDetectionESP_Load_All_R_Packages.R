@@ -19,6 +19,7 @@ library("EMD")
 library("ggpubr")
 library("gridExtra")
 library("gsignal")
+library("pracma")
 
 
 # Hadley Wickham's tidyverse universe
