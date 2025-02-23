@@ -136,7 +136,7 @@ for (signal_id in rownames(spectrum_features_merged))
   # These variable must be re-defedined with the new data.
   xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=1:((IDXEND-IDXBEGIN)+1))
   xdata2 = data.frame(Signal=as.vector(unlist(log(amplitude_vector[1:1100]+(1e-10)))),Interval=1:1100+1)
-  xdata3 = data.frame(Signal=as.vector(unlist(log(amplitude_vector[100:1200]+(1e-10)))),Interval=1:1100+1)
+  xdata3 = data.frame(Signal=as.vector(unlist(log(amplitude_vector[101:1200]+(1e-10)))),Interval=1:1100)
               
   # exponential regression 1
   lm.fit=lm(xdata$Interval~xdata$Signal)
