@@ -140,8 +140,8 @@ for (signal_id in rownames(spectrum_features_merged))
   fit_er = lm(xdata$Interval~xdata$Signal, data = xdata) 
   
   # Store cofficientes
-  a=summary(fit_er)$coefficients[1,2]
-  b=summary(fit_er)$coefficients[1,1]
+  a=summary(fit_er)$coefficients[1,1]
+  b=summary(fit_er)$coefficients[1,2]
 
   # Add the results for the signal
   df_results<-data.frame(signal=signal_id,median8_13=median8_13,median98_102=median98_102,rms98_102=rms98_102,peak1x=peak1x,peak2x=peak2x,a=a,b=b)
