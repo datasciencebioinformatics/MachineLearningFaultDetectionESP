@@ -129,15 +129,16 @@ for (signal_id in rownames(spectrum_features_merged))
   peak2x<-as.vector(unlist(amplitude_vector[X2_IDX]))
 
   # CONSTANT VARIABLES FOR THE CALCULATION OF REGRESSION 
-  IDXBEGIN  <-100-STARTING_IDX_POS
-  IDXEND    <-1200-STARTING_IDX_POS
+  IDXBEGIN  <-100-STARTING_IDX_POS -100
+  IDXEND    <-1200-STARTING_IDX_POS -100
 
   # Take the log of the amplitude in the inverval from IDXBEGIN to IDXEND
   # These variable must be re-defedined with the new data.
-  xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=1:((IDXEND-IDXBEGIN)+1))
+  #xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=1:((IDXEND-IDXBEGIN)+1))
+  xdata = data.frame(Signal=as.vector(unlist(log(amplitude_vector[IDXBEGIN:(IDXEND)]+(1e-10)))),Interval=1:((IDXEND-IDXBEGIN)))
             
   # exponential regression 1
-  lm.fit=lm(xdata$Interval~xdata$Signal, data = xdata)
+  lm.fit=lm(xdata$Interval~xdata$Signal)
     
   # Store cofficientes
   intercept <-  summary(lm.fit)$coefficients[1,1]
