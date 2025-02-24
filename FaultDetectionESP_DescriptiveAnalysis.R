@@ -157,3 +157,30 @@ ggplot2_raw_data<-ggplot(data = melt_df_metrics, aes(x = as.integer(sw_id), y = 
 png(filename=paste(output_dir,"Plot_raw_statistical indicators.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
+
+#########################################################################################################
+# center and scale the data before
+# calculation the components
+model.pca.min          <- prcomp(df_min[,1:length(SlidingWindows$min)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.max          <- prcomp(df_max[,1:length(SlidingWindows$max)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.median       <- prcomp(df_median[,1:length(SlidingWindows$median)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.mean         <- prcomp(df_mean[,1:length(SlidingWindows$mean)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.sd           <- prcomp(df_sd[,1:length(SlidingWindows$sd)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.skewness     <- prcomp(df_skewness[,1:length(SlidingWindows$skewness)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.kurtosis     <- prcomp(df_kurtosis[,1:length(SlidingWindows$kurtosis)],center = FALSE, scale =FALSE, rank. = 4)
+
+# Plot pca's
+PCA_of_min        <-autoplot(model.pca.min, data = features_signals[which(features_signals$id %in% as.integer(df_min$id)),], colour = 'label') + theme_bw() + ggtitle("min")
+PCA_of_max        <-autoplot(model.pca.max, data = features_signals[which(features_signals$id %in% as.integer(df_max$id)),], colour = 'label') + theme_bw()  + ggtitle("max")
+PCA_of_median     <-autoplot(model.pca.median, data = features_signals[which(features_signals$id %in% as.integer(df_median$id)),], colour = 'label') + theme_bw() + ggtitle("median")
+PCA_of_mean       <-autoplot(model.pca.mean, data = features_signals[which(features_signals$id %in% as.integer(df_mean$id)),], colour = 'label') + theme_bw()  + ggtitle("mean")
+PCA_of_sd         <-autoplot(model.pca.sd, data = features_signals[which(features_signals$id %in% as.integer(df_sd$id)),], colour = 'label') + theme_bw()  + ggtitle("sd")
+PCA_of_skewness   <-autoplot(model.pca.skewness, data = features_signals[which(features_signals$id %in% as.integer(df_skewness$id)),], colour = 'label') + theme_bw()  + ggtitle("skewness")
+PCA_of_kurtosis   <-autoplot(model.pca.kurtosis, data = features_signals[which(features_signals$id %in% as.integer(df_kurtosis$id)),], colour = 'label') + theme_bw()  + ggtitle("kurtosis")
+
+
+# Plot_raw_vibration_data.png               
+png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+  grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
+dev.off()
+#########################################################################################################
