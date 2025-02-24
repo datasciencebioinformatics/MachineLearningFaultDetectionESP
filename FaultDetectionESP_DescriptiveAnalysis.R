@@ -56,6 +56,15 @@ for (signal_id in rownames(spectrum_features_merged))
 # skewness : skewness amplitude value wihing the slidding windows
 # kurtosis : kurtosis amplitude value wihing the slidding windows
 
+# First, I must split the df_signa_statistical_indicators into different data.frames.
+df_min       <- data.frame()
+df_max       <- data.frame()
+df_mean      <- data.frame()
+df_median    <- data.frame()
+df_sd        <- data.frame()
+df_skewness  <- data.frame()
+df_kurtosis  <- data.frame()
+
 
 
 
