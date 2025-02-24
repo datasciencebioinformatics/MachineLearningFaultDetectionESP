@@ -27,6 +27,26 @@ ENDNG_IDX_POS     = 6100
 # Frequency_id
 frequency_id<-frequency_id[1:6100]
 
+#####################################################################################################################################
+# Start a template data.frame
+# Vector to store amplitude for the frequency vector
+amplitude_vector<-spectrum_features_merged[1,frequency_id]
+
+# Add the results for the signal
+# It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
+# this for an interval of size w
+SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
+
+# Template data.frame
+df_min       <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+df_max       <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+df_mean      <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+df_median    <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+df_sd        <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+df_skewness  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+df_kurtosis  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+#####################################################################################################################################
+
 # For each signal, the amplitude is taken for all frequency_id
 for (signal_id in rownames(spectrum_features_merged))
 {
@@ -39,6 +59,15 @@ for (signal_id in rownames(spectrum_features_merged))
   # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
   # this for an interval of size w
   SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
+
+  # statistical indicators
+  df_min      <-rbind(as.vector(SlidingWindows$min))
+  df_max      <-rbind(as.vector(SlidingWindows$max))
+  df_mean     <-rbind(as.vector(SlidingWindows$mean))
+  df_median   <-rbind(as.vector(SlidingWindows$median))
+  df_sd       <-rbind(as.vector(SlidingWindows$sd))
+  df_skewness <-rbind(as.vector(SlidingWindows$skewness))
+  df_kurtosis <-rbind(as.vector(SlidingWindows$kurtosis)) 
   
   # statistical indicators
   # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"  
@@ -47,6 +76,8 @@ for (signal_id in rownames(spectrum_features_merged))
   # df_signa_statistical_indicators of the signal
   all_signal_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,SlidingWindows=1:length(SlidingWindows$min),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),mean=as.vector(SlidingWindows$mean),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
 }
+
+
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
 # min      : mimuim amplitude value wihing the slidding windows
@@ -57,12 +88,6 @@ for (signal_id in rownames(spectrum_features_merged))
 # kurtosis : kurtosis amplitude value wihing the slidding windows
 # First, I must split the df_signa_statistical_indicators into different data.frames.
 # Start a template data.frame
-m <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(df_signa_statistical_indicators$id)))
+m <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
 
-df_min       <- data.frame(,)
-df_max       <- data.frame()
-df_mean      <- data.frame()
-df_median    <- data.frame()
-df_sd        <- data.frame()
-df_skewness  <- data.frame()
-df_kurtosis  <- data.frame()
+
