@@ -85,6 +85,16 @@ rownames(df_kurtosis)  <-signal_id
 # First, I must split the df_signa_statistical_indicators into different data.frames.
 # Start a template data.frame
 
+# One painel with the line plots for all the measures min,max,mean,median,skewness,kurtosis
+# one measure per plot in the panel.
+
+
+# One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
+# one measure per plot in the panel.
+
+
+
+
 
 
 
