@@ -33,15 +33,20 @@ for (signal_id in rownames(spectrum_features_merged))
   print(signal_id)
   
   # Vector to store amplitude for the frequency vector
-  amplitude_vector<-spectrum_features_merged[signal_id,frequency_vector]
+  amplitude_vector<-spectrum_features_merged[signal_id,frequency_id]
 
   # Add the results for the signal
 
   # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
   # this for an interval of size w
+  # statistical indicators
   # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"
-  # For each signal, there will be a vector containing results    
-  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
+  # For each signal, there will be a vector containing results
+  # the resulting vector has the same size of the input amplitude_vector
+  #
+  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 10, skewness = "moment", kurtosis = "moment")
+
+  # The resulting table will have signals as hows and the statistis for the slidding windows as collumns
   
 
 }
