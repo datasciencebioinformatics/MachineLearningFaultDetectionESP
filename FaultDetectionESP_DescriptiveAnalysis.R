@@ -46,7 +46,6 @@ df_sd        <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(uniqu
 df_skewness  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
 df_kurtosis  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
 #####################################################################################################################################
-
 # For each signal, the amplitude is taken for all frequency_id
 for (signal_id in rownames(spectrum_features_merged))
 {
@@ -61,22 +60,14 @@ for (signal_id in rownames(spectrum_features_merged))
   SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
 
   # statistical indicators
-  df_min      <-rbind(as.vector(SlidingWindows$min))
-  df_max      <-rbind(as.vector(SlidingWindows$max))
-  df_mean     <-rbind(as.vector(SlidingWindows$mean))
-  df_median   <-rbind(as.vector(SlidingWindows$median))
-  df_sd       <-rbind(as.vector(SlidingWindows$sd))
-  df_skewness <-rbind(as.vector(SlidingWindows$skewness))
-  df_kurtosis <-rbind(as.vector(SlidingWindows$kurtosis)) 
-  
-  # statistical indicators
-  # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"  
-  # For each signal, there will be a vector containing results
-  # the resulting vector has the same size of the input amplitude_vector
-  # df_signa_statistical_indicators of the signal
-  all_signal_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,SlidingWindows=1:length(SlidingWindows$min),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),mean=as.vector(SlidingWindows$mean),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
+  df_min      <-rbind(df_min,as.vector(SlidingWindows$min))
+  df_max      <-rbind(df_max,as.vector(SlidingWindows$max))
+  df_mean     <-rbind(df_mean,as.vector(SlidingWindows$mean))
+  df_median   <-rbind(df_median,as.vector(SlidingWindows$median))
+  df_sd       <-rbind(df_sd,as.vector(SlidingWindows$sd))
+  df_skewness <-rbind(df_skewness,as.vector(SlidingWindows$skewness))
+  df_kurtosis <-rbind(df_kurtosis,as.vector(SlidingWindows$kurtosis))   
 }
-
 
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
