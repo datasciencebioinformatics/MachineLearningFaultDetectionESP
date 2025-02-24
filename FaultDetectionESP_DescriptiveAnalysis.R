@@ -36,14 +36,12 @@ for (signal_id in rownames(spectrum_features_merged))
   amplitude_vector<-spectrum_features_merged[signal_id,frequency_id]
 
   # Add the results for the signal
-  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 50, skewness = "moment", kurtosis = "moment")
-
   # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
   # this for an interval of size w
   # statistical indicators
-  # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"
+  # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"  
   # For each signal, there will be a vector containing results
   # the resulting vector has the same size of the input amplitude_vector
   # df_signa_statistical_indicators of the signal
-  df_signa_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,amplitude=amplitude_vector,min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
+  df_signa_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,amplitude=as.vector(unlist(amplitude_vector)),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
 }
