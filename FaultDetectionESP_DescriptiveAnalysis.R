@@ -66,13 +66,13 @@ for (signal_id in rownames(spectrum_features_merged))
   df_kurtosis <-rbind(df_kurtosis,as.vector(SlidingWindows$kurtosis))   
 }
 # Set rownames
-df_min       <-rownames(spectrum_features_merged)
-df_max       <-rownames(spectrum_features_merged)
-df_mean      <-rownames(spectrum_features_merged)
-df_median    <-rownames(spectrum_features_merged)
-df_sd        <-rownames(spectrum_features_merged)
-df_skewness  <-rownames(spectrum_features_merged)
-df_kurtosis  <-rownames(spectrum_features_merged)
+rownames(df_min)       <-rownames(spectrum_features_merged)
+rownames(df_max)       <-rownames(spectrum_features_merged)
+rownames(df_mean)      <-rownames(spectrum_features_merged)
+rownames(df_median)    <-rownames(spectrum_features_merged)
+rownames(df_sd)        <-rownames(spectrum_features_merged)
+rownames(df_skewness)  <-rownames(spectrum_features_merged)
+rownames(df_kurtosis)  <-rownames(spectrum_features_merged)
 
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
