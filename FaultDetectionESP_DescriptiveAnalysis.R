@@ -68,26 +68,31 @@ for (signal_id in rownames(spectrum_features_merged))
 #########################################################################################################
 # Preparation of data.frame with the statistical indicators
 # Set rownames
-rownames(df_min)       <-rownames(spectrum_features_merged)
-rownames(df_max)       <-rownames(spectrum_features_merged)
-rownames(df_mean)      <-rownames(spectrum_features_merged)
-rownames(df_median)    <-rownames(spectrum_features_merged)
-rownames(df_sd)        <-rownames(spectrum_features_merged)
-rownames(df_skewness)  <-rownames(spectrum_features_merged)
-rownames(df_kurtosis)  <-rownames(spectrum_features_merged)
+rownames(df_min)       <-spectrum_features_merged$signal_id
+rownames(df_max)       <-spectrum_features_merged$signal_id
+rownames(df_mean)      <-spectrum_features_merged$signal_id
+rownames(df_median)    <-spectrum_features_merged$signal_id
+rownames(df_sd)        <-spectrum_features_merged$signal_id
+rownames(df_skewness)  <-spectrum_features_merged$signal_id
+rownames(df_kurtosis)  <-spectrum_features_merged$signal_id
 
-df_min<-data.frame(df_min)
+# Convert all to data.frame
+df_min        <-data.frame(df_min)
+df_max        <-data.frame(df_max)
+df_mean       <-data.frame(df_mean)
+df_median     <-data.frame(df_median)
+df_sd         <-data.frame(df_sd)
+df_skewness   <-data.frame(df_skewness)
+df_kurtosis   <-data.frame(df_kurtosis)
 
-
-
-
-df_min             <-cbind(df_max,data.frame(min=rownames(df_min)))
-df_max$id          <-cbind(df_max,min=data.frame(rownames(df_max)))
-df_mean$id         <-cbind(df_max,min=data.frame(rownames(df_mean)))
-df_median$id       <-cbind(df_max,min=data.frame(rownames(df_mean)))
-df_sd$id           <-cbind(df_sd,median=data.frame(rownames(df_sd)))
-df_skewness$id     <-cbind(skewness,median=data.frame(rownames(df_skewness)))
-df_kurtosis$id     <-cbind(kurtosis,median=data.frame(rownames(df_kurtosis)))
+# Add collumns data.frame 
+df_min             <-cbind(df_min,id=data.frame(min=rownames(df_min)))
+df_max$id          <-cbind(df_max,id=data.frame(rownames(df_max)))
+df_mean$id         <-cbind(df_mean,id=data.frame(rownames(df_mean)))
+df_median$id       <-cbind(df_median,id=data.frame(rownames(df_median)))
+df_sd$id           <-cbind(df_sd,id=data.frame(rownames(df_sd)))
+df_skewness$id     <-cbind(df_skewness,id=data.frame(rownames(df_skewness)))
+df_kurtosis$id     <-cbind(df_kurtosis,id=data.frame(rownames(df_kurtosis)))
 
                     
 # For each signal, I have all the frequency_ids as collumns.
@@ -112,13 +117,13 @@ melt_df_skewness<-melt(df_skewness)
 melt_df_kurtosis<-melt(df_kurtosis)
 
 # Set the colnames
-colnames(melt_df_min) <-c("id","sw_id","value")
-colnames(melt_df_max) <-c("id","sw_id","value")
-colnames(melt_df_sd) <-c("id","sw_id","value")
-colnames(melt_df_mean)<-c("id","sw_id","value")
-colnames(melt_df_median)<-c("id","sw_id","value")
-colnames(melt_df_skewness)<-c("id","sw_id","value")
-colnames(melt_df_kurtosis)<-c("id","sw_id","value")
+colnames(melt_df_min)      <-c("id","sw_id","value")
+colnames(melt_df_max)      <-c("id","sw_id","value")
+colnames(melt_df_sd)       <-c("id","sw_id","value")
+colnames(melt_df_mean)     <-c("id","sw_id","value")
+colnames(melt_df_median)   <-c("id","sw_id","value")
+colnames(melt_df_skewness) <-c("id","sw_id","value")
+colnames(melt_df_kurtosis) <-c("id","sw_id","value")
 
 # Add a collumn to set the type of metric
 melt_df_min$metric        <-"min"
@@ -156,4 +161,3 @@ ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(freque
 png(filename=paste(output_dir,"Plot_raw_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
-
