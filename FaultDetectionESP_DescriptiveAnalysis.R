@@ -15,9 +15,6 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
-# Initiate a data.frame for the results of all signals
-all_signal_statistical_indicators=data.frame(id=c(),SlidingWindows=c(),min=c(),max=c(),median=c(),mean=c(),sd=c(),skewness=c(),kurtosis=c())
-
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
