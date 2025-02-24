@@ -86,13 +86,13 @@ df_skewness   <-data.frame(df_skewness)
 df_kurtosis   <-data.frame(df_kurtosis)
 
 # Add collumns data.frame 
-df_min             <-cbind(df_min,id=data.frame(min=rownames(df_min)))
-df_max$id          <-cbind(df_max,id=data.frame(rownames(df_max)))
-df_mean$id         <-cbind(df_mean,id=data.frame(rownames(df_mean)))
-df_median$id       <-cbind(df_median,id=data.frame(rownames(df_median)))
-df_sd$id           <-cbind(df_sd,id=data.frame(rownames(df_sd)))
-df_skewness$id     <-cbind(df_skewness,id=data.frame(rownames(df_skewness)))
-df_kurtosis$id     <-cbind(df_kurtosis,id=data.frame(rownames(df_kurtosis)))
+df_min          <-cbind(df_min,id=data.frame(min=rownames(df_min)))
+df_max          <-cbind(df_max,id=data.frame(rownames(df_max)))
+df_mean         <-cbind(df_mean,id=data.frame(rownames(df_mean)))
+df_median       <-cbind(df_median,id=data.frame(rownames(df_median)))
+df_sd           <-cbind(df_sd,id=data.frame(rownames(df_sd)))
+df_skewness     <-cbind(df_skewness,id=data.frame(rownames(df_skewness)))
+df_kurtosis     <-cbind(df_kurtosis,id=data.frame(rownames(df_kurtosis)))
 
                     
 # For each signal, I have all the frequency_ids as collumns.
