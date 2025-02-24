@@ -102,6 +102,7 @@ df_median       <-cbind(df_median,data.frame(id=rownames(df_median)))
 df_sd           <-cbind(df_sd,data.frame(id=rownames(df_sd)))
 df_skewness     <-cbind(df_skewness,data.frame(id=rownames(df_skewness)))
 df_kurtosis     <-cbind(df_kurtosis,data.frame(id=rownames(df_kurtosis)))
+
                     
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
@@ -134,16 +135,17 @@ colnames(melt_df_skewness) <-c("id","sw_id","value")
 colnames(melt_df_kurtosis) <-c("id","sw_id","value")
 
 # Add a collumn to set the type of metric
+# Add a collumn to set the type of metric
 melt_df_min$metric        <-"min"
 melt_df_max$metric        <-"max"
 melt_df_mean$metric       <-"mean"
+melt_df_median$metric     <-"median"
+melt_df_sd$metric         <-"sd"
 melt_df_skewness$metric   <-"skewness"
 melt_df_kurtosis$metric   <-"kurtosis"
-melt_df_sd$metric         <-"sd"
-melt_df_median            <-"median"
 
 # Melt all the metric in one
-melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_df_skewness,melt_df_skewness,melt_df_kurtosis,melt_df_sd)
+melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_df_sd,melt_df_skewness,melt_df_kurtosis)
 
 # One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
 # one measure per plot in the panel.
