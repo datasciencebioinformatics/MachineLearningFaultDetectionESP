@@ -16,7 +16,7 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
-all_signal_statistical_indicators=data.frame(id=c(),amplitude=c(),min=c(),max=c(),median=c(),sd=c(),skewness=c(),kurtosis=c())
+all_signal_statistical_indicators=data.frame(id=c(),amplitude=c(),min=c(),max=c(),median=c(),mean=c(),sd=c(),skewness=c(),kurtosis=c())
 
 # Vector to store the frequencies_id
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
@@ -43,7 +43,19 @@ for (signal_id in rownames(spectrum_features_merged))
   # For each signal, there will be a vector containing results
   # the resulting vector has the same size of the input amplitude_vector
   # df_signa_statistical_indicators of the signal
-  df_signa_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,amplitude=as.vector(unlist(amplitude_vector)),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
+  df_signa_statistical_indicators<rbind(all_signal_statistical_indicators,data.frame(id=signal_id,amplitude=as.vector(unlist(amplitude_vector)),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),mean=as.vector(SlidingWindows$mean),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
 }
 # For each signal, I have all the frequency_ids as collumns.
-# and in each collumn I have the folllowing
+# and in each collumn I have the folllowing information for each slidding window:
+# min      : mimuim amplitude value wihing the slidding windows
+# max      : maximum amplitude value wihing the slidding windows
+# mean     : mean amplitude value wihing the slidding windows
+# median   : mean amplitude value wihing the slidding windows
+# skewness : skewness amplitude value wihing the slidding windows
+# kurtosis : kurtosis amplitude value wihing the slidding windows
+
+
+
+
+
+
