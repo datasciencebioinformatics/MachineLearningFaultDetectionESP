@@ -76,22 +76,20 @@ rownames(df_sd)        <-rownames(spectrum_features_merged)
 rownames(df_skewness)  <-rownames(spectrum_features_merged)
 rownames(df_kurtosis)  <-rownames(spectrum_features_merged)
 
-df_min$id          <-cbind(df_max,min=data.frame(rownames(df_min))
-df_max$id          <-cbind(df_max,min=data.frame(rownames(df_max))
-df_mean$id         <-cbind(df_max,min=data.frame(rownames(df_mean))
-df_median$id       <-cbind(df_max,min=data.frame(rownames(df_mean))
-df_sd$id           <-cbind(df_sd,median=data.frame(rownames(df_sd))
-df_skewness$id     <-cbind(skewness,median=data.frame(rownames(df_skewness))
-df_kurtosis$id     <-cbind(kurtosis,median=data.frame(rownames(df_kurtosis))
+df_min<-data.frame(df_min)
+
+
+
+
+df_min             <-cbind(df_max,data.frame(min=rownames(df_min)))
+df_max$id          <-cbind(df_max,min=data.frame(rownames(df_max)))
+df_mean$id         <-cbind(df_max,min=data.frame(rownames(df_mean)))
+df_median$id       <-cbind(df_max,min=data.frame(rownames(df_mean)))
+df_sd$id           <-cbind(df_sd,median=data.frame(rownames(df_sd)))
+df_skewness$id     <-cbind(skewness,median=data.frame(rownames(df_skewness)))
+df_kurtosis$id     <-cbind(kurtosis,median=data.frame(rownames(df_kurtosis)))
 
                     
-df_mean$id<-rownames(df_mean)
-df_median$id<-rownames(df_median)
-df_sd$id    <-rownames(df_sd)
-df_skewness$id<-rownames(df_skewness)
-df_kurtosis$id<-rownames(df_kurtosis)
-
-
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
 # min      : mimuim amplitude value wihing the slidding windows
