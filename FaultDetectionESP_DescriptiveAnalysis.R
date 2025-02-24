@@ -23,6 +23,7 @@ ENDNG_IDX_POS     = 6100
 
 # Frequency_id
 frequency_id<-frequency_id[1:6100]
+
 #####################################################################################################################################
 # Start a template data.frame
 # Vector to store amplitude for the frequency vector
@@ -84,7 +85,7 @@ df_sd         <-data.frame(df_sd)
 df_skewness   <-data.frame(df_skewness)
 df_kurtosis   <-data.frame(df_kurtosis)
 
-# Convert all to data.frame
+# Set colnames
 colnames(df_min)        <-1:length(SlidingWindows$min)
 colnames(df_max)        <-1:length(SlidingWindows$min)
 colnames(df_mean)       <-1:length(SlidingWindows$min)
@@ -95,13 +96,13 @@ colnames(df_kurtosis)   <-1:length(SlidingWindows$min)
 
 # Add collumns data.frame 
 df_min          <-cbind(df_min,data.frame(id=rownames(df_min)))
-df_max          <-cbind(df_max,id=data.frame(id=rownames(df_max)))
-df_mean         <-cbind(df_mean,id=data.frame(id=rownames(df_mean)))
-df_median       <-cbind(df_median,id=data.frame(id=rownames(df_median)))
+df_max          <-cbind(df_max,data.frame(id=rownames(df_max)))
+df_mean         <-cbind(df_mean,data.frame(id=rownames(df_mean)))
+df_median       <-cbind(df_median,data.frame(id=rownames(df_median)))
 df_sd           <-cbind(df_sd,data.frame(id=rownames(df_sd)))
 df_skewness     <-cbind(df_skewness,data.frame(id=rownames(df_skewness)))
 df_kurtosis     <-cbind(df_kurtosis,data.frame(id=rownames(df_kurtosis)))
-
+                    
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
 # min      : mimuim amplitude value wihing the slidding windows
