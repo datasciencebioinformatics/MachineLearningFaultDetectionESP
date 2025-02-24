@@ -63,8 +63,10 @@ for (signal_id in rownames(spectrum_features_merged))
   df_median   <-rbind(df_median,as.vector(SlidingWindows$median))
   df_sd       <-rbind(df_sd,as.vector(SlidingWindows$sd))
   df_skewness <-rbind(df_skewness,as.vector(SlidingWindows$skewness))
-  df_kurtosis <-rb/ind(df_kurtosis,as.vector(SlidingWindows$kurtosis))   
+  df_kurtosis <-rbind(df_kurtosis,as.vector(SlidingWindows$kurtosis))   
 }
+#########################################################################################################
+# Preparation of data.frame with the statistical indicators
 # Set rownames
 rownames(df_min)       <-rownames(spectrum_features_merged)
 rownames(df_max)       <-rownames(spectrum_features_merged)
@@ -73,6 +75,22 @@ rownames(df_median)    <-rownames(spectrum_features_merged)
 rownames(df_sd)        <-rownames(spectrum_features_merged)
 rownames(df_skewness)  <-rownames(spectrum_features_merged)
 rownames(df_kurtosis)  <-rownames(spectrum_features_merged)
+
+df_min$id          <-cbind(df_max,min=data.frame(rownames(df_min))
+df_max$id          <-cbind(df_max,min=data.frame(rownames(df_max))
+df_mean$id         <-cbind(df_max,min=data.frame(rownames(df_mean))
+df_median$id       <-cbind(df_max,min=data.frame(rownames(df_mean))
+df_sd$id           <-cbind(df_sd,median=data.frame(rownames(df_sd))
+df_skewness$id     <-cbind(skewness,median=data.frame(rownames(df_skewness))
+df_kurtosis$id     <-cbind(kurtosis,median=data.frame(rownames(df_kurtosis))
+
+                    
+df_mean$id<-rownames(df_mean)
+df_median$id<-rownames(df_median)
+df_sd$id    <-rownames(df_sd)
+df_skewness$id<-rownames(df_skewness)
+df_kurtosis$id<-rownames(df_kurtosis)
+
 
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
@@ -118,3 +136,26 @@ melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_
 
 # One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
 # one measure per plot in the panel.
+#########################################################################################################
+
+
+# The spectrum_signals table must be melt. 
+# The id must be kept to identity each signal.
+# Melt by multiple ids
+melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label","esp_id_label"))
+
+# Rename collumn
+colnames(melt_spectrum_signals)<-c("id","esp_id","label","esp_id_label","frequency_id","amplitude")
+
+# Each line represents a signal.
+# For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
+# Therefore, two collumns are needed, x for the singal and y for the amplitude.
+
+# Plot the raw data
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(esp_id)))+ geom_line(aes(group=id))+ facet_grid(vars(label)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Raw data") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id)))
+
+# Plot_raw_vibration_data.png               
+png(filename=paste(output_dir,"Plot_raw_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+  ggplot2_raw_data
+dev.off()
+
