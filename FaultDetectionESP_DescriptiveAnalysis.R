@@ -68,13 +68,13 @@ for (signal_id in rownames(spectrum_features_merged))
 #########################################################################################################
 # Preparation of data.frame with the statistical indicators
 # Set rownames
-rownames(df_min)       <-spectrum_features_merged$signal_id
-rownames(df_max)       <-spectrum_features_merged$signal_id
-rownames(df_mean)      <-spectrum_features_merged$signal_id
-rownames(df_median)    <-spectrum_features_merged$signal_id
-rownames(df_sd)        <-spectrum_features_merged$signal_id
-rownames(df_skewness)  <-spectrum_features_merged$signal_id
-rownames(df_kurtosis)  <-spectrum_features_merged$signal_id
+rownames(df_min)       <-spectrum_features_merged$signal_id[1:length(rownames(df_min))]
+rownames(df_max)       <-spectrum_features_merged$signal_id[1:length(rownames(df_max))]
+rownames(df_mean)      <-spectrum_features_merged$signal_id[1:length(rownames(df_mean))]
+rownames(df_median)    <-spectrum_features_merged$signal_id[1:length(rownames(df_median))]
+rownames(df_sd)        <-spectrum_features_merged$signal_id[1:length(rownames(df_sd))]
+rownames(df_skewness)  <-spectrum_features_merged$signal_id[1:length(rownames(df_skewness))]
+rownames(df_kurtosis)  <-spectrum_features_merged$signal_id[1:length(rownames(df_kurtosis))]
 
 # Convert all to data.frame
 df_min        <-data.frame(df_min)
