@@ -65,6 +65,14 @@ for (signal_id in rownames(spectrum_features_merged))
   df_skewness <-rbind(df_skewness,as.vector(SlidingWindows$skewness))
   df_kurtosis <-rbind(df_kurtosis,as.vector(SlidingWindows$kurtosis))   
 }
+# Set rownames
+rownames(df_min)       <-signal_id
+rownames(df_max)       <-signal_id
+rownames(df_mean)      <-signal_id
+rownames(df_median)    <-signal_id
+rownames(df_sd)        <-signal_id
+rownames(df_skewness)  <-signal_id
+rownames(df_kurtosis)  <-signal_id
 
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
@@ -76,6 +84,8 @@ for (signal_id in rownames(spectrum_features_merged))
 # kurtosis : kurtosis amplitude value wihing the slidding windows
 # First, I must split the df_signa_statistical_indicators into different data.frames.
 # Start a template data.frame
-m <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(all_signal_statistical_indicators$id)))
+
+
+
 
 
