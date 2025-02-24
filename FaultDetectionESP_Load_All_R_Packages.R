@@ -20,6 +20,7 @@ library("ggpubr")
 library("gridExtra")
 library("gsignal")
 library("pracma")
+library("SlidingWindows")
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
