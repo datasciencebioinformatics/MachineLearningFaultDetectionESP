@@ -23,7 +23,6 @@ ENDNG_IDX_POS     = 6100
 
 # Frequency_id
 frequency_id<-frequency_id[1:6100]
-
 #####################################################################################################################################
 # Start a template data.frame
 # Vector to store amplitude for the frequency vector
@@ -84,6 +83,15 @@ df_median     <-data.frame(df_median)
 df_sd         <-data.frame(df_sd)
 df_skewness   <-data.frame(df_skewness)
 df_kurtosis   <-data.frame(df_kurtosis)
+
+# Convert all to data.frame
+colnames(df_min)        <-1:length(SlidingWindows$min)
+colnames(df_max)        <-1:length(SlidingWindows$min)
+colnames(df_mean)       <-1:length(SlidingWindows$min)
+colnames(df_median)     <-1:length(SlidingWindows$min)
+colnames(df_sd)         <-1:length(SlidingWindows$min)
+colnames(df_skewness)   <-1:length(SlidingWindows$min)
+colnames(df_kurtosis)   <-1:length(SlidingWindows$min)
 
 # Add collumns data.frame 
 df_min          <-cbind(df_min,id=data.frame(min=rownames(df_min)))
