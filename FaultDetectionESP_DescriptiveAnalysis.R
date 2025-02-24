@@ -45,3 +45,5 @@ for (signal_id in rownames(spectrum_features_merged))
   # df_signa_statistical_indicators of the signal
   df_signa_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,amplitude=as.vector(unlist(amplitude_vector)),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
 }
+# For each signal, I have all the frequency_ids as collumns.
+# and in each collumn I have the folllowing
