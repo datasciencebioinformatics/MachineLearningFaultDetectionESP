@@ -38,7 +38,7 @@ for (signal_id in rownames(spectrum_features_merged))
   # Add the results for the signal
   # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
   # this for an interval of size w
-  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 50, skewness = "moment", kurtosis = "moment")
+  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
   
   # statistical indicators
   # "w"        "min"      "max"      "mean"     "median"   "sd"       "skewness" "kurtosis"  
