@@ -45,7 +45,7 @@ for (signal_id in rownames(spectrum_features_merged))
   # For each signal, there will be a vector containing results
   # the resulting vector has the same size of the input amplitude_vector
   # df_signa_statistical_indicators of the signal
-  df_signa_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,SlidingWindows=1:length(SlidingWindows$min),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),mean=as.vector(SlidingWindows$mean),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
+  all_signal_statistical_indicators<-rbind(all_signal_statistical_indicators,data.frame(id=signal_id,SlidingWindows=1:length(SlidingWindows$min),min=as.vector(SlidingWindows$min),max=as.vector(SlidingWindows$max),median=as.vector(SlidingWindows$median),mean=as.vector(SlidingWindows$mean),sd=as.vector(SlidingWindows$sd),skewness=as.vector(SlidingWindows$skewness),kurtosis=as.vector(SlidingWindows$kurtosis)))
 }
 # For each signal, I have all the frequency_ids as collumns.
 # and in each collumn I have the folllowing information for each slidding window:
