@@ -89,6 +89,7 @@ rownames(df_kurtosis)  <-rownames(spectrum_features_merged)
 # one measure per plot in the panel.
 melt_df_min     <-melt(df_min)
 melt_df_max     <-melt(df_max)
+melt_df_sd      <-melt(df_sd)
 melt_df_mean    <-melt(df_mean)
 melt_df_median  <-melt(df_median)
 melt_df_skewness<-melt(df_skewness)
@@ -97,6 +98,7 @@ melt_df_kurtosis<-melt(df_kurtosis)
 # Set the colnames
 colnames(melt_df_min) <-c("id","sw_id","value")
 colnames(melt_df_max) <-c("id","sw_id","value")
+colnames(melt_df_sd) <-c("id","sw_id","value")
 colnames(melt_df_mean)<-c("id","sw_id","value")
 colnames(melt_df_median)<-c("id","sw_id","value")
 colnames(melt_df_skewness)<-c("id","sw_id","value")
@@ -107,10 +109,12 @@ melt_df_min$metric        <-"min"
 melt_df_max$metric        <-"max"
 melt_df_mean$metric       <-"mean"
 melt_df_skewness$metric   <-"skewness"
-melt_df_median$kurtosis   <-"kurtosis"
+melt_df_kurtosis$metric   <-"kurtosis"
+melt_df_sd$metric         <-"sd"
+melt_df_median            <-"median"
 
-
-
+# Melt all the metric in one
+melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_df_skewness,melt_df_skewness,melt_df_kurtosis,melt_df_sd)
 
 # One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
 # one measure per plot in the panel.
