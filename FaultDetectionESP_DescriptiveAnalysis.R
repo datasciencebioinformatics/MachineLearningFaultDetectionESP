@@ -45,7 +45,7 @@ df_skewness  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(uniqu
 df_kurtosis  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(spectrum_features_merged$id)))
 #####################################################################################################################################
 # For each signal, the amplitude is taken for all frequency_id
-for (signal_id in rownames(spectrum_features_merged))
+for (signal_id in rownames(spectrum_features_merged)[1:10])
 {
   print(as.integer(signal_id))
   
@@ -161,24 +161,49 @@ png(filename=paste(output_dir,"Plot_raw_statistical_indicators.png",sep=""), wid
 dev.off()
 
 #########################################################################################################
+id_min<-unique(intersect(features_signals$id,na.omit(df_min$id)))
+id_max<-unique(intersect(features_signals$id,na.omit(df_max$id)))
+id_median<-unique(intersect(features_signals$id,na.omit(df_median$id)))
+id_mean<-unique(intersect(features_signals$id,na.omit(df_mean$id)))
+id_sd<-unique(intersect(features_signals$id,na.omit(df_sd$id)))
+id_skewness<-unique(intersect(features_signals$id,na.omit(df_skewness$id)))
+id_kurtosis<-unique(intersect(features_signals$id,na.omit(df_kurtosis$id)))
+
+features_signals_min<-features_signals[features_signals$id %in% id_min,]
+features_signals_max<-features_signals[features_signals$id %in% id_max,]
+features_signals_median<-features_signals[features_signals$id %in% id_median,]
+features_signals_mean<-features_signals[features_signals$id %in% id_mean,]
+features_signals_sd<-features_signals[features_signals$id %in% id_sd,]
+features_signals_skewness<-features_signals[features_signals$id %in% id_skewness,]
+features_signals_kurtosis<-features_signals[features_signals$id %in% id_kurtosis,]
+
 # center and scale the data before
+df_min<-na.omit(df_min[,1:length(SlidingWindows$min)])
+df_max<-na.omit(df_max[,1:length(SlidingWindows$max)])
+df_median<-na.omit(df_median[,1:length(SlidingWindows$median)])
+df_mean<-na.omit(df_mean[,1:length(SlidingWindows$mean)])
+df_sd<-na.omit(df_sd[,1:length(SlidingWindows$sd)])
+df_skewness<-na.omit(df_skewness[,1:length(SlidingWindows$skewness)])
+df_kurtosis<-na.omit(df_kurtosis[,1:length(SlidingWindows$kurtosis)])
+
+
 # calculation the components
-model.pca.min          <- prcomp(df_min[,1:length(SlidingWindows$min)],center = FALSE, scale =FALSE, rank. = 4)
-model.pca.max          <- prcomp(df_max[,1:length(SlidingWindows$max)],center = FALSE, scale =FALSE, rank. = 4)
-model.pca.median       <- prcomp(df_median[,1:length(SlidingWindows$median)],center = FALSE, scale =FALSE, rank. = 4)
-model.pca.mean         <- prcomp(df_mean[,1:length(SlidingWindows$mean)],center = FALSE, scale =FALSE, rank. = 4)
-model.pca.sd           <- prcomp(df_sd[,1:length(SlidingWindows$sd)],center = FALSE, scale =FALSE, rank. = 4)
-model.pca.skewness     <- prcomp(df_skewness[,1:length(SlidingWindows$skewness)],center = FALSE, scale =FALSE, rank. = 4)
-model.pca.kurtosis     <- prcomp(df_kurtosis[,1:length(SlidingWindows$kurtosis)],center = FALSE, scale =FALSE, rank. = 4)
+model.pca.min          <- prcomp(df_min,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.max          <- prcomp(df_max,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.median       <- prcomp(df_median,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.mean         <- prcomp(df_mean,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.sd           <- prcomp(df_sd,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.skewness     <- prcomp(df_skewness,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.kurtosis     <- prcomp(df_kurtosis,center = FALSE, scale =FALSE, rank. = 4)
 
 # Plot pca's
-PCA_of_min        <-autoplot(model.pca.min, data = features_signals[which(features_signals$id %in% as.integer(df_min$id)),], colour = 'label') + theme_bw() + ggtitle("min")
-PCA_of_max        <-autoplot(model.pca.max, data = features_signals[which(features_signals$id %in% as.integer(df_max$id)),], colour = 'label') + theme_bw()  + ggtitle("max")
-PCA_of_median     <-autoplot(model.pca.median, data = features_signals[which(features_signals$id %in% as.integer(df_median$id)),], colour = 'label') + theme_bw() + ggtitle("median")
-PCA_of_mean       <-autoplot(model.pca.mean, data = features_signals[which(features_signals$id %in% as.integer(df_mean$id)),], colour = 'label') + theme_bw()  + ggtitle("mean")
-PCA_of_sd         <-autoplot(model.pca.sd, data = features_signals[which(features_signals$id %in% as.integer(df_sd$id)),], colour = 'label') + theme_bw()  + ggtitle("sd")
-PCA_of_skewness   <-autoplot(model.pca.skewness, data = features_signals[which(features_signals$id %in% as.integer(df_skewness$id)),], colour = 'label') + theme_bw()  + ggtitle("skewness")
-PCA_of_kurtosis   <-autoplot(model.pca.kurtosis, data = features_signals[which(features_signals$id %in% as.integer(df_kurtosis$id)),], colour = 'label') + theme_bw()  + ggtitle("kurtosis")
+PCA_of_min        <-autoplot(model.pca.min, data = features_signals_min, colour = 'label') + theme_bw() + ggtitle("min")
+PCA_of_max        <-autoplot(model.pca.max, data = features_signals_max, colour = 'label') + theme_bw()  + ggtitle("max")
+PCA_of_median     <-autoplot(model.pca.median, data = features_signals_median, colour = 'label') + theme_bw() + ggtitle("median")
+PCA_of_mean       <-autoplot(model.pca.mean, data = features_signals_mean, colour = 'label') + theme_bw()  + ggtitle("mean")
+PCA_of_sd         <-autoplot(model.pca.sd, data = features_signals_sd, colour = 'label') + theme_bw()  + ggtitle("sd")
+PCA_of_skewness   <-autoplot(model.pca.skewness, data = features_signals_skewness, colour = 'label') + theme_bw()  + ggtitle("skewness")
+PCA_of_kurtosis   <-autoplot(model.pca.kurtosis, data = features_signals_kurtosis, colour = 'label') + theme_bw()  + ggtitle("kurtosis")
 
 
 # Plot_raw_vibration_data.png               
@@ -186,5 +211,8 @@ png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), wid
   grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
 dev.off()
 #########################################################################################################
+
+
+
 
 
