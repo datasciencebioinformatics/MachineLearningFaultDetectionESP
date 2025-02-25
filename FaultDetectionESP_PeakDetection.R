@@ -33,7 +33,7 @@ for (signal_id in rownames(spectrum_features_merged))
   print(signal_id)
   
   # Vector to store amplitude for the frequency vector
-  amplitude_vector<-as.vector(unlist(spectrum_signals[1,]))
+  amplitude_vector<-as.vector(unlist(spectrum_signals[signal_id,]))
   
   # Calculate the peaks
   peaks<-findpeaks(amplitude_vector,npeaks=3)
@@ -55,8 +55,11 @@ model.pca.index      <- prcomp(df_index_peaks    ,center = FALSE, scale =FALSE, 
 model.pca.amplitude  <- prcomp(df_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
 
 # Plot pca's
-PCA_of_index     <-autoplot(model.pca.index, data = spectrum_features_merged, colour = 'label') + theme_bw() + ggtitle("min")
-PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()  + ggtitle("max")
-
-
+PCA_of_index     <-autoplot(model.pca.index, data = spectrum_features_merged, colour = 'label') + theme_bw() + ggtitle("index")
+PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()  + ggtitle("amplitude")
+#########################################################################################################
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
+  grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "Summary of vibration data") 
+dev.off()
 
