@@ -66,7 +66,6 @@ for (signal_id in rownames(spectrum_features_merged))
   df_skewness <-rbind(df_skewness,as.vector(SlidingWindows$skewness))
   df_kurtosis <-rbind(df_kurtosis,as.vector(SlidingWindows$kurtosis))   
 }
-#########################################################################################################
 # Preparation of data.frame with the statistical indicators
 # Set rownames
 rownames(df_min)       <-spectrum_features_merged$signal_id[1:length(rownames(df_min))]
@@ -147,6 +146,10 @@ melt_df_kurtosis$metric   <-"kurtosis"
 
 # Melt all the metric in one
 melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_df_sd,melt_df_skewness,melt_df_kurtosis)
+
+#########################################################################################################
+write.csv(melt_df_metrics,"/home/felipe/Downloads/melt_df_metrics.csv", row.names = FALSE)
+#########################################################################################################
 
 # One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
 # one measure per plot in the panel.
