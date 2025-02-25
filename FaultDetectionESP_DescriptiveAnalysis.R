@@ -211,6 +211,3 @@ png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), wid
   grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
 dev.off()
 #########################################################################################################
-
-
-
