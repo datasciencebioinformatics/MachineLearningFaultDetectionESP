@@ -55,7 +55,7 @@ for (signal_id in rownames(spectrum_features_merged))
   # Add the results for the signal
   # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
   # this for an interval of size w
-  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
+  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 50, skewness = "moment", kurtosis = "moment")
 
   # statistical indicators
   df_min      <-rbind(df_min,as.vector(SlidingWindows$min))
@@ -147,6 +147,8 @@ melt_df_kurtosis$metric   <-"kurtosis"
 # Melt all the metric in one
 melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_df_sd,melt_df_skewness,melt_df_kurtosis)
 #########################################################################################################
+# One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
+# one measure per plot in the panel.
 #########################################################################################################
 # Plot the raw data
 ggplot2_raw_data<-ggplot(data = melt_df_metrics, aes(x = as.integer(sw_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(metric), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows")
@@ -155,6 +157,7 @@ ggplot2_raw_data<-ggplot(data = melt_df_metrics, aes(x = as.integer(sw_id), y = 
 png(filename=paste(output_dir,"Plot_raw_statistical indicators.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
+
 #########################################################################################################
 # center and scale the data before
 # calculation the components
@@ -181,4 +184,3 @@ png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), wid
   grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
 dev.off()
 #########################################################################################################
-
