@@ -229,7 +229,7 @@ PCA_of_kurtosis   <-autoplot(model.pca.kurtosis, data = features_signals_kurtosi
 
 
 # Plot_raw_vibration_data.png               
-png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_pca_statistical_indicators.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
 dev.off()
 #########################################################################################################
