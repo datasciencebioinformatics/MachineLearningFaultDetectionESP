@@ -15,3 +15,39 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
+print(signal_id)
+
+
+
+#########################################################################################################
+# Initiate a data.frame for the results of all signals
+df_index_peaks    <-data.frame(peak1_index=c(),peak2_index=c(),peak3_index=c())
+df_amplitude_peaks<-data.frame(peak1_ampl=c(),peak2_ampl=c(),peak3_ampl=c())
+
+# Vector to store the frequencies_id
+frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
+
+# For each signal, the amplitude is taken for all frequency_id
+for (signal_id in rownames(spectrum_features_merged))
+{
+  print(signal_id)
+  
+  # Vector to store amplitude for the frequency vector
+  amplitude_vector<-as.vector(unlist(spectrum_signals[1,]))
+  
+  # Calculate the peaks
+  peaks<-findpeaks(amplitude_vector,npeaks=3)
+
+  # Take the indexes and the amplitude
+  indexes<-data.frame(t(peaks[,4]))
+  amplitude<-data.frame(t(peaks[,1]))
+
+  # Set the colnames
+  colnames(indexes)   <-c("peak1","peak2","peak3")
+  colnames(amplitude) <-c("peak1","peak2","peak3")
+
+  df_index_peaks<-rbind(df_index_peaks,indexes)
+  df_index_peaks<-rbind(df_amplitude_peaks,amplitude)
+}
+
+
