@@ -59,7 +59,6 @@ PCA_of_index     <-autoplot(model.pca.index, data = spectrum_features_merged, co
 PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()  + ggtitle("amplitude")
 #########################################################################################################
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_summary_PCA_of_spectral_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
-  grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "Summary of vibration data") 
+png(filename=paste(output_dir,"Plot_summary_PCA_of_peaks_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
+  grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "PCA for 3 peaks per signal") 
 dev.off()
-
