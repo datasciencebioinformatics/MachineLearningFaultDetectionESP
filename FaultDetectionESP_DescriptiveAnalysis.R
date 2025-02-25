@@ -19,8 +19,8 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # Constant to define end position
-STARTING_IDX_POS     = 001
-ENDING_IDX_POS     = 500
+STARTING_IDX_POS     = 101
+ENDING_IDX_POS     = 200
 
 # Frequency_id
 frequency_id<-frequency_id[STARTING_IDX_POS:ENDING_IDX_POS]
@@ -33,7 +33,7 @@ amplitude_vector<-spectrum_features_merged[1,frequency_id]
 # Add the results for the signal
 # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
 # this for an interval of size w
-SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 50, skewness = "moment", kurtosis = "moment")
+SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 10, skewness = "moment", kurtosis = "moment")
 
 # Template data.frame
 df_min       <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(spectrum_features_merged$id)))
@@ -55,7 +55,7 @@ for (signal_id in rownames(spectrum_features_merged))
   # Add the results for the signal
   # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
   # this for an interval of size w
-  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 50, skewness = "moment", kurtosis = "moment")
+  SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 10, skewness = "moment", kurtosis = "moment")
 
   # statistical indicators  
   df_min[as.integer(signal_id),]<-as.vector(SlidingWindows$min)
@@ -92,7 +92,7 @@ colnames(df_mean)      <- 1:dim(df_mean)[2]
 colnames(df_median)    <- 1:dim(df_median)[2]
 colnames(df_sd)        <- 1:dim(df_sd)[2]
 colnames(df_skewness)  <- 1:dim(df_skewness)[2]
-colnames(df_kurtosis)  <- 1:dim(df_min)[2]
+colnames(df_kurtosis)  <- 1:dim(df_kurtosis)[2]
 
 
 # Add collumns data.frame 
@@ -176,6 +176,14 @@ features_signals_mean<-features_signals[features_signals$id %in% id_mean,]
 features_signals_sd<-features_signals[features_signals$id %in% id_sd,]
 features_signals_skewness<-features_signals[features_signals$id %in% id_skewness,]
 features_signals_kurtosis<-features_signals[features_signals$id %in% id_kurtosis,]
+
+df_min<-df_min[df_min$id %in% id_min,]
+df_max<-df_max[df_max$id %in% id_max,]
+df_median<-df_median[df_median$id %in% id_median,]
+df_mean<-df_mean[df_mean$id %in% id_mean,]
+df_sd<-df_sd[df_sd$id %in% id_sd,]
+df_skewness<-df_skewness[df_skewness$id %in% id_skewness,]
+df_kurtosis<-df_kurtosis[df_kurtosis$id %in% id_kurtosis,]
 
 # center and scale the data before
 df_min<-na.omit(df_min[,1:length(SlidingWindows$min)])
