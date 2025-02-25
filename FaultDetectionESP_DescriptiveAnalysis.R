@@ -149,6 +149,7 @@ melt_df_metrics<-rbind(melt_df_min,melt_df_max,melt_df_mean,melt_df_median,melt_
 #########################################################################################################
 # One painel with the pca plots for all the measures min,max,mean,median,skewness,kurtosis
 # one measure per plot in the panel.
+
 #########################################################################################################
 # Plot the raw data
 ggplot2_raw_data<-ggplot(data = melt_df_metrics, aes(x = as.integer(sw_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(metric), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows")
