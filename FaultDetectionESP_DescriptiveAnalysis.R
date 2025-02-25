@@ -33,7 +33,7 @@ amplitude_vector<-spectrum_features_merged[1,frequency_id]
 # Add the results for the signal
 # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
 # this for an interval of size w
-SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 10, skewness = "moment", kurtosis = "moment")
+SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 50, skewness = "moment", kurtosis = "moment")
 
 # Template data.frame
 df_min       <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(spectrum_features_merged$id)))
@@ -211,8 +211,6 @@ png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), wid
   grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
 dev.off()
 #########################################################################################################
-
-
 
 
 
