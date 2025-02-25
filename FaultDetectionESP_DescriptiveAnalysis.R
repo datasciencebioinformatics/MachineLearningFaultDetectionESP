@@ -19,10 +19,11 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # Constant to define end position
-ENDNG_IDX_POS     = 6100
+STARTING_IDX_POS     = 001
+ENDING_IDX_POS     = 500
 
 # Frequency_id
-frequency_id<-frequency_id[1:6100]
+frequency_id<-frequency_id[STARTING_IDX_POS:ENDING_IDX_POS]
 
 #####################################################################################################################################
 # Start a template data.frame
@@ -32,7 +33,7 @@ amplitude_vector<-spectrum_features_merged[1,frequency_id]
 # Add the results for the signal
 # It takes the amplitude vector as input (time-series) and calculate w, min, max, mean, median, sd and stat
 # this for an interval of size w
-SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 100, skewness = "moment", kurtosis = "moment")
+SlidingWindows<-descritive.SlidingWindows(as.vector(unlist(amplitude_vector)), w = 10, skewness = "moment", kurtosis = "moment")
 
 # Template data.frame
 df_min       <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(spectrum_features_merged$id)))
