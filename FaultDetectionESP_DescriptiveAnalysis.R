@@ -161,6 +161,9 @@ png(filename=paste(output_dir,"Plot_raw_statistical_indicators.png",sep=""), wid
 dev.off()
 
 #########################################################################################################
+
+
+#########################################################################################################
 id_min<-unique(intersect(features_signals$id,na.omit(df_min$id)))
 id_max<-unique(intersect(features_signals$id,na.omit(df_max$id)))
 id_median<-unique(intersect(features_signals$id,na.omit(df_median$id)))
@@ -194,7 +197,18 @@ df_sd<-na.omit(df_sd[,1:length(SlidingWindows$sd)])
 df_skewness<-na.omit(df_skewness[,1:length(SlidingWindows$skewness)])
 df_kurtosis<-na.omit(df_kurtosis[,1:length(SlidingWindows$kurtosis)])
 
+##############################################################################
+# Sample from the vector 'a' 1 element.
+selected_positions<-as.integer(sample(1:length(df_min),10 ))
 
+df_min<-df_min[,selected_positions]
+df_max<-df_max[,selected_positions]
+df_median<-df_median[,selected_positions]
+df_mean<-df_mean[,selected_positions]
+df_sd<-df_sd[,selected_positions]
+df_skewness<-df_skewness[,selected_positions]
+df_kurtosis<-df_kurtosis[,selected_positions]
+##############################################################################
 # calculation the components
 model.pca.min          <- prcomp(df_min,center = FALSE, scale =FALSE, rank. = 4)
 model.pca.max          <- prcomp(df_max,center = FALSE, scale =FALSE, rank. = 4)
@@ -219,3 +233,4 @@ png(filename=paste(output_dir,"Plot_pca_statistical indicators.png",sep=""), wid
   grid.arrange(PCA_of_min,PCA_of_max,PCA_of_median,PCA_of_mean,PCA_of_sd,PCA_of_skewness,PCA_of_kurtosis, ncol = 3, nrow = 3, top = "Descritive statistics with sliding windows")
 dev.off()
 #########################################################################################################
+
