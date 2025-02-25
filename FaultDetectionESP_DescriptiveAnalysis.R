@@ -45,7 +45,7 @@ df_skewness  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(uniqu
 df_kurtosis  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(spectrum_features_merged$id)))
 #####################################################################################################################################
 # For each signal, the amplitude is taken for all frequency_id
-for (signal_id in rownames(spectrum_features_merged)[1:10])
+for (signal_id in rownames(spectrum_features_merged))
 {
   print(as.integer(signal_id))
   
