@@ -47,7 +47,16 @@ for (signal_id in rownames(spectrum_features_merged))
   colnames(amplitude) <-c("peak1","peak2","peak3")
 
   df_index_peaks<-rbind(df_index_peaks,indexes)
-  df_index_peaks<-rbind(df_amplitude_peaks,amplitude)
+  df_amplitude_peaks<-rbind(df_amplitude_peaks,amplitude)
 }
+
+# calculation the components
+model.pca.index      <- prcomp(df_index_peaks    ,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.amplitude  <- prcomp(df_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
+
+# Plot pca's
+PCA_of_index     <-autoplot(model.pca.index, data = spectrum_features_merged, colour = 'label') + theme_bw() + ggtitle("min")
+PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()  + ggtitle("max")
+
 
 
