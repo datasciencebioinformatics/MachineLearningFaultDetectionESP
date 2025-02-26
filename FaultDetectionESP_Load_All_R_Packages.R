@@ -22,7 +22,7 @@ library("gsignal")
 library("pracma")
 library("SlidingWindows")
 library("photobiology")
-
+library("doBy")
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
