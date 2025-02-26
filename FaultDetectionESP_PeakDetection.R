@@ -15,10 +15,9 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
-print(signal_id)
-
-
-
+# Constant to define end position
+STARTING_IDX_POS     = 101
+ENDING_IDX_POS     = 6000
 #########################################################################################################
 # Initiate a data.frame for the results of all signals
 df_index_peaks    <-data.frame(peak1_index=c(),peak2_index=c(),peak3_index=c())
@@ -33,10 +32,17 @@ for (signal_id in rownames(spectrum_features_merged))
   print(signal_id)
   
   # Vector to store amplitude for the frequency vector
-  amplitude_vector<-as.vector(unlist(spectrum_signals[signal_id,]))
+  amplitude_vector<-as.vector(unlist(spectrum_signals[signal_id,STARTING_IDX_POS:ENDING_IDX_POS]))
   
   # Calculate the peaks
   peaks<-findpeaks(amplitude_vector,npeaks=3)
+
+  # If number of dimensions shows less than three rows
+  if(dim(peaks)[1]<3)
+  {
+    # peaks
+    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+  }
 
   # Take the indexes and the amplitude
   indexes<-data.frame(t(peaks[,4]))
@@ -46,10 +52,15 @@ for (signal_id in rownames(spectrum_features_merged))
   colnames(indexes)   <-c("peak1","peak2","peak3")
   colnames(amplitude) <-c("peak1","peak2","peak3")
 
-    df_index_peaks<-rbind(df_index_peaks,indexes)
+  df_index_peaks<-rbind(df_index_peaks,indexes)
   df_amplitude_peaks<-rbind(df_amplitude_peaks,amplitude)
 }
+#########################################################################################################
+# The peak position has to be shifted minus STARTING_IDX_POS
+indexes
 
+
+#########################################################################################################
 # calculation the components
 model.pca.index      <- prcomp(df_index_peaks    ,center = FALSE, scale =FALSE, rank. = 4)
 model.pca.amplitude  <- prcomp(df_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
@@ -72,7 +83,7 @@ df_index_peaks$id<-rownames(df_index_peaks)
 spectrum_selected_signals<-sample_n(spectrum_signals, 10)  
 
 #  Selected 10 random signals.
-spectrum_selected_signals[
+# spectrum_selected_signals[
 df_index_peaks<-df_index_peaks[spectrum_selected_signals$id,]
 
 # Merge spectrum_selected
@@ -86,8 +97,7 @@ spectrum_selected_melt<-melt(spectrum_selected_merged,id.vars =c("id","peak1","p
 colnames(spectrum_selected_melt)[5]<-"Frequency_id"
   
 # Plot the raw data
-ggplot2_raw_data<-ggplot(data = spectrum_selected_melt, aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows")
-
+ggplot2_raw_data<-ggplot(data = spectrum_selected_melt, aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows") + xlim(100,5000) + ylim(0,1)
   
 
 
