@@ -38,8 +38,9 @@ for (signal_id in rownames(spectrum_features_merged))
   peaks<-findpeaks(amplitude_vector,npeaks=3,minpeakheight=0.01)
 
   # If functrion returned null
-  if (is.logical(peaks))
-  {  
+  if (!is.logical(peaks))
+  { 
+    # peaks
     peaks<-rbind(peaks,c(-1,-1,-1,-1))    
     peaks<-rbind(peaks,c(-1,-1,-1,-1))    
     peaks<-rbind(peaks,c(-1,-1,-1,-1))    
