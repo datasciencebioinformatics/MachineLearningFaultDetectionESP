@@ -78,7 +78,7 @@ model.pca.amplitude  <- prcomp(filtered_amplitude_peaks,center = FALSE, scale =F
 PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged[rownames(filtered_amplitude_peaks),], colour = 'label') + theme_bw()  + ggtitle("amplitude")
 #########################################################################################################
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_summary_PCA_of_peaks_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_summary_PCA_of_peaks_data.png",sep=""), width = 10, height = 10, res=600, units = "cm")  
   grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "PCA for 3 peaks per signal") 
 dev.off()
 #########################################################################################################
