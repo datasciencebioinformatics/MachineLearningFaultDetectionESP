@@ -69,8 +69,11 @@ for (signal_id in rownames(spectrum_features_merged))
   df_amplitude_peaks<-rbind(df_amplitude_peaks,amplitude)
 }
 #########################################################################################################
+filtered_index_peaks <- df_index_peaks[df$peak2 >= 0, ]
+filtered_index_peaks <- filtered_index_peaks[df$peak3 >= 0, ]
+
 # calculation the components
-model.pca.index      <- prcomp(df_index_peaks    ,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.index      <- prcomp(filtered_index_peaks    ,center = FALSE, scale =FALSE, rank. = 4)
 model.pca.amplitude  <- prcomp(df_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
 
 # Plot pca's
