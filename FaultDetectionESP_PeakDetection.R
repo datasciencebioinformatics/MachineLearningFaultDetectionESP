@@ -1,4 +1,4 @@
-#########################################################################################################
+-#########################################################################################################
 # Load the spectrum file
 spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 
@@ -46,7 +46,7 @@ for (signal_id in rownames(spectrum_features_merged))
   colnames(indexes)   <-c("peak1","peak2","peak3")
   colnames(amplitude) <-c("peak1","peak2","peak3")
 
-  df_index_peaks<-rbind(df_index_peaks,indexes)
+    df_index_peaks<-rbind(df_index_peaks,indexes)
   df_amplitude_peaks<-rbind(df_amplitude_peaks,amplitude)
 }
 
@@ -62,3 +62,33 @@ PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged
 png(filename=paste(output_dir,"Plot_summary_PCA_of_peaks_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
   grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "PCA for 3 peaks per signal") 
 dev.off()
+
+#########################################################################################################
+# Add id to df_index_peak
+df_index_peaks$id<-rownames(df_index_peaks)
+
+#  Plot the first 1000 frequency positions.
+# Printing three rows  
+spectrum_selected_signals<-sample_n(spectrum_signals, 10)  
+
+#  Selected 10 random signals.
+spectrum_selected_signals[
+df_index_peaks<-df_index_peaks[spectrum_selected_signals$id,]
+
+# Merge spectrum_selected
+spectrum_selected_merged<-merge(spectrum_selected_signals,df_index_peaks,by="id")
+
+# Melt data.frame
+spectrum_selected_melt<-melt(spectrum_selected_merged,id.vars =c("id","peak1","peak2","peak3"))  
+
+#########################################################################################################
+# Re-set the colnames
+colnames(spectrum_selected_melt)[5]<-"Frequency_id"
+  
+# Plot the raw data
+ggplot2_raw_data<-ggplot(data = spectrum_selected_melt, aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows")
+
+  
+
+
+
