@@ -1,4 +1,4 @@
--#########################################################################################################
+#########################################################################################################
 # Load the spectrum file
 spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
 
@@ -56,11 +56,6 @@ for (signal_id in rownames(spectrum_features_merged))
   df_amplitude_peaks<-rbind(df_amplitude_peaks,amplitude)
 }
 #########################################################################################################
-# The peak position has to be shifted minus STARTING_IDX_POS
-indexes
-
-
-#########################################################################################################
 # calculation the components
 model.pca.index      <- prcomp(df_index_peaks    ,center = FALSE, scale =FALSE, rank. = 4)
 model.pca.amplitude  <- prcomp(df_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
@@ -77,6 +72,9 @@ dev.off()
 #########################################################################################################
 # Add id to df_index_peak
 df_index_peaks$id<-rownames(df_index_peaks)
+
+# Subselect spectrum_signals
+spectrum_signals_subselection<-spectrum_signals[STARTING_IDX_POS:ENDING_IDX_POS]
 
 #  Plot the first 1000 frequency positions.
 # Printing three rows  
@@ -95,10 +93,15 @@ spectrum_selected_melt<-melt(spectrum_selected_merged,id.vars =c("id","peak1","p
 #########################################################################################################
 # Re-set the colnames
 colnames(spectrum_selected_melt)[5]<-"Frequency_id"
-  
+
+
+spectrum_selected_melt
 # Plot the raw data
-ggplot2_raw_data<-ggplot(data = spectrum_selected_melt, aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows") + xlim(100,5000) + ylim(0,1)
-  
+ggplot2_raw_data<-ggplot(data = spectrum_selected_melt[spectrum_selected_melt$id==135,], aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows") + xlim(1,6000) + ylim(0,1) + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak1"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak1"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak2"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak2"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak3"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak3"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  
+
+
+
+
 
 
 
