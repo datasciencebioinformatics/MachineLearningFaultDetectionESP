@@ -37,7 +37,7 @@ for (signal_id in rownames(spectrum_features_merged))
   # Calculate the peaks
   #peaks<-findpeaks(amplitude_vector,npeaks=3, sortstr=FALSE,minpeakheight=0.02)
 
-  indexes<-data.frame(t(which.minn(amplitude_vector, 3)))
+  indexes<-data.frame(t(which.maxn(amplitude_vector, 3)))
   amplitude<-data.frame(t(amplitude_vector[as.vector(unlist(indexes))]))
   
 
