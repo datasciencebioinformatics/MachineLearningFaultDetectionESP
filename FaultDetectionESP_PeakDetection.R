@@ -37,21 +37,24 @@ for (signal_id in rownames(spectrum_features_merged))
   # Calculate the peaks
   peaks<-findpeaks(amplitude_vector,npeaks=3,minpeakheight=0.01)
 
+  # If functrion returned null
+  if (is.logical(peaks))
+  {  
+    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+  }
   # If number of dimensions shows less than three rows
-  if(dim(peaks)[1]<2)
+  if((dim(peaks)[1]<3))
   {
     # peaks
     peaks<-rbind(peaks,c(-1,-1,-1,-1))    
-    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
-  }else if(dim(peaks)[1]<3)
-  {
-    # peaks
     peaks<-rbind(peaks,c(-1,-1,-1,-1))    
   }    
-
+  
   # Take the indexes and the amplitude
-  indexes<-data.frame(t(peaks[,2]))
-  amplitude<-data.frame(t(peaks[,1]))
+  indexes<-data.frame(t(peaks[1:3,2]))
+  amplitude<-data.frame(t(peaks[1:3,1]))
 
   # Set the colnames
   colnames(indexes)   <-c("peak1","peak2","peak3")
