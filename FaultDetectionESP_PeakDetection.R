@@ -35,26 +35,25 @@ for (signal_id in rownames(spectrum_features_merged))
   amplitude_vector<-as.vector(unlist(spectrum_signals[signal_id,STARTING_IDX_POS:ENDING_IDX_POS]))
   
   # Calculate the peaks
-  peaks<-findpeaks(amplitude_vector,npeaks=3, sortstr=FALSE,minpeakheight=0.02,minpeakdistance=20)
+  peaks<-findpeaks(amplitude_vector,npeaks=3, sortstr=FALSE,minpeakheight=0.01,minpeakdistance=20)
 
   indexes<-data.frame(t(which.maxn(amplitude_vector, 3)))
   amplitude<-data.frame(t(amplitude_vector[as.vector(unlist(indexes))]))
   
-
   # If functrion returned null
   if (!is.logical(peaks))
   { 
     # peaks
-    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
-    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
-    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+    peaks<-rbind(peaks,c(NA,NA,NA,NA))    
+    peaks<-rbind(peaks,c(NA,NA,NA,NA))    
+    peaks<-rbind(peaks,c(NA,NA,NA,NA))    
   }
   # If number of dimensions shows less than three rows
   if((dim(peaks)[1]<3))
   {
     # peaks
-    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
-    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+    peaks<-rbind(peaks,c(NA,NA,NA,NA))    
+    peaks<-rbind(peaks,c(NA,NA,NA,NA))    
   }    
   
   # Take the indexes and the amplitude
@@ -69,22 +68,19 @@ for (signal_id in rownames(spectrum_features_merged))
   df_amplitude_peaks<-rbind(df_amplitude_peaks,amplitude)
 }
 #########################################################################################################
-filtered_index_peaks <- df_index_peaks[df$peak2 >= 0, ]
-filtered_index_peaks <- filtered_index_peaks[df$peak3 >= 0, ]
+filtered_amplitude_peaks <- df_amplitude_peaks[df_amplitude_peaks$peak2 >= 0, ]
+filtered_amplitude_peaks <- na.omit(filtered_amplitude_peaks[filtered_index_peaks$peak3 >= 0, ])
 
 # calculation the components
-model.pca.index      <- prcomp(filtered_index_peaks    ,center = FALSE, scale =FALSE, rank. = 4)
-model.pca.amplitude  <- prcomp(df_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
+model.pca.amplitude  <- prcomp(filtered_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
 
 # Plot pca's
-PCA_of_index     <-autoplot(model.pca.index, data = spectrum_features_merged, colour = 'label') + theme_bw() + ggtitle("index")
-PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged, colour = 'label') + theme_bw()  + ggtitle("amplitude")
+PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged[rownames(filtered_amplitude_peaks),], colour = 'label') + theme_bw()  + ggtitle("amplitude")
 #########################################################################################################
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_summary_PCA_of_peaks_data.png",sep=""), width = 20, height = 10, res=600, units = "cm")  
   grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "PCA for 3 peaks per signal") 
 dev.off()
-
 #########################################################################################################
 # Add id to df_index_peak
 df_index_peaks$id<-rownames(df_index_peaks)
@@ -116,14 +112,16 @@ spectrum_selected_melt<-melt(spectrum_selected_merged,id.vars =c("id","peak1","p
 # Re-set the colnames
 colnames(spectrum_selected_melt)[5]<-"Frequency_id"
 
-
 # Plot the raw data
-ggplot2_raw_data<-ggplot(data = spectrum_selected_melt[spectrum_selected_melt$id==135,], aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows") + ylim(0,1) + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak1"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak1"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak2"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak2"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak3"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak3"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  
+index=5
 
+# Generate plot
+plot2<-ggplot(data = spectrum_selected_melt[spectrum_selected_melt$id==selected_signals[index],], aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle(paste("Peak detection for signal ",selected_signals[index])) + ylim(0,0.05) 
+plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak1"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak1"], yend = 0.025, colour = "green"), arrow = arrow(length = unit(0.25, "cm"))) 
+plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak2"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak2"], yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))
+plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak3"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak3"], yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))  
 
-
-
-
-
-
-
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_Peak_Detection_Example.png",sep=""), width = 30, height = 20, res=600, units = "cm")  
+  plot2
+dev.off()
