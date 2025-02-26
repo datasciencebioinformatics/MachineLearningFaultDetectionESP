@@ -35,7 +35,7 @@ for (signal_id in rownames(spectrum_features_merged))
   amplitude_vector<-as.vector(unlist(spectrum_signals[signal_id,STARTING_IDX_POS:ENDING_IDX_POS]))
   
   # Calculate the peaks
-  peaks<-findpeaks(amplitude_vector,npeaks=3,minpeakheight=0.01,minpeakdistance=50)
+  peaks<-findpeaks(amplitude_vector,npeaks=3, sortstr=TRUE)
 
   # If functrion returned null
   if (!is.logical(peaks))
