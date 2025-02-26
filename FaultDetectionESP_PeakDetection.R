@@ -35,17 +35,22 @@ for (signal_id in rownames(spectrum_features_merged))
   amplitude_vector<-as.vector(unlist(spectrum_signals[signal_id,STARTING_IDX_POS:ENDING_IDX_POS]))
   
   # Calculate the peaks
-  peaks<-findpeaks(amplitude_vector,npeaks=3)
+  peaks<-findpeaks(amplitude_vector,npeaks=3,minpeakheight=0.01)
 
   # If number of dimensions shows less than three rows
-  if(dim(peaks)[1]<3)
+  if(dim(peaks)[1]<2)
   {
     # peaks
     peaks<-rbind(peaks,c(-1,-1,-1,-1))    
-  }
+    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+  }else if(dim(peaks)[1]<3)
+  {
+    # peaks
+    peaks<-rbind(peaks,c(-1,-1,-1,-1))    
+  }    
 
   # Take the indexes and the amplitude
-  indexes<-data.frame(t(peaks[,4]))
+  indexes<-data.frame(t(peaks[,2]))
   amplitude<-data.frame(t(peaks[,1]))
 
   # Set the colnames
@@ -78,7 +83,7 @@ spectrum_signals_subselection<-spectrum_signals[,STARTING_IDX_POS:ENDING_IDX_POS
 
 #  Plot the first 1000 frequency positions.
 # Printing three rows  
-selected_signals<-sample(rownames(spectrum_signals), 10)  
+selected_signals<-sample(df_index_peaks$id, 10)
 
 #  Selected 10 random signals.
 # spectrum_selected_signals[
@@ -103,6 +108,7 @@ colnames(spectrum_selected_melt)[5]<-"Frequency_id"
 
 # Plot the raw data
 ggplot2_raw_data<-ggplot(data = spectrum_selected_melt[spectrum_selected_melt$id==135,], aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle("Descritive statistics with sliding windows") + ylim(0,1) + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak1"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak1"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak2"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak2"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  + geom_segment(aes(x = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak3"], y = 0.5, xend = spectrum_selected_melt[spectrum_selected_melt$id==135,"peak3"], yend = 0), arrow = arrow(length = unit(0.25, "cm")))  
+
 
 
 
