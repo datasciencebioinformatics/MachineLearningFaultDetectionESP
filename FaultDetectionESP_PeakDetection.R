@@ -27,7 +27,7 @@ df_amplitude_peaks<-data.frame(peak1_ampl=c(),peak2_ampl=c(),peak3_ampl=c())
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # For each signal, the amplitude is taken for all frequency_id
-for (signal_id in rownames(spectrum_features_merged)[1])
+for (signal_id in rownames(spectrum_features_merged))
 {
   print(signal_id)
   
