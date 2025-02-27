@@ -86,21 +86,7 @@ dev.off()
 df_index_peaks$id<-rownames(df_index_peaks)
 
 # Subselect spectrum_signals
-spectrum_signals_subselection<-spectrum_signals[,STARTING_IDX_POS:ENDING_IDX_POS]
-
-#  Plot the first 1000 frequency positions.
-# Printing three rows  
-selected_signals<-sample(df_index_peaks$id, 10)
-
-#  Selected 10 random signals.
-# spectrum_selected_signals[
-df_index_peaks<-df_index_peaks[df_index_peaks$id %in% selected_signals,]
-
-# Set id
-spectrum_signals_subselection$id<-rownames(spectrum_signals_subselection)
-
-# spectrum_signals_subselection
-spectrum_signals_subselection<-spectrum_signals_subselection[selected_signals,]
+spectrum_signals_subselection<-spectrum_signals[,c(STARTING_IDX_POS:ENDING_IDX_POS,"id")]
 
 # Merge spectrum_selected
 spectrum_selected_merged<-merge(spectrum_signals_subselection,df_index_peaks,by="id")
@@ -113,7 +99,7 @@ spectrum_selected_melt<-melt(spectrum_selected_merged_2,id.vars =c("id","peak1",
 
 #########################################################################################################
 # Re-set the colnames
-colnames(spectrum_selected_melt)[5]<-"Frequency_id"
+colnames(spectrum_selected_melt)[7]<-"Frequency_id"
 
 # Plot the raw data
 index=5
