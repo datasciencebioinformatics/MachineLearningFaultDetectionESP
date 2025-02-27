@@ -105,8 +105,11 @@ spectrum_signals_subselection<-spectrum_signals_subselection[selected_signals,]
 # Merge spectrum_selected
 spectrum_selected_merged<-merge(spectrum_signals_subselection,df_index_peaks,by="id")
 
+# Merge spectrum_selected
+spectrum_selected_merged_2<-merge(spectrum_selected_merged,features_signals,by="id")
+
 # Melt data.frame
-spectrum_selected_melt<-melt(spectrum_selected_merged,id.vars =c("id","peak1","peak2","peak3"))  
+spectrum_selected_melt<-melt(spectrum_selected_merged_2,id.vars =c("id","peak1","peak2","peak3","esp_id","label"))  
 
 #########################################################################################################
 # Re-set the colnames
