@@ -69,17 +69,17 @@ for (signal_id in rownames(spectrum_features_merged))
 }
 #########################################################################################################
 filtered_amplitude_peaks <- df_amplitude_peaks[df_amplitude_peaks$peak2 >= 0, ]
-filtered_amplitude_peaks <- na.omit(filtered_amplitude_peaks[filtered_index_peaks$peak3 >= 0, ])
+filtered_amplitude_peaks <- na.omit(filtered_amplitude_peaks[filtered_amplitude_peaks$peak3 >= 0, ])
 
 # calculation the components
 model.pca.amplitude  <- prcomp(filtered_amplitude_peaks,center = FALSE, scale =FALSE, rank. = 4)
 
 # Plot pca's
-PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged[rownames(filtered_amplitude_peaks),], colour = 'label') + theme_bw()  + ggtitle("amplitude")
+PCA_of_amplitude <-autoplot(model.pca.amplitude, data = spectrum_features_merged[rownames(filtered_amplitude_peaks),], colour = 'label') + theme_bw()
 #########################################################################################################
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_summary_PCA_of_peaks_data.png",sep=""), width = 10, height = 10, res=600, units = "cm")  
-  grid.arrange(PCA_of_index, PCA_of_amplitude, ncol = 2, nrow = 1, top = "PCA for 3 peaks per signal") 
+  PCA_of_amplitude
 dev.off()
 #########################################################################################################
 # Add id to df_index_peak
