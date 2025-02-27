@@ -24,10 +24,10 @@ library("SlidingWindows")
 library("photobiology")
 library("doBy")
 library("SlidingWindows")
+library("pracma")
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
 
 # To load a library, use the function
 library("xts")
-
