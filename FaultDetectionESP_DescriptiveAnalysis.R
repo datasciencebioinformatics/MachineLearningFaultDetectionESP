@@ -19,7 +19,7 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # Constant to define end position
-STARTING_IDX_POS     = 101
+STARTING_IDX_POS     = 1
 ENDING_IDX_POS     = 6001
 
 # Frequency_id
