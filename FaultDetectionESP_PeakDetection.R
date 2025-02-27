@@ -27,7 +27,7 @@ df_amplitude_peaks<-data.frame(peak1_ampl=c(),peak2_ampl=c(),peak3_ampl=c())
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # For each signal, the amplitude is taken for all frequency_id
-for (signal_id in rownames(spectrum_features_merged))
+for (signal_id in rownames(spectrum_features_merged)[1])
 {
   print(signal_id)
   
@@ -122,6 +122,6 @@ plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peak
 plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak3"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak3"], yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))  
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_Peak_Detection_Example.png",sep=""), width = 30, height = 20, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_Peak_Detection_Example.png",sep=""), width = 15, height = 15, res=600, units = "cm")  
   plot2
 dev.off()
