@@ -20,7 +20,7 @@ frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_featur
 
 # Constant to define end position
 STARTING_IDX_POS     = 101
-ENDING_IDX_POS     = 200
+ENDING_IDX_POS     = 6001
 
 # Frequency_id
 frequency_id<-frequency_id[STARTING_IDX_POS:ENDING_IDX_POS]
