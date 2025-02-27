@@ -19,8 +19,8 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 frequency_id<-colnames(spectrum_features_merged[,-which(colnames(spectrum_features_merged) %in% c("id","esp_id","label","esp_id_label","esp_id_str"))])
 
 # Constant to define end position
-STARTING_IDX_POS     = 1
-ENDING_IDX_POS     = 6001
+STARTING_IDX_POS     = 100
+ENDING_IDX_POS     = 6000
 
 # Frequency_id
 frequency_id<-frequency_id[STARTING_IDX_POS:ENDING_IDX_POS]
@@ -45,7 +45,7 @@ df_skewness  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(uniqu
 df_kurtosis  <- matrix(0, ncol = length(SlidingWindows$min), nrow = length(unique(spectrum_features_merged$id)))
 #####################################################################################################################################
 # For each signal, the amplitude is taken for all frequency_id
-for (signal_id in rownames(spectrum_features_merged))
+for (signal_id in rownames(spectrum_features_merged)[1:10])
 {
   print(as.integer(signal_id))
   
@@ -159,9 +159,6 @@ ggplot2_raw_data<-ggplot(data = melt_df_metrics, aes(x = as.integer(sw_id), y = 
 png(filename=paste(output_dir,"Plot_raw_statistical_indicators.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
-
-#########################################################################################################
-
 
 #########################################################################################################
 id_min<-unique(intersect(features_signals$id,na.omit(df_min$id)))
