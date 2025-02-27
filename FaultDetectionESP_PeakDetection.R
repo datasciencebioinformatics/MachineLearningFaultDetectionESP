@@ -114,3 +114,13 @@ plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peak
 png(filename=paste(output_dir,"Plot_Peak_Detection_Example.png",sep=""), width = 15, height = 15, res=600, units = "cm")  
   plot2
 dev.off()
+
+
+# Generate plot
+plot2<-ggplot(data = spectrum_selected_melt, aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(label), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle(paste("Peak detection for signal ",selected_signals[index])) + ylim(0,1) 
+
+
+# FindClusters_resolution               
+png(filename=paste(output_dir,"Plot_Peak_Detection_Example_2.png",sep=""), width = 15, height = 20, res=600, units = "cm")  
+  plot2
+dev.off()
