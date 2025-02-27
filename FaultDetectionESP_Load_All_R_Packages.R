@@ -23,6 +23,7 @@ library("pracma")
 library("SlidingWindows")
 library("photobiology")
 library("doBy")
+library("SlidingWindows")
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
