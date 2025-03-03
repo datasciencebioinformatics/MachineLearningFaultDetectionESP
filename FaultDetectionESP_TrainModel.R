@@ -64,4 +64,4 @@ png(filename=paste(output_dir,"Plot_bwplot_results.png",sep=""), width = 25, hei
   bwplot(resamps, layout = c(3, 1))
 dev.off()
 #########################################################################################################
-svm_1_espset
+bh_pred <- predict(svm_1_espset, bh_te) 
