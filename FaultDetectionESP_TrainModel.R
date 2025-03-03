@@ -51,12 +51,17 @@ resamps <- resamples(list(svmLinear = svm_1_espset,
                           dnn=dnn_espset,                 
                           glm=glm_espset))                          
 #########################################################################################################
+# Set up bwplot
 theme1 <- trellis.par.get()
 theme1$plot.symbol$col = rgb(.2, .2, .2, .4)
 theme1$plot.symbol$pch = 16
 theme1$plot.line$col = rgb(1, 0, 0, .7)
 theme1$plot.line$lwd <- 2
 trellis.par.set(theme1)
-bwplot(resamps, layout = c(3, 1))
+
+# bwplo               
+png(filename=paste(output_dir,"Plot_bwplot_results.png",sep=""), width = 25, height = 12, res=600, units = "cm")  
+  bwplot(resamps, layout = c(3, 1))
+dev.off()
 #########################################################################################################
-17 Measuring Performance
+svm_1_espset
