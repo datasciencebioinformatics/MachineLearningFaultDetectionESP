@@ -72,4 +72,10 @@ png(filename=paste(output_dir,"Plot_bwplot_results.png",sep=""), width = 25, hei
   bwplot(resamps, layout = c(3, 1))
 dev.off()
 #########################################################################################################
-svm_pred <- predict(svm_1_espset, testing_features) 
+svm_1_pred <- predict(svm_1_espset, testing_features) 
+svm_2_pred <- predict(svm_2_espset, testing_features) 
+knn_pred <- predict(knn_espset, testing_features) 
+mlp_pred <- predict(mlp_espset, testing_features) 
+dnn_pred <- predict(dnn_espset, testing_features) 
+glm_pred <- predict(glm_espset, testing_features) 
+
