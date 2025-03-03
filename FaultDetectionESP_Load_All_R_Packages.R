@@ -26,6 +26,7 @@ library("doBy")
 library("SlidingWindows")
 library("pracma")
 library("pracma")
+library("caret")
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
