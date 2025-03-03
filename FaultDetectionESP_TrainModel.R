@@ -8,6 +8,7 @@ features_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_
 spectrum_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_dataset/spectrum.csv"
 #########################################################################################################
 # Split train and test set for caret
+createDataPartition(features_file,times = 1,p = 0.5,list = TRUE,groups = features_file$labels)
 #########################################################################################################
 # Support machine models (SVM)
 https://rpubs.com/uky994/593668
