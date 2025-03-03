@@ -1,4 +1,18 @@
 #########################################################################################################
+# Load the spectrum file
+spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
+
+# Load the features file
+features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
+#########################################################################################################
+features_signals[features_signals$label=="Faulty sensor","label"]<-"Faulty_Sensor"
+features_signals[features_signals$label=="Misaliggnment","label"]<-"Misaliggnment"
+features_signals[features_signals$label=="Misaliggnment","label"]<-"Normal"
+features_signals[features_signals$label=="Rubbing","label"]<-"Rubbing"
+features_signals[features_signals$label=="Unbalanced","label"]<-"Unbalanced"
+#########################################################################################################
+features_signals$label<-as.vector(features_signals$label)
+#########################################################################################################
 # Split into trainning and testing
 trainning<- as.vector(createDataPartition(features_signals$label,times = 1,p = 0.5,list = TRUE)[[1]])
 testing <- which(!rownames(features_signals) %in% trainning)
@@ -15,9 +29,6 @@ Algoritms <- c("svmRadial","svmLinear","knn","bnclassify","dnn")
 
 svm_espset <- train(label ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl, verbose = FALSE)
 knn_espset <- train(label ~ ., data = trainning_features, method = "knn", trControl = fitControl, verbose = FALSE)
-nb_espset <- train(label ~ ., data = trainning_features, method = "nb", trControl = fitControl, verbose = FALSE)
-dnn_espset <- train(label ~ ., data = trainning_features, method = "dnn", trControl = fitControl, verbose = FALSE)
-mlp_espset <- train(label ~ ., data = trainning_features, method = "dnn", trControl = fitControl, verbose = FALSE)
 #########################################################################################################
 
 
