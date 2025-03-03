@@ -25,6 +25,14 @@ features_signals$Class<-as.factor(features_signals$Class)
 # Split into trainning and testing
 # Store trainning and testing data
 trainingControl_features<-features_signals[trainning,c("Class","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
+
+# Split into trainning and testing
+trainning<- as.vector(createDataPartition(features_signals$label,times = 1,p = 0.5,list = TRUE)[[1]])
+testing <- which(!rownames(features_signals) %in% trainning)
+
+# Store trainning and testing data
+trainning_features<-features_signals[trainning,c("Class","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
+testing_featurea  <-features_signals[trainning,c("Class","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
 #########################################################################################################
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv",
