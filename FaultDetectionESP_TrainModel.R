@@ -79,6 +79,20 @@ mlp_pred <- predict(mlp_espset, testing_features)
 dnn_pred <- predict(dnn_espset, testing_features) 
 glm_pred <- predict(glm_espset, testing_features) 
 #########################################################################################################
+varImp_svm_1_espset <- varImp(svm_1_espset, scale = FALSE)
+varImp_svm_2_espset <- varImp(svm_2_espset, scale = FALSE)
+varImp_knn_espset   <- varImp(knn_espset, scale = FALSE)
+varImp_mlp_espset   <- varImp(dnn_espset, scale = FALSE)
+varImp_glm_espset   <- varImp(glm_espset, scale = FALSE)
+varImp_dnn_espset   <- varImp(dnn_espset, scale = FALSE)
+
+plot(varImp_svm_1_espset, main = "svmLinear") 
+plot(varImp_svm_2_espset, main = "svmRadial") 
+plot(varImp_mlp_espset, main = "mlp") 
+plot(varImp_knn_espset, main = "knn") 
+plot(varImp_glm_espset, main = "glm") 
+plot(varImp_dnn_espset, main = "dnn") 
+#########################################################################################################
 cm_svm_1  <-confusionMatrix(data = svm_1_pred, reference = testing_features$Class)
 cm_svm_2  <-confusionMatrix(data = svm_2_pred, reference = testing_features$Class)
 cm_knn    <-confusionMatrix(data = knn_pred, reference = testing_features$Class)
@@ -87,3 +101,4 @@ dnn_mlp   <-confusionMatrix(data = dnn_pred, reference = testing_features$Class)
 glm_mlp   <-confusionMatrix(data = glm_pred, reference = testing_features$Class)
 
 
+plot(svm_1_espset, top = 10)
