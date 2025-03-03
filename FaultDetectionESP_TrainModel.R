@@ -33,9 +33,12 @@ testing_featurea  <-features_signals[trainning,c("Class","median.8.13.","rms.98.
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 3, classProbs = TRUE)
 
-svm_1_espset <- train(Class ~ ., data = trainning_features, method = "svmLinear", trControl = fitControl)
-svm_2_espset <- train(Class ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl)
-knn_espset <-   train(Class ~ ., data = trainning_features, method = "knn", trControl = fitControl)
+svm_1_espset <- train(Class ~ ., data = trainning_features, method = "svmLinear", trControl = fitControl,metric=TRUE)
+svm_2_espset <- train(Class ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl,metric=TRUE)
+knn_espset <-   train(Class ~ ., data = trainning_features, method = "knn", trControl = fitControl,metric=TRUE)
+mlp_espset    <-   train(Class ~ ., data = trainning_features, method = "mlp", trControl = fitControl,metric=TRUE)
+dnn_espset    <-   train(Class ~ ., data = trainning_features, method = "dnn", trControl = fitControl,metric=TRUE)
+
 
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset, 
