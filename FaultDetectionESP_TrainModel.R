@@ -7,8 +7,13 @@ features_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_
 # Path to the spectrum file
 spectrum_file="/home/felipe/googledrive/MachineLearningFaultDetectionESP/ESPset_dataset/spectrum.csv"
 #########################################################################################################
+# Split train and test set for caret
+#########################################################################################################
 # Support machine models (SVM)
 https://rpubs.com/uky994/593668
 
 # K-Nearest Neighbor (KNN)
 https://rpubs.com/njvijay/16444
+
+# https://rpubs.com/maulikpatel/224581
+https://rpubs.com/maulikpatel/224581
