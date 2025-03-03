@@ -15,5 +15,8 @@ https://rpubs.com/uky994/593668
 # K-Nearest Neighbor (KNN)
 https://rpubs.com/njvijay/16444
 
-# https://rpubs.com/maulikpatel/224581
+# Naive Bayes (NB)
 https://rpubs.com/maulikpatel/224581
+
+# Stacked AutoEncoder Deep Neural Network (method = 'dnn').
+https://cran.r-project.org/web/packages/caret/caret.pdf
