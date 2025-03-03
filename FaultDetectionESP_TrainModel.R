@@ -13,7 +13,7 @@ features_signals[features_signals$label=="Rubbing","label"]<-"Rubbing"
 features_signals[features_signals$label=="Unbalanced","label"]<-"Unbalanced"
 
 # Convert labels to factopr
-features_signals$label<-as.vector(features_signals$label)
+features_signals$label<-as.factor(features_signals$label)
 #########################################################################################################
 # Add collumns abnormal and normal
 features_signals$Class<-"Abnormal"
@@ -32,12 +32,21 @@ testing_featurea  <-features_signals[trainning,c("Class","median.8.13.","rms.98.
 #########################################################################################################
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 3, classProbs = TRUE)
+fitControl <- trainControl(method = "repeatedcv",
+                           number = 10,
+                           repeats = 10,
+                           ## Estimate class probabilities
+                           classProbs = TRUE,
+                           ## Evaluate performance using 
+                           ## the following function
+                           summaryFunction = twoClassSummary)
 
-svm_1_espset  <- train(Class ~ ., data = trainning_features, method = "svmLinear", trControl = fitControl)
-svm_2_espset  <- train(Class ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl)
-knn_espset    <- train(Class ~ ., data = trainning_features, method = "knn", trControl = fitControl)
-mlp_espset    <- train(Class ~ ., data = trainning_features, method = "mlp", trControl = fitControl
-dnn_espset    <- train(Class ~ ., data = trainning_features, method = "dnn", trControl = fitControl)
+
+svm_1_espset  <- train(Class ~ ., data = trainning_features, method = "svmLinear", trControl = fitControl,metric="ROC")
+svm_2_espset  <- train(Class ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl,metric="ROC")
+knn_espset    <- train(Class ~ ., data = trainning_features, method = "knn", trControl = fitControl,metric="ROC")
+mlp_espset    <- train(Class ~ ., data = trainning_features, method = "mlp", trControl = fitContro,metric="ROC"l
+dnn_espset    <- train(Class ~ ., data = trainning_features, method = "dnn", trControl = fitControl,metric="ROC")
 
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset, 
