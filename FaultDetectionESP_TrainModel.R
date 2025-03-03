@@ -79,5 +79,11 @@ mlp_pred <- predict(mlp_espset, testing_features)
 dnn_pred <- predict(dnn_espset, testing_features) 
 glm_pred <- predict(glm_espset, testing_features) 
 #########################################################################################################
-cm_svm_1 <-confusionMatrix(data = svm_1_pred, reference = testing_features$Class)
+cm_svm_1  <-confusionMatrix(data = svm_1_pred, reference = testing_features$Class)
+cm_svm_2  <-confusionMatrix(data = svm_2_pred, reference = testing_features$Class)
+cm_knn    <-confusionMatrix(data = knn_pred, reference = testing_features$Class)
+cm_mlp    <-confusionMatrix(data = mlp_pred, reference = testing_features$Class)
+dnn_mlp   <-confusionMatrix(data = dnn_pred, reference = testing_features$Class)
+glm_mlp   <-confusionMatrix(data = glm_pred, reference = testing_features$Class)
+
 
