@@ -22,8 +22,6 @@ https://rpubs.com/rusdipermana/image-cl
 # Stacked AutoEncoder Deep Neural Network
 https://topepo.github.io/caret/train-models-by-tag.html#neural-network
 #########################################################################################################
-
-
-
-
+trainning<- as.vector(createDataPartition(features_signals$label,times = 1,p = 0.5,list = TRUE)[[1]])
+testting <- which(!rownames(features_signals) %in% trainning)
 #########################################################################################################
