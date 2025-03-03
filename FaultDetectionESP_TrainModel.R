@@ -8,12 +8,14 @@ trainning_features<-features_signals[trainning,c("label","median.8.13.","rms.98.
 testing_featurea  <-features_signals[trainning,c("label","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
 #########################################################################################################
 # Basic Parameter Tuning
-fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 10)
+fitControl <- trainControl(method = "repeatedcv", number = 10, repeats = 3, classProbs = TRUE)
 
 # Traing svm dataset
+Algoritms <- c("svmRadial","svmLinear","knn","bnclassify","dnn")  
+
 svm_espset <- train(label ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl, verbose = FALSE)
 knn_espset <- train(label ~ ., data = trainning_features, method = "knn", trControl = fitControl, verbose = FALSE)
-nb_espset <- train(label ~ ., data = trainning_features, method = "nb", trControl = fitControl, verbose = FALSE.)
+nb_espset <- train(label ~ ., data = trainning_features, method = "nb", trControl = fitControl, verbose = FALSE)
 dnn_espset <- train(label ~ ., data = trainning_features, method = "dnn", trControl = fitControl, verbose = FALSE)
 mlp_espset <- train(label ~ ., data = trainning_features, method = "dnn", trControl = fitControl, verbose = FALSE)
 #########################################################################################################
@@ -21,6 +23,6 @@ mlp_espset <- train(label ~ ., data = trainning_features, method = "dnn", trCont
 
 
 
-
 # To do:
 - Take models directly from vibration dataset
+
