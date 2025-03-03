@@ -19,4 +19,18 @@ https://rpubs.com/njvijay/16444
 https://rpubs.com/maulikpatel/224581
 
 # Stacked AutoEncoder Deep Neural Network (method = 'dnn').
-https://cran.r-project.org/web/packages/caret/caret.pdf
+# Stacked AutoEncoder Deep Neural Network
+https://topepo.github.io/caret/train-models-by-tag.html#support-vector-machines
+
+# "Convolutional Neural Network" R caret
+https://rpubs.com/rusdipermana/image-cl
+
+# Multi-Layer Perceptron
+# Stacked AutoEncoder Deep Neural Network
+https://topepo.github.io/caret/train-models-by-tag.html#neural-network
+#########################################################################################################
+
+
+
+
+#########################################################################################################
