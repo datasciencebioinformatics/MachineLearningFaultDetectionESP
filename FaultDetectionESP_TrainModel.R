@@ -40,7 +40,7 @@ fitControl <- trainControl(method = "repeatedcv",
 svm_1_espset  <- train(Class ~ ., data = trainning_features, method = "svmLinear", trControl = fitControl,metric="ROC")
 svm_2_espset  <- train(Class ~ ., data = trainning_features, method = "svmRadial", trControl = fitControl,metric="ROC")
 knn_espset    <- train(Class ~ ., data = trainning_features, method = "knn", trControl = fitControl,metric="ROC")
-mlp_espset    <- train(Class ~ ., data = trainning_features, method = "mlp", trControl = fitContro,metric="ROC")
+mlp_espset    <- train(Class ~ ., data = trainning_features, method = "mlp", trControl = fitControl,metric="ROC")
 dnn_espset    <- train(Class ~ ., data = trainning_features, method = "dnn", trControl = fitControl,metric="ROC")
 
 #########################################################################################################
