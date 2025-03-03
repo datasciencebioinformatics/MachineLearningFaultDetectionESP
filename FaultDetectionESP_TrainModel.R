@@ -42,14 +42,14 @@ svm_2_espset  <- train(Class ~ ., data = trainning_features, method = "svmRadial
 knn_espset    <- train(Class ~ ., data = trainning_features, method = "knn", trControl = fitControl,metric="ROC")
 mlp_espset    <- train(Class ~ ., data = trainning_features, method = "mlp", trControl = fitControl,metric="ROC")
 dnn_espset    <- train(Class ~ ., data = trainning_features, method = "dnn", trControl = fitControl,metric="ROC")
-
+glm_espset    <- train(Class ~ ., data = trainning_features, method = "glm", trControl = fitControl,metric="ROC")
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset, 
                           svmRadial = svm_2_espset,
                           knn = knn_espset,
                           mlp=mlp_espset,
-                          dnn=dnn_espset))                          
-                         
+                          dnn=dnn_espset,                 
+                          glm=glm_espset))                          
 #########################################################################################################
 theme1 <- trellis.par.get()
 theme1$plot.symbol$col = rgb(.2, .2, .2, .4)
@@ -58,3 +58,5 @@ theme1$plot.line$col = rgb(1, 0, 0, .7)
 theme1$plot.line$lwd <- 2
 trellis.par.set(theme1)
 bwplot(resamps, layout = c(3, 1))
+#########################################################################################################
+17 Measuring Performance
