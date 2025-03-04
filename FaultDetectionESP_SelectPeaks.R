@@ -83,6 +83,8 @@ trainingControl_amplitude_in_peaks<-df_amplitude_in_peaks[trainning,]
 trainning_amplitude_in_peaks<-trainingControl_amplitude_in_peaks[trainning,]
 testing_amplitude_in_peaks  <-trainingControl_amplitude_in_peaks[testing,]
 
+# Remove collumn lavbel
+trainning_amplitude_in_peaks <-trainning_amplitude_in_peaks[ ,-which(colnames(trainning_amplitude_in_peaks)=="label") ]
 #########################################################################################################
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv",
@@ -94,13 +96,12 @@ fitControl <- trainControl(method = "repeatedcv",
                            ## the following function
                            summaryFunction = twoClassSummary)
 
-
-svm_1_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks[,c(peaks_position)], method = "svmLinear", trControl = fitControl,metric="ROC")
-svm_2_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmRadial", trControl = fitControl,metric="ROC")
-knn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "knn", trControl = fitControl,metric="ROC")
-mlp_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "mlp", trControl = fitControl,metric="ROC")
-dnn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "dnn", trControl = fitControl,metric="ROC")
-glm_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "glm", trControl = fitControl,metric="ROC")
+svm_1_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmLinear", trControl = fitControl,metric="ROC",na.action=na.omit)
+svm_2_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmRadial", trControl = fitControl,metric="ROC",na.action=na.omit)
+knn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "knn", trControl = fitControl,metric="ROC",na.action=na.omit)
+mlp_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "mlp", trControl = fitControl,metric="ROC",na.action=na.omit)
+dnn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "dnn", trControl = fitControl,metric="ROC",na.action=na.omit)
+glm_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "glm", trControl = fitControl,metric="ROC",na.action=na.omit)
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset, 
                           svmRadial = svm_2_espset,
