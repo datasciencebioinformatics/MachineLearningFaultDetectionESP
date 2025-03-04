@@ -23,12 +23,13 @@ features_signals[which(features_signals$label=="Normal"),"Class"]<-"Normal"
 features_signals$Class<-as.factor(features_signals$Class)
 #########################################################################################################
 # Split into trainning and testing
-# Store trainning and testing data
-trainingControl_features<-features_signals[trainning,c("Class","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
-
-# Split into trainning and testing
 trainning<- as.vector(createDataPartition(features_signals$label,times = 1,p = 0.5,list = TRUE)[[1]])
 testing <- which(!rownames(features_signals) %in% trainning)
+
+
+# Split into trainning and testing
+# Store trainning and testing data
+trainingControl_features<-features_signals[trainning,c("Class","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
 
 # Store trainning and testing data
 trainning_features<-features_signals[trainning,c("Class","median.8.13.","rms.98.102.","median.98.102.","peak1x","peak2x","a","b")]
