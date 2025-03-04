@@ -100,7 +100,7 @@ svm_1_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = 
 svm_2_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmRadial", trControl = fitControl,metric="ROC",na.action=na.omit)
 knn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "knn", trControl = fitControl,metric="ROC",na.action=na.omit)
 mlp_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "mlp", trControl = fitControl,metric="ROC",na.action=na.omit)
-dnn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "dnn", trControl = fitControl,metric="ROC",na.action=na.omit)
+#dnn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "dnn", trControl = fitControl,metric="ROC",na.action=na.omit)
 glm_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "glm", trControl = fitControl,metric="ROC",na.action=na.omit)
 #########################################################################################################
 varImp_svm_1_espset <- varImp(svm_1_espset, scale = FALSE)
@@ -108,18 +108,19 @@ varImp_svm_2_espset <- varImp(svm_2_espset, scale = FALSE)
 varImp_knn_espset   <- varImp(knn_espset, scale = FALSE)
 varImp_mlp_espset   <- varImp(dnn_espset, scale = FALSE)
 varImp_glm_espset   <- varImp(glm_espset, scale = FALSE)
-varImp_dnn_espset   <- varImp(dnn_espset, scale = FALSE)
+#varImp_dnn_espset   <- varImp(dnn_espset, scale = FALSE)
 
 plot_varImp_svm_1_espset<-plot(varImp_svm_1_espset, main = "svmLinear") 
 plot_varImp_svm_2_espset<-plot(varImp_svm_2_espset, main = "svmRadial") 
 plot_varImp_mlp_espset<-plot(varImp_mlp_espset, main = "mlp") 
 plot_varImp_knn_espset<-plot(varImp_knn_espset, main = "knn") 
 plot_varImp_glm_espset<-plot(varImp_glm_espset, main = "glm") 
-plot_varImp_dnn_espset<-plot(varImp_dnn_espset, main = "dnn") 
+#plot_varImp_dnn_espset<-plot(varImp_dnn_espset, main = "dnn") 
 
 # bwplo               
 png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
-  grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset,plot_varImp_dnn_espset)
+  #grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset,plot_varImp_dnn_espset)
+  grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset)
 dev.off()
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset, 
