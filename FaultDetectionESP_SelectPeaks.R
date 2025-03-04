@@ -70,9 +70,12 @@ df_amplitude_in_peaks[which(df_amplitude_in_peaks$label=="Normal"),"Class"]<-"No
 
 # Convert labels to factopr
 df_amplitude_in_peaks$Class<-as.factor(df_amplitude_in_peaks$Class)
+
+# Remove collumn lavbel
+df_amplitude_in_peaks <-df_amplitude_in_peaks[ ,-which(colnames(df_amplitude_in_peaks)=="label") ]
 #########################################################################################################
 # Split into trainning and testing
-trainning<- as.vector(createDataPartition(df_amplitude_in_peaks$label,times = 1,p = 0.5,list = TRUE)[[1]])
+trainning<- as.vector(createDataPartition(df_amplitude_in_peaks$Class,times = 1,p = 0.5,list = TRUE)[[1]])
 testing <- which(!rownames(df_amplitude_in_peaks) %in% trainning)
 
 # Split into trainning and testing
@@ -83,8 +86,6 @@ trainingControl_amplitude_in_peaks<-df_amplitude_in_peaks[trainning,]
 trainning_amplitude_in_peaks<-trainingControl_amplitude_in_peaks[trainning,]
 testing_amplitude_in_peaks  <-trainingControl_amplitude_in_peaks[testing,]
 
-# Remove collumn lavbel
-trainning_amplitude_in_peaks <-trainning_amplitude_in_peaks[ ,-which(colnames(trainning_amplitude_in_peaks)=="label") ]
 #########################################################################################################
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv",
