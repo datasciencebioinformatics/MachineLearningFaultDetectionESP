@@ -27,6 +27,8 @@ library("SlidingWindows")
 library("pracma")
 library("pracma")
 library("caret")
+library("pracma")
+library("ggplot2")
 
 # Hadley Wickham's tidyverse universe
 library("tidyverse")
