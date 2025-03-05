@@ -124,11 +124,11 @@ dev.off()
 plot_average<-ggplot(data = df_average_frequency, aes(x = as.integer(Frequency), y = Average))+ geom_line()  + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(0,0.1) 
 
 # Generate plot
-plot_average<-plot_average +  geom_segment(aes(x = 100, y = 0.050, xend =  100, yend = 0.025, colour = "green"), arrow = arrow(length = unit(0.25, "cm"))) 
-plot_average<-plot_average +  geom_segment(aes(x = 201,  y = 0.050, xend = 201, yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))
-plot_average<-plot_average +  geom_segment(aes(x = 169, y = 0.050, xend =  168, yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))  
+plot_average<-plot_average +  geom_segment(aes(x = 3003, y = 0.1, xend =  3003, yend = 0.025, colour = "green"), arrow = arrow(length = unit(0.50, "cm"))) 
+plot_average<-plot_average +  geom_segment(aes(x = 169,  y = 0.1, xend = 169, yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.50, "cm")))
+plot_average<-plot_average +  geom_segment(aes(x = 1490, y = 0.1, xend =  1490, yend = 0.025, colour = "red"), arrow = arrow(length = unit(0.50, "cm")))  
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_Average_Peaks.png",sep=""), width = 15, height = 20, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_Average_SelectPeaks.png",sep=""), width = 15, height = 20, res=600, units = "cm")  
   plot_average
 dev.off()
