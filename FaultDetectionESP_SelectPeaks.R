@@ -17,6 +17,19 @@ spectrum_signals$id<-features_signals$id
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
+# Averaging can be performed in the time domain or in the frequency domain. In this section, we will focus mainly on averaging in the frequency domain, which is the primary type of averaging used with FFT analyzers.
+average_per_frequency<-colMeans(spectrum_signals[,1:length(colnames(spectrum_signals))-1])
+
+# Adjust a data.frame with the average frequnecy
+df_average_frequency<-data.frame(Average=average_per_frequency,Frequency=names(average_per_frequency))
+
+# Calculate the peaks
+# The first column gives the height, the second the position/index where the maximum is reached, the third and forth the indices of where the peak begins and ends — in the sense of where the pattern starts and ends.
+# npeaks
+npeaks=50
+peak_average<-findpeaks(average_per_frequency,npeaks=npeaks, sortstr=FALSE,minpeakheight=0.01,minpeakdistance=10)
+#########################################################################################################
+
 # Take the position of all peaks
 peaks_position<-sort(as.vector(peak_average[,2]))
 
@@ -107,26 +120,13 @@ png(filename=paste(output_dir,"Plot_bwplot_results_peaks.png",sep=""), width = 1
   bwplot(resamps, layout = c(3, 1))
 dev.off()
 #########################################################################################################
-# Averaging can be performed in the time domain or in the frequency domain. In this section, we will focus mainly on averaging in the frequency domain, which is the primary type of averaging used with FFT analyzers.
-average_per_frequency<-colMeans(spectrum_signals[,1:length(colnames(spectrum_signals))-1])
-
-# Adjust a data.frame with the average frequnecy
-df_average_frequency<-data.frame(Average=average_per_frequency,Frequency=names(average_per_frequency))
-
-# Calculate the peaks
-# The first column gives the height, the second the position/index where the maximum is reached, the third and forth the indices of where the peak begins and ends — in the sense of where the pattern starts and ends.
-# npeaks
-npeaks=50
-peak_average<-findpeaks(average_per_frequency,npeaks=npeaks, sortstr=FALSE,minpeakheight=0,minpeakdistance=5)
-
 # Generate plot
 plot_average<-ggplot(data = df_average_frequency, aes(x = as.integer(Frequency), y = Average))+ geom_line()  + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(0,0.1) 
 
 # Generate plot
-plot2<-ggplot(data = spectrum_selected_melt[spectrum_selected_melt$id==selected_signals[index],], aes(x = as.integer(Frequency_id), y = value))+ geom_line(aes(group=id))+ facet_grid(vars(id), scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1)) + ggtitle(paste("Peak detection for signal ",selected_signals[index])) + ylim(0,0.05) 
-plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak1"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak1"], yend = 0.025, colour = "green"), arrow = arrow(length = unit(0.25, "cm"))) 
-plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak2"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak2"], yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))
-plot2<-plot2 +  geom_segment(aes(x = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak3"], y = 0.050, xend = df_index_peaks[which(rownames(df_index_peaks)==selected_signals[index]),"peak3"], yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))  
+plot_average<-plot_average +  geom_segment(aes(x = 100, y = 0.050, xend =  100, yend = 0.025, colour = "green"), arrow = arrow(length = unit(0.25, "cm"))) 
+plot_average<-plot_average +  geom_segment(aes(x = 201,  y = 0.050, xend = 201, yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))
+plot_average<-plot_average +  geom_segment(aes(x = 169, y = 0.050, xend =  168, yend = 0.025, colour = "blue"), arrow = arrow(length = unit(0.25, "cm")))  
 
 # FindClusters_resolution               
 png(filename=paste(output_dir,"Plot_Average_Peaks.png",sep=""), width = 15, height = 20, res=600, units = "cm")  
