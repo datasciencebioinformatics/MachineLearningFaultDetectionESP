@@ -119,7 +119,7 @@ plot_varImp_glm_espset<-plot(varImp_glm_espset, main = "glm")
 #plot_varImp_dnn_espset<-plot(varImp_dnn_espset, main = "dnn") 
 
 # bwplo               
-png(filename=paste(output_dir,"Variable_Importance_results_Peaks.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
+png(filename=paste(output_dir,"Variable_Importance_results_Peaks.png",sep=""), width = 25, height = 35, res=600, units = "cm")  
   #grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset,plot_varImp_dnn_espset)
   grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset)
 dev.off()
