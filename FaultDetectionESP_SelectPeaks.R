@@ -86,6 +86,10 @@ trainingControl_amplitude_in_peaks<-df_amplitude_in_peaks[trainning,]
 trainning_amplitude_in_peaks<-trainingControl_amplitude_in_peaks[trainning,]
 testing_amplitude_in_peaks  <-trainingControl_amplitude_in_peaks[testing,]
 
+# Filter out the trainign and test set
+trainning_amplitude_in_peaks<-trainning_amplitude_in_peaks[,which(colnames(trainning_amplitude_in_peaks) %in% c(peaks_position,"Class"))]
+testing_amplitude_in_peaks<-testing_amplitude_in_peaks[,which(colnames(testing_amplitude_in_peaks) %in% c(peaks_position,"Class"))]
+
 #########################################################################################################
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv",
@@ -97,8 +101,9 @@ fitControl <- trainControl(method = "repeatedcv",
                            ## the following function
                            summaryFunction = twoClassSummary)
 
+
 svm_1_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmLinear", trControl = fitControl,metric="ROC",na.action=na.omit)
-)
+
 
 #########################################################################################################
 varImp_svm_1_espset <- varImp(svm_1_espset, scale = FALSE)
