@@ -107,8 +107,8 @@ varImp_svm_1_espset <- varImp(svm_1_espset, scale = FALSE)
 # plot_varImp_svm_1_espset
 plot_varImp_svm_1_espset<-plot(varImp_svm_1_espset, main = "svmLinear")
 
-# bwplo               
-png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), width = 20, height = 35, res=600, units = "cm")  
+# bwplot               
+png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
   plot_varImp_svm_1_espset
 dev.off()
 #########################################################################################################
