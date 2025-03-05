@@ -106,6 +106,8 @@ png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), w
 dev.off()
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset))                          
+
+confusionMatrix(svm_1_espset)
 #########################################################################################################
 # Generate plot
 plot_average<-ggplot(data = df_average_frequency, aes(x = as.integer(Frequency), y = Average))+ geom_line()  + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(0,0.1) 
