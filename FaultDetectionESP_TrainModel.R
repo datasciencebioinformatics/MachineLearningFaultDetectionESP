@@ -23,7 +23,7 @@ features_signals[which(features_signals$label=="Normal"),"Class"]<-"Normal"
 features_signals$Class<-as.factor(features_signals$Class)
 #########################################################################################################
 # Split into trainning and testing
-trainning<- as.vector(createDataPartition(features_signals$label,times = 1,p = 0.5,list = TRUE)[[1]])
+trainning<- as.vector(createDataPartition(features_signals$Class,times = 1,p = 0.5,list = TRUE)[[1]])
 testing <- which(!rownames(features_signals) %in% trainning)
 
 
