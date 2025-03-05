@@ -127,9 +127,17 @@ dev.off()
 resamps <- resamples(list(svmLinear = svm_1_espset))                          
 
 # svm_1_pred
-svm_1_pred<-predict(svm_1_espset, newdata = testing_amplitude_in_peaks)
+svm_2_pred<-predict(svm_2_espset, newdata = testing_amplitude_in_peaks)
 
-confusionMatrix(svm_1_pred, testing_amplitude_in_peaks$Class)
+# Predictions for each 
+svm_1_pred <- predict(svm_1_espset, testing_amplitude_in_peaks) 
+svm_2_pred <- predict(svm_2_espset, testing_amplitude_in_peaks) 
+knn_pred <- predict(knn_espset, testing_amplitude_in_peaks) 
+mlp_pred <- predict(mlp_espset, testing_amplitude_in_peaks) 
+dnn_pred <- predict(dnn_espset, testing_amplitude_in_peaks) 
+glm_pred <- predict(glm_espset, testing_amplitude_in_peaks) 
+
+knn_confusionMatrix<-confusionMatrix(knn_pred, testing_amplitude_in_peaks$Class)
 #########################################################################################################
 # Generate plot
 plot_average<-ggplot(data = df_average_frequency, aes(x = as.integer(Frequency), y = Average))+ geom_line()  + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(0,0.1) 
