@@ -26,7 +26,7 @@ df_average_frequency<-data.frame(Average=average_per_frequency,Frequency=names(a
 # Calculate the peaks
 # The first column gives the height, the second the position/index where the maximum is reached, the third and forth the indices of where the peak begins and ends — in the sense of where the pattern starts and ends.
 # npeaks
-npeaks=100
+npeaks=50
 peak_average<-findpeaks(average_per_frequency,npeaks=npeaks, sortstr=FALSE,minpeakheight=0,minpeakdistance=5)
 
 # Generate plot
@@ -73,23 +73,19 @@ df_amplitude_in_peaks$Class<-as.factor(df_amplitude_in_peaks$Class)
 
 # Remove collumn lavbel
 df_amplitude_in_peaks <-df_amplitude_in_peaks[ ,-which(colnames(df_amplitude_in_peaks)=="label") ]
+df_amplitude_in_peaks <-df_amplitude_in_peaks[ ,-which(colnames(df_amplitude_in_peaks)=="id") ]
 #########################################################################################################
 # Split into trainning and testing
 trainning<- as.vector(createDataPartition(df_amplitude_in_peaks$Class,times = 1,p = 0.5,list = TRUE)[[1]])
 testing <- which(!rownames(df_amplitude_in_peaks) %in% trainning)
 
-# Split into trainning and testing
 # Store trainning and testing data
-trainingControl_amplitude_in_peaks<-df_amplitude_in_peaks[trainning,]
-
-# Store trainning and testing data
-trainning_amplitude_in_peaks<-trainingControl_amplitude_in_peaks[trainning,]
-testing_amplitude_in_peaks  <-trainingControl_amplitude_in_peaks[testing,]
+trainning_amplitude_in_peaks<-df_amplitude_in_peaks[trainning,]
+testing_amplitude_in_peaks  <-df_amplitude_in_peaks[testing,]
 
 # Filter out the trainign and test set
 trainning_amplitude_in_peaks<-trainning_amplitude_in_peaks[,which(colnames(trainning_amplitude_in_peaks) %in% c(peaks_position,"Class"))]
 testing_amplitude_in_peaks<-testing_amplitude_in_peaks[,which(colnames(testing_amplitude_in_peaks) %in% c(peaks_position,"Class"))]
-
 #########################################################################################################
 # Basic Parameter Tuning
 fitControl <- trainControl(method = "repeatedcv",
@@ -101,21 +97,19 @@ fitControl <- trainControl(method = "repeatedcv",
                            ## the following function
                            summaryFunction = twoClassSummary)
 
-
+#########################################################################################################
+# Perform svmLinear on trainning set
 svm_1_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmLinear", trControl = fitControl,metric="ROC",na.action=na.omit)
 
-
-#########################################################################################################
+# Perform variable importance on svmLinear
 varImp_svm_1_espset <- varImp(svm_1_espset, scale = FALSE)
 
-
-plot_varImp_svm_1_espset<-plot(varImp_svm_1_espset, main = "svmLinear") 
-
+# plot_varImp_svm_1_espset
+plot_varImp_svm_1_espset<-plot(varImp_svm_1_espset, main = "svmLinear")
 
 # bwplo               
-png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
-  #grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset,plot_varImp_dnn_espset)
-  grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset)
+png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), width = 20, height = 35, res=600, units = "cm")  
+  plot_varImp_svm_1_espset
 dev.off()
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset, 
