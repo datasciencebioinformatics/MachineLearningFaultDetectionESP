@@ -89,25 +89,47 @@ fitControl <- trainControl(method = "repeatedcv",
                            ## Evaluate performance using 
                            ## the following function
                            summaryFunction = twoClassSummary)
-
 #########################################################################################################
-# Perform svmLinear on trainning set
 svm_1_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmLinear", trControl = fitControl,metric="ROC",na.action=na.omit)
-
-# Perform variable importance on svmLinear
+svm_2_espset  <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "svmRadial", trControl = fitControl,metric="ROC",na.action=na.omit)
+knn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "knn", trControl = fitControl,metric="ROC",na.action=na.omit)
+mlp_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "mlp", trControl = fitControl,metric="ROC",na.action=na.omit)
+#dnn_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "dnn", trControl = fitControl,metric="ROC",na.action=na.omit)
+glm_espset    <- train(Class ~ ., data = trainning_amplitude_in_peaks, method = "glm", trControl = fitControl,metric="ROC",na.action=na.omit)
+#########################################################################################################
+svm_1_pred <- predict(svm_1_espset, testing_amplitude_in_peaks) 
+svm_2_pred <- predict(svm_2_espset, testing_amplitude_in_peaks) 
+knn_pred <- predict(knn_espset, testing_amplitude_in_peaks) 
+mlp_pred <- predict(mlp_espset, testing_amplitude_in_peaks) 
+#dnn_pred <- predict(dnn_espset, testing_amplitude_in_peaks) 
+glm_pred <- predict(glm_espset, testing_amplitude_in_peaks) 
+#########################################################################################################
 varImp_svm_1_espset <- varImp(svm_1_espset, scale = FALSE)
+varImp_svm_2_espset <- varImp(svm_2_espset, scale = FALSE)
+varImp_knn_espset   <- varImp(knn_espset, scale = FALSE)
+varImp_mlp_espset   <- varImp(mlp_espset, scale = FALSE)
+varImp_glm_espset   <- varImp(glm_espset, scale = FALSE)
+#varImp_dnn_espset   <- varImp(dnn_espset, scale = FALSE)
 
-# plot_varImp_svm_1_espset
-plot_varImp_svm_1_espset<-plot(varImp_svm_1_espset, main = "svmLinear")
+plot_varImp_svm_1_espset<-plot(varImp_svm_1_espset, main = "svmLinear") 
+plot_varImp_svm_2_espset<-plot(varImp_svm_2_espset, main = "svmRadial") 
+plot_varImp_mlp_espset<-plot(varImp_mlp_espset, main = "mlp") 
+plot_varImp_knn_espset<-plot(varImp_knn_espset, main = "knn") 
+plot_varImp_glm_espset<-plot(varImp_glm_espset, main = "glm") 
+#plot_varImp_dnn_espset<-plot(varImp_dnn_espset, main = "dnn") 
 
-# bwplot               
-png(filename=paste(output_dir,"Variable_Importance_results_peaks.png",sep=""), width = 20, height = 25, res=600, units = "cm")  
-  plot_varImp_svm_1_espset
+# bwplo               
+png(filename=paste(output_dir,"Variable_Importance_results_Peaks.png",sep=""), width = 25, height = 25, res=600, units = "cm")  
+  #grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset,plot_varImp_dnn_espset)
+  grid.arrange(plot_varImp_svm_1_espset,plot_varImp_svm_2_espset,plot_varImp_mlp_espset,plot_varImp_knn_espset,plot_varImp_glm_espset)
 dev.off()
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset))                          
 
-confusionMatrix(svm_1_espset)
+# svm_1_pred
+svm_1_pred<-predict(svm_1_espset, newdata = testing_amplitude_in_peaks)
+
+confusionMatrix(svm_1_pred, testing_amplitude_in_peaks$Class)
 #########################################################################################################
 # Generate plot
 plot_average<-ggplot(data = df_average_frequency, aes(x = as.integer(Frequency), y = Average))+ geom_line()  + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(0,0.1) 
