@@ -107,19 +107,6 @@ dev.off()
 #########################################################################################################
 resamps <- resamples(list(svmLinear = svm_1_espset))                          
 #########################################################################################################
-# Set up bwplot
-theme1 <- trellis.par.get()
-theme1$plot.symbol$col = rgb(.2, .2, .2, .4)
-theme1$plot.symbol$pch = 16
-theme1$plot.line$col = rgb(1, 0, 0, .7)
-theme1$plot.line$lwd <- 2
-trellis.par.set(theme1)
-
-# bwplo               
-png(filename=paste(output_dir,"Plot_bwplot_results_peaks.png",sep=""), width = 10, height = 10, res=600, units = "cm")  
-  bwplot(resamps, layout = c(3, 1))
-dev.off()
-#########################################################################################################
 # Generate plot
 plot_average<-ggplot(data = df_average_frequency, aes(x = as.integer(Frequency), y = Average))+ geom_line()  + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(0,0.1) 
 
