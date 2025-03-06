@@ -148,6 +148,6 @@ plot_average<-plot_average +  geom_segment(aes(x = 169,  y = 0.1, xend = 169, ye
 plot_average<-plot_average +  geom_segment(aes(x = 1490, y = 0.1, xend =  1490, yend = 0.025, colour = "red"), arrow = arrow(length = unit(0.50, "cm")))  
 
 # FindClusters_resolution               
-png(filename=paste(output_dir,"Plot_Average_SelectPeaks.png",sep=""), width = 15, height = 20, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_Average_SelectPeaks.png",sep=""), width = 15, height = 10, res=600, units = "cm")  
   plot_average
 dev.off()
