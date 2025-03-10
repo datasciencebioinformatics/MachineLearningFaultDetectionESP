@@ -4,12 +4,8 @@ spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
 
 # Load the features file
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
-
-# Take the number of collumns of the spectrum_signals table
-nCollumns_spectrum<-length(colnames(spectrum_signals))
-
 # Re-set the colnames to numbers
-colnames(spectrum_signals)<-1:nCollumns_spectrum
+colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
 
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
@@ -17,19 +13,6 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 # Spectrum and features merged
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
-#########################################################################################################
-# Re-set the colnames to numbers
-rotating_X<-1:nCollumns_spectrum*0
-
-# Convert the values to rotating X
-convertion_rate<-4096/length(rotating_X)
-
-# For each posiition, add increment the rotation rate
-for (index in 2:length(rotating_X))
-{
-  # Add convertion_rate to the position
-  rotating_X[index]<-rotating_X[index-1]+convertion_rate
-}
 #########################################################################################################
 # Constant to define end position
 STARTING_IDX_POS     = 101
