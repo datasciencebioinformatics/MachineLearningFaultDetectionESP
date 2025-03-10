@@ -1,12 +1,15 @@
 #########################################################################################################
 # Load the spectrum file
-spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = TRUE, sep=";")
+spectrum_signals=read.csv(spectrum_file, fill = TRUE, header = FALSE, sep=";")
 
 # Load the features file
 features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 
 # Re-set the colnames to numbers
 colnames(spectrum_signals)<-1:length(colnames(spectrum_signals))
+
+# Re-set the colnames to numbers
+colnames(spectrum_signals)<-seq(1,4096+0.5,by=(4096/12103))
 
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
