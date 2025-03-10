@@ -22,9 +22,15 @@ spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_i
 rotating_X<-1:nCollumns_spectrum*0
 
 # Convert the values to rotating X
+convertion_rate<-4096/length(rotating_X)
+
+# For each posiition, add increment the rotation rate
+for (index in 2:length(rotating_X))
+{
+  # Add convertion_rate to the position
+  rotating_X[index]<-rotating_X[index-1]+convertion_rate
+}
 #########################################################################################################
-
-
 # Constant to define end position
 STARTING_IDX_POS     = 101
 ENDING_IDX_POS     = 6000
