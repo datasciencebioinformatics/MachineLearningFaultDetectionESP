@@ -64,7 +64,7 @@ dev.off()
 # From the spectrum_features_data, take the frequency_id and the esp_id
 
 # First the frequency_id in the colnames
-frequency_ids_vector<- sort(colnames(spectrum_features_data))
+frequency_ids_vector<- colnames(spectrum_features_data)
 
 # Second the esp_id in the colnames
 esp_ids_vector      <- sort(unique(spectrum_features_merged$esp_id))
