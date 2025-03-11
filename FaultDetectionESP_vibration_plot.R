@@ -38,7 +38,7 @@ colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitu
 melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
 
 # Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum ")+ ylab("inches/s")
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s")
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
@@ -92,17 +92,17 @@ df_esp_frequency$label<-rownames(df_esp_frequency)
 melt_spectrum_signals<-melt(df_esp_frequency,id=c("label"))
 
 # Rename collumn
-colnames(melt_spectrum_signals)<-c("label","rotating_x","amplitude")
+colnames(melt_spectrum_signals)<-c("label","frequency_id","amplitude")
 
 # Convert collumn to numeric
-melt_spectrum_signals$rotating_x<-as.numeric(as.vector(melt_spectrum_signals$rotating_x))
+melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
                                
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
 
 # Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = rotating_x, y = amplitude,colour = factor(label)))+ geom_line(aes(group=label))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Averaged data")   +  ylim(0, 0.1) + xlab("x rotation")+ ylab("inches/s")+ scale_x_continuous(breaks=seq(0,3,0.25))
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=label))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Averaged data")   +  ylim(0, 0.1) + xlab("spectrum")+ ylab("inches/s")
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
