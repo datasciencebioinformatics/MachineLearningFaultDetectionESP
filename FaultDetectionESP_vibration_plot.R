@@ -109,4 +109,4 @@ png(filename=paste(output_dir,"Plot_raw_vibration_average.png",sep=""), width = 
   ggplot2_raw_data
 dev.off()
 #########################################################################################################
-
+# Trim the spectrum in the interval 101:6101
