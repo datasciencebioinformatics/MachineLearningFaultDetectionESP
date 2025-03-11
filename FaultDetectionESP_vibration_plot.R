@@ -46,10 +46,10 @@ png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 
 dev.off()
 #########################################################################################################
 # Select only equipment four
-melt_spectrum_signals[which(melt_spectrum_signals$esp_id=="4"),]
+melt_spectrum_signals<-melt_spectrum_signals[which(melt_spectrum_signals$esp_id=="4"),]
 
 # Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") + xlim(101,6101)
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("ESP 4")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") + xlim(101,6101)
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_eqp_4.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
