@@ -70,16 +70,16 @@ for (label in esp_label)
   signals_from_esp_label<-spectrum_features_merged[spectrum_features_merged$label %in% label,]
 
   # Take only the amplitude
-  signals_from_esp_label<-signals_from_esp_label[,which(colnames(signals_from_esp_label) %in% rotating_X)]
+  signals_from_esp_label<-signals_from_esp_label[,which(colnames(signals_from_esp_label) %in% frequency_ids_vector)]
 
   # For each frequency_id
   for (frequency_id in frequency_ids_vector)
   {
     # Then, take the average of the amplitude for each frequency_id
-    mean_of_amplitude<-mean(signals_from_esp_label[,toString(frequency_id)])
+    mean_of_amplitude<-mean(signals_from_esp_label[,frequency_id])
 
     # Mean of ampplitude for the equipment
-    df_esp_frequency[label,toString(frequency_id)]<-mean_of_amplitude    
+    df_esp_frequency[label,frequency_id]<-mean_of_amplitude    
   }    
 }
 # Set the label
