@@ -9,23 +9,7 @@ features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 nCollumns_spectrum<-length(colnames(spectrum_signals))
 #########################################################################################################
 # Re-set the colnames to numbers
-rotating_X<-1:nCollumns_spectrum*0
-
-# Max rate rotating X
-max_rate<-length(rotating_X)/4096
-
-# Rotating X conversion rate
-convertion_rate<-max_rate/length(rotating_X)
-
-# For each posiition, add increment the rotation rate
-for (index in 2:length(rotating_X))
-{
-  # Add convertion_rate to the position
-  rotating_X[index]<-rotating_X[index-1]+convertion_rate
-}
-#########################################################################################################
-# Re-set the colnames to numbers
-colnames(spectrum_signals)<-rotating_X
+colnames(spectrum_signals)<-1:nCollumns_spectrum
 
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
@@ -98,43 +82,30 @@ for (label in esp_label)
     df_esp_frequency[label,toString(frequency_id)]<-mean_of_amplitude    
   }    
 }
-# Set the esp_id
-df_esp_frequency$esp_with_label_id<-rownames(df_esp_frequency)
+# Set the label
+df_esp_frequency$label<-rownames(df_esp_frequency)
 
-# Take list with the paired  id
-esp_with_label_id_list<-strsplit(df_esp_frequency$esp_with_label_id,"_",fixed=T)
-
-# Add also the field esp_id
-df_esp_frequency$esp_id<-0
-
-# And the field esp_id
-df_esp_frequency$label<-""
-
-# For each paired id in the list
-for (esp_with_label_id in esp_with_label_id_list)
-{
-  # Add the esp_id and the label
-  df_esp_frequency[paste(esp_with_label_id[1],esp_with_label_id[2],sep="_"),"esp_id"]<-esp_with_label_id[2]
-  df_esp_frequency[paste(esp_with_label_id[1],esp_with_label_id[2],sep="_"),"label"]<-esp_with_label_id[1]
-}
 #################################################################################################################
 # The spectrum_signals table must be melt.
 # The id must be kept to identity each signal.
 # Melt by multiple ids
-melt_spectrum_signals<-melt(df_esp_frequency,id=c("esp_with_label_id","esp_id","label"))
+melt_spectrum_signals<-melt(df_esp_frequency,id=c("label"))
 
 # Rename collumn
-colnames(melt_spectrum_signals)<-c("esp_with_label_id","esp_id","label","frequency_id","amplitude")
+colnames(melt_spectrum_signals)<-c("label","rotating_x","amplitude")
+
+# Convert collumn to numeric
+melt_spectrum_signals$rotating_x<-as.numeric(as.vector(melt_spectrum_signals$rotating_x))
                                
 # Each line represents a signal.
 # For each the 6032 vibration signals , there are 12103 collumns. Each collumn represents the amplitude.
 # Therefore, two collumns are needed, x for the singal and y for the amplitude.
 
-# Plot the raw data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(frequency_id), y = amplitude,colour = factor(label)))+ geom_line(aes(group=esp_with_label_id))+ theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())  + theme(axis.text.x = element_text(angle = 90, vjust = 0.5, hjust = 1))  + ylim(min(melt_spectrum_signals$amplitude), 100) + ggtitle("Average data (per esp and condition)") + xlim(min(as.integer(melt_spectrum_signals$frequency_id)), max(as.integer(melt_spectrum_signals$frequency_id))) + facet_grid(vars(label), scales="free")
+# Plot the average data data
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = rotating_x, y = amplitude,colour = factor(label)))+ geom_line(aes(group=label))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Averaged data")   +  ylim(0, 0.1) + xlab("x rotation")+ ylab("inches/s")+ scale_x_continuous(breaks=seq(0,3,0.25))
 
-# Plot_raw_vibration_data.png              
-png(filename=paste(output_dir,"Plot_average_vibration_data.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+# Plot_raw_vibration_data.png               
+png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
 #########################################################################################################
