@@ -71,6 +71,15 @@ png(filename=paste(output_dir,"Plot_raw_vibration_limits.png",sep=""), width = 2
   ggplot2_raw_data_limits
 dev.off()
 #########################################################################################################
+
+
+
+
+
+
+
+#########################################################################################################
+# Convert the frequencies ids to rotation x
 # x unit
 x_unit<-1/X1_IDX
 
@@ -83,9 +92,18 @@ spectrum_signals[,1:nCollumns_spectrum]<-rotation_x
 # Rename collumns
 colnames(spectrum_signals)[1:nCollumns_spectrum]<-rotation_x
 
+# Spectrum and features merged
+# In this table I have the signals and also the id, the esp_id and label.
+spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
+#########################################################################################################
+# Re-sample normal samples
+# Split normal samples from the other samples
+spectrum_features_merged_normal_samples <-spectrum_features_merged[spectrum_features_merged$label=="Normal",]
+spectrum_features_merged_except_samples <-spectrum_features_merged[spectrum_features_merged$label!="Normal",]
+
 ## Merge back the two data.frames
 spectrum_features_merged<-rbind(sample_n(spectrum_features_merged_normal_samples, 100),spectrum_features_merged_except_samples)
-
+#########################################################################################################
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
@@ -98,7 +116,7 @@ colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitu
 melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
 #########################################################################################################
 # Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") 
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.numeric(frequency_id), y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("X rotation")+ ylab("inches/s") 
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
