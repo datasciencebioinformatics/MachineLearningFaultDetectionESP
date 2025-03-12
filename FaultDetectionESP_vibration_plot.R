@@ -176,7 +176,7 @@ dev.off()
 
 
 # Select only equipment four
-melt_spectrum_signals_signal<-melt_spectrum_signals[which(melt_spectrum_signals$id=="4897"),]
+melt_spectrum_signals_signal<-melt_spectrum_signals[which(melt_spectrum_signals$id=="6"),]
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_signal_4897.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
