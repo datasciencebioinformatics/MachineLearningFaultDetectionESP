@@ -87,10 +87,8 @@ x_unit<-1/X1_IDX
 rotation_x<-(0:(nCollumns_spectrum-1))*x_unit
 
 # Convert the frequency_id vector to rotation x vector
-spectrum_signals[,1:nCollumns_spectrum]<-rotation_x
-
-# Rename collumns
 colnames(spectrum_signals)[1:nCollumns_spectrum]<-rotation_x
+colnames(spectrum_signals)[1:nCollumns_spectrum]<-1:nCollumns_spectrum
 
 # Spectrum and features merged
 # In this table I have the signals and also the id, the esp_id and label.
@@ -114,13 +112,10 @@ colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitu
 
 # Convert collumn to numeric
 melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
-#########################################################################################################
-# Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.numeric(frequency_id), y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  
 
 # Plot_raw_vibration_data.png               
-png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  gplot2_raw_data
+png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
+  ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1)
 dev.off()
 #########################################################################################################
 # Select only equipment four
