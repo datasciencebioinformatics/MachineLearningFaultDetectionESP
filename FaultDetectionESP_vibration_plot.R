@@ -32,11 +32,11 @@ nCollumns_spectrum<-length(colnames(spectrum_signals))
 colnames(spectrum_signals)<-1:nCollumns_spectrum
 #########################################################################################################
 # Constants are same as the github.com/NINFA-UFES/ESPset
-STARTING_IDX_POS  = 0+1
+STARTING_IDX_POS  = 101
 ENDNG_IDX_POS     = 6100+1
 
 # Trim spectrum vector with 6100 positions : 1...6101
-spectrum_signals<-spectrum_signals[,STARTING_IDX_POS:ENDNG_IDX_POS]
+spectrum_signals<-spectrum_signals[,1:ENDNG_IDX_POS]
 #########################################################################################################
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
@@ -65,7 +65,7 @@ colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitu
 melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
 
 # Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") + xlim(101,6201)
+ggplot2_raw_data <- ggplot2_raw_data + geom_vline(xintercept = STARTING_IDX_POS, linetype="dotted") + geom_text(aes(x=STARTING_IDX_POS, label="\nSTARTING_POS, ", y=9), colour="red", angle=90)
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
