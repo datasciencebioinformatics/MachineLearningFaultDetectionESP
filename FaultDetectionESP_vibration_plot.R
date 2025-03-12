@@ -327,4 +327,5 @@ ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = as.integer(freque
 png(filename=paste(output_dir,"Plot_raw_vibration_average_esp.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot2_raw_data
 dev.off()
+
 #################################################################################################################
