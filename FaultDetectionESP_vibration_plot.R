@@ -71,8 +71,34 @@ png(filename=paste(output_dir,"Plot_raw_vibration_limits.png",sep=""), width = 2
   ggplot2_raw_data_limits
 dev.off()
 #########################################################################################################
+# x unit
+x_unit<-1/X1_IDX
+
+# Convert the frequency_id vector to rotation x vector
+rotation_x<-(0:(nCollumns_spectrum-1))*x_unit
+
+# Convert the frequency_id vector to rotation x vector
+spectrum_signals[,1:nCollumns_spectrum]<-rotation_x
+
+# Rename collumns
+colnames(spectrum_signals)[1:nCollumns_spectrum]<-rotation_x
+
+## Merge back the two data.frames
+spectrum_features_merged<-rbind(sample_n(spectrum_features_merged_normal_samples, 100),spectrum_features_merged_except_samples)
+
+# The spectrum_signals table must be melt. 
+# The id must be kept to identity each signal.
+# Melt by multiple ids
+melt_spectrum_signals<-melt(spectrum_features_merged,id=c("id","esp_id","label"))
+
+# Rename collumn
+colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitude")
+
+# Convert collumn to numeric
+melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
+#########################################################################################################
 # Plot the average data data
-ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") + scale_x_continuous(breaks=c(0,STARTING_IDX_POS,ENDING_IDX_POS,X1_IDX,X2_IDX), limits = c(0, max(melt_spectrum_signals$frequency_id)) )
+ggplot2_raw_data<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") 
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
