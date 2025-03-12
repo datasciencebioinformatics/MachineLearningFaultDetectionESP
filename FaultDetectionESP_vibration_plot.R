@@ -65,7 +65,10 @@ colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitu
 melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
 
 # Plot the average data data
-ggplot2_raw_data <- ggplot2_raw_data + geom_vline(xintercept = STARTING_IDX_POS, linetype="dotted") + geom_text(aes(x=STARTING_IDX_POS, label="\nSTARTING_POS, ", y=9), colour="red", angle=90)
+gplot2_raw_data <-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 0.5) + xlab("spectrum")+ ylab("inches/s") 
+
+# Plot the average data data
+ggplot2_raw_data <- ggplot2_raw_data + geom_vline(xintercept = c(STARTING_IDX_POS,ENDNG_IDX_POS), linetype="dotted") + geom_text(aes(x=c(STARTING_IDX_POS,ENDNG_IDX_POS), label=c("\nSTARTING_POS","\nENDING_POS"), y=0.45), colour="red", angle=90,size = 5)
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
