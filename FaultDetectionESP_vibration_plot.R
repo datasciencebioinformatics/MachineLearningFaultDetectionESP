@@ -44,14 +44,6 @@ spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 # In this table I have the signals and also the id, the esp_id and label.
 spectrum_features_merged<-merge(spectrum_signals,features_signals[,c("id","esp_id","label")],by="id")
 #########################################################################################################
-# When needed, a procedure to subset Normal samples to reduce computational complexity
-# Split normal samples from the other samples
-spectrum_features_merged_normal_samples <-spectrum_features_merged[spectrum_features_merged$label=="Normal",]
-spectrum_features_merged_except_samples <-spectrum_features_merged[spectrum_features_merged$label!="Normal",]
-
-## Merge back the two data.frames
-spectrum_features_merged<-rbind(sample_n(spectrum_features_merged_normal_samples, 100),spectrum_features_merged_except_samples)
-#########################################################################################################
 # The spectrum_signals table must be melt. 
 # The id must be kept to identity each signal.
 # Melt by multiple ids
@@ -154,7 +146,7 @@ melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$f
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_trimmed.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25))
+ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=1))
 dev.off()
 
 
