@@ -2,7 +2,7 @@
 # X2 position X2_IDX
 
 # CONSTANT VARIABLES
-# STARTING_IDX_POS  = 0
+# STARTING_IDX_POS  = 100
 # ENDNG_IDX_POS     = 6100
 # X1_IDX            = 3002 - STARTING_IDX_POS
 # X2_IDX            = 6005 - STARTING_IDX_POS
@@ -27,10 +27,17 @@ features_signals=read.csv(features_file, fill = TRUE, header = TRUE, sep=";")
 
 # Take the number of collumns of the spectrum_signals table
 nCollumns_spectrum<-length(colnames(spectrum_signals))
-#########################################################################################################
+
 # Re-set the colnames to numbers
 colnames(spectrum_signals)<-1:nCollumns_spectrum
+#########################################################################################################
+# Constants are same as the github.com/NINFA-UFES/ESPset
+STARTING_IDX_POS  = 0+1
+ENDNG_IDX_POS     = 6100+1
 
+# Trim spectrum vector with 6100 positions : 1...6101
+spectrum_signals<-spectrum_signals[,STARTING_IDX_POS:ENDNG_IDX_POS]
+#########################################################################################################
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 
