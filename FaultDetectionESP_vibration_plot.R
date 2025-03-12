@@ -146,34 +146,43 @@ melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$f
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_trimmed.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=1))
+ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25))
 dev.off()
 
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
+#########################################################################################################
+# 3) Third, plot also the trimmed version from STARTING_IDX_POS:ENDING_IDX_POS only for one equipment
+# Plot also the trimmed version
+# Load the spectrum file
+# Re-set the colnames to numbers
 
 
 # Select only equipment four
 melt_spectrum_signals_signal<-melt_spectrum_signals[which(melt_spectrum_signals$esp_id=="4"),]
 
 # Plot_raw_vibration_data.png               
-png(filename=paste(output_dir,"Plot_raw_vibration_eqp_4.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  ggplot(data = melt_spectrum_signals_signal, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25))
+png(filename=paste(output_dir,"Plot_raw_vibration_eqp_4.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
+  ggplot(data = melt_spectrum_signals_signal, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25)) + ggtitle("ESP 4")
 dev.off()
+
+
+#########################################################################################################
+# 4) Fournt, plot also the trimmed version from STARTING_IDX_POS:ENDING_IDX_POS only for one signal
+# Plot also the trimmed version
+# Load the spectrum file
+# Re-set the colnames to numbers
+
+
+# Select only equipment four
+melt_spectrum_signals_signal<-melt_spectrum_signals[which(melt_spectrum_signals$id=="4"),]
+
+# Plot_raw_vibration_data.png               
+png(filename=paste(output_dir,"Plot_raw_vibration_eqp_4.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
+  ggplot(data = melt_spectrum_signals_signal, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25)) + ggtitle("ESP 4")
+dev.off()
+
 
 
 
