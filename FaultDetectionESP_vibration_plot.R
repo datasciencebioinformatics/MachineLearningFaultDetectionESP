@@ -74,7 +74,7 @@ ggplot2_raw_data <- ggplot2_raw_data + geom_vline(xintercept = c(STARTING_IDX_PO
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  ggplot2_raw_data
+  gplot2_raw_data
 dev.off()
 #########################################################################################################
 # Select only equipment four
