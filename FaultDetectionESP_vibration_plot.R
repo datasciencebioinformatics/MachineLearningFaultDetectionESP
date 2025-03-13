@@ -37,6 +37,11 @@ ENDING_IDX_POS     = 6100
 X1_IDX            = 3003 - STARTING_IDX_POS
 X2_IDX            = 6006 - STARTING_IDX_POS
 #########################################################################################################
+Interval_8=(8*X1_IDX)/100
+Interval_13=(13*X1_IDX)/100
+Interval_98=(98*X1_IDX)/100
+Interval_102=(102*X1_IDX)/100
+#########################################################################################################
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
 
@@ -56,14 +61,13 @@ colnames(melt_spectrum_signals)<-c("id","esp_id","label","frequency_id","amplitu
 melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$frequency_id))
 #########################################################################################################
 # Plot the average data data
-ggplot2_raw_data_limits<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 1) + xlab("spectrum")+ ylab("inches/s") + scale_x_continuous(breaks=c(STARTING_IDX_POS,ENDING_IDX_POS,X1_IDX,X2_IDX), limits = c(0, max(melt_spectrum_signals$frequency_id)) )+ theme(axis.text.x = element_text(angle=90,size=9))
+ggplot2_raw_data_limits<-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id)) + theme_bw() +   theme(axis.line = element_line(colour = "black"),panel.grid.major = element_blank(), panel.grid.minor = element_blank(), panel.border = element_blank(),    panel.background = element_blank())   + ggtitle("Raw data")   +  ylim(0, 1) + xlab("spectrum")+ ylab("inches/s") + scale_x_continuous(breaks=c(STARTING_IDX_POS,ENDING_IDX_POS,X1_IDX,X2_IDX), limits = c(0, max(melt_spectrum_signals$frequency_id)) )+ theme(axis.text.x = element_text(angle=90,size=9)) + geom_segment(aes(x=Interval_8,xend=Interval_13,y=0.85,yend=0.85)) + geom_segment(aes(x=Interval_98,xend=Interval_102,y=0.85,yend=0.85))
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_limits.png",sep=""), width = 25, height = 10, res=600, units = "cm")  
   ggplot2_raw_data_limits
 dev.off()
 #########################################################################################################
-
 
 
 
@@ -108,7 +112,7 @@ melt_spectrum_signals$frequency_id<-as.numeric(as.vector(melt_spectrum_signals$f
 
 # Plot_raw_vibration_data.png               
 png(filename=paste(output_dir,"Plot_raw_vibration_convert.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line()+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,1) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25))  + xlim(0,2.25) + xlab("X rotation")
+ggplot(data = melt_spectrum_signals, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line()+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.03) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25))  + xlim(0,2.25) + xlab("X rotation")
 dev.off()
 #########################################################################################################
 # 2) Second, plot also the trimmed version from STARTING_IDX_POS:ENDING_IDX_POS
