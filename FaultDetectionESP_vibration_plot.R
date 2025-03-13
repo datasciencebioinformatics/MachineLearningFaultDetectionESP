@@ -180,7 +180,7 @@ signals_conditions <- signals_conditions[match(unique(signals_conditions$label),
 melt_spectrum_signals_filtered<-melt_spectrum_signals[(melt_spectrum_signals$esp_id %in% signals_conditions$esp_id) & (melt_spectrum_signals$id %in% signals_conditions$id),]
 
 # Plot_raw_vibration_data.png               
-png(filename=paste(output_dir,"Plot_raw_vibration_signal_filtered.png",sep=""), width = 20, height = 30, res=600, units = "cm")  
+png(filename=paste(output_dir,"Plot_raw_vibration_signal_filtered.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
   ggplot(data = melt_spectrum_signals_filtered, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line()+ facet_grid(vars(id),scales="free") + theme_bw()  + ylim(0,0.03) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25)) 
 dev.off()
 
