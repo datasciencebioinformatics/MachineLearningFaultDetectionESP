@@ -169,18 +169,20 @@ dev.off()
 
 
 #########################################################################################################
-# 4) Fournt, plot also the trimmed version from STARTING_IDX_POS:ENDING_IDX_POS only for one signal
-# Plot also the trimmed version
-# Load the spectrum file
-# Re-set the colnames to numbers
+# 4) Fournt, plot also the trimmed version from STARTING_IDX_POS:ENDING_IDX_POS only for one signal per condition
+# Slect the first signal from each condition
+signals_conditions<-spectrum_features_merged[,c("esp_id","label","id")]
 
+# Take one signal from each position
+signals_conditions <- signals_conditions[match(unique(signals_conditions$label), signals_conditions$label),]
 
-# Select only equipment four
-melt_spectrum_signals_signal<-melt_spectrum_signals[which(melt_spectrum_signals$id=="6"),]
+# Filter the melt table for the esp and the ids
+melt_spectrum_signals_filtered<-melt_spectrum_signals[(melt_spectrum_signals$esp_id %in% signals_conditions$esp_id) & (melt_spectrum_signals$id %in% signals_conditions$id),]
+
 
 # Plot_raw_vibration_data.png               
-png(filename=paste(output_dir,"Plot_raw_vibration_signal_4897.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
-  ggplot(data = melt_spectrum_signals_signal, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line(aes(group=id))+ facet_grid(vars(label),scales="free") + theme_bw()  + ylim(0,0.01) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25)) + ggtitle("signal 4897")
+png(filename=paste(output_dir,"Plot_raw_vibration_signal_filktered.png",sep=""), width = 20, height = 20, res=600, units = "cm")  
+  ggplot(data = melt_spectrum_signals_filtered, aes(x = frequency_id, y = amplitude,colour = factor(label)))+ geom_line()+ facet_grid(vars(id),scales="free") + theme_bw()  + ylim(0,0.03) + scale_x_continuous(name="X rotation", limits=c(0, max(melt_spectrum_signals$frequency_id)),breaks=seq(0,max(melt_spectrum_signals$frequency_id),by=0.25)) 
 dev.off()
 
 
