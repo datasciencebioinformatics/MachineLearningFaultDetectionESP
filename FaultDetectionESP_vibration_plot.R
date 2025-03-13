@@ -41,6 +41,9 @@ Interval_8=(8*X1_IDX)/100
 Interval_13=(13*X1_IDX)/100
 Interval_98=(98*X1_IDX)/100
 Interval_102=(102*X1_IDX)/100
+
+regression_interval_start<-0
+regression_interval_end  <-0.4*X1_IDX
 #########################################################################################################
 # Take the ids as the rownames
 spectrum_signals$id<-as.integer(rownames(spectrum_signals))
